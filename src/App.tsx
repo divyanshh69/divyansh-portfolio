@@ -1,0 +1,100 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { Navbar, SectionId, NAV_SECTIONS } from './components/Navbar';
+import { HeroSection } from './components/HeroSection';
+import { AboutSection } from './components/AboutSection';
+import { SkillsSection } from './components/SkillsSection';
+import { ProjectsSection } from './components/ProjectsSection';
+import { JourneySection } from './components/JourneySection';
+import { BeyondSection } from './components/BeyondSection';
+import { NowSection } from './components/NowSection';
+import { ContactFooter } from './components/ContactFooter';
+import { CommandPalette } from './components/CommandPalette';
+
+export default function App() {
+  const [activeSection, setActiveSection] = useState<SectionId>('home');
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+
+  const handleNavigate = useCallback((id: SectionId) => {
+    setActiveSection(id);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
+
+  const handleOpenProject = useCallback((projectId: string) => {
+    setSelectedProjectId(projectId);
+    const element = document.getElementById('projects');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
+
+  // Global ⌘K keyboard shortcut listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Scrollspy for active section
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 180;
+      for (let i = NAV_SECTIONS.length - 1; i >= 0; i--) {
+        const secId = NAV_SECTIONS[i].id;
+        const el = document.getElementById(secId);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(secId);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#050505] text-zinc-100 flex flex-col selection:bg-[#2563EB] selection:text-white relative">
+      <Navbar
+        activeSection={activeSection}
+        onNavigate={handleNavigate}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+      />
+
+      <main className="flex-1">
+        <HeroSection
+          onNavigate={handleNavigate}
+          onOpenProject={handleOpenProject}
+        />
+        <AboutSection />
+        <SkillsSection />
+        <ProjectsSection
+          externalSelectedProject={selectedProjectId}
+          onClearExternalProject={() => setSelectedProjectId(null)}
+        />
+        <JourneySection />
+        <BeyondSection />
+        <NowSection />
+      </main>
+
+      <ContactFooter onNavigate={handleNavigate} />
+
+      {/* Interactive Command Palette */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onNavigate={handleNavigate}
+        onOpenProject={handleOpenProject}
+      />
+    </div>
+  );
+}
