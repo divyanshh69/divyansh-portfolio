@@ -77,12 +77,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           style={{ width: `${scrollProgress}%` }}
         />
 
-        <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-6 px-6 py-3.5">
+        <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-3 sm:py-3.5">
           {/* Zone 1: Wordmark */}
           <a
             href="#home"
             onClick={(e) => handleLinkClick(e, 'home')}
-            className="flex items-center gap-2 text-base font-bold tracking-tight text-zinc-100 hover:text-white transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2563EB]"
+            className="flex items-center gap-2 text-sm sm:text-base font-bold tracking-tight text-zinc-100 hover:text-white transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2563EB]"
           >
             <span>Divyansh Nayak</span>
             <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-blue-500" />
@@ -166,7 +166,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18 }}
-            className="lg:hidden fixed inset-x-0 top-[57px] z-30 bg-[#09090B]/98 backdrop-blur-xl border-b border-zinc-800 px-6 py-5 shadow-2xl"
+            className="lg:hidden fixed inset-x-0 top-[53px] sm:top-[57px] z-30 bg-[#09090B]/98 backdrop-blur-xl border-b border-zinc-800 px-4 sm:px-6 py-4 sm:py-5 shadow-2xl"
           >
             <nav aria-label="Mobile Navigation" className="grid grid-cols-2 gap-2">
               {NAV_SECTIONS.map((sec, index) => {
@@ -176,14 +176,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                     key={sec.id}
                     type="button"
                     onClick={(e) => handleLinkClick(e, sec.id)}
-                    className={`flex items-center justify-between px-4 py-3 rounded-lg text-left text-sm font-medium transition-colors cursor-pointer ${
+                    className={`flex items-center justify-between px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-lg text-left text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
                       isActive
                         ? 'bg-[#2563EB] text-white'
                         : 'bg-zinc-900/70 text-zinc-300 hover:bg-zinc-800 hover:text-white'
                     }`}
                   >
                     <span>{sec.label}</span>
-                    <span className="font-mono-tabular text-xs opacity-70">0{index + 1}</span>
+                    <span className="font-mono-tabular text-[11px] sm:text-xs opacity-70">0{index + 1}</span>
                   </button>
                 );
               })}

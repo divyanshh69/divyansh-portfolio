@@ -63,14 +63,14 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-100 flex flex-col selection:bg-[#2563EB] selection:text-white relative">
+    <div className="min-h-screen bg-[#050505] text-zinc-100 flex flex-col selection:bg-[#2563EB] selection:text-white relative w-full overflow-x-clip">
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
       />
 
-      <main className="flex-1">
+      <main className="flex-1 w-full overflow-x-clip">
         <HeroSection
           onNavigate={handleNavigate}
           onOpenProject={handleOpenProject}

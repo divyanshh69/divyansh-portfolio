@@ -87,9 +87,9 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
       : events.filter((e) => e.category === activeCategory);
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 p-5 space-y-5 backdrop-blur-md">
+    <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 p-3.5 sm:p-5 space-y-3.5 sm:space-y-5 backdrop-blur-md">
       {/* Platform Header & RBAC Selector */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-900 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-900 pb-3 sm:pb-4">
         <div>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-blue-400" />
@@ -100,7 +100,7 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 p-1 bg-zinc-900 border border-zinc-800 rounded-lg">
+        <div className="flex flex-wrap items-center gap-1 p-1 bg-zinc-900 border border-zinc-800 rounded-lg">
           <ShieldCheck className="w-3.5 h-3.5 text-[#2563EB] ml-1.5" />
           <span className="text-[11px] text-zinc-400 mr-1">Role:</span>
           {(['Student Member', 'Club President', 'Faculty Advisor'] as const).map((role) => (
@@ -108,7 +108,7 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
               key={role}
               type="button"
               onClick={() => setSelectedRole(role)}
-              className={`px-2 py-1 text-[11px] font-medium rounded transition-colors cursor-pointer ${
+              className={`px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-medium rounded transition-colors cursor-pointer ${
                 selectedRole === role
                   ? 'bg-[#2563EB] text-white'
                   : 'text-zinc-400 hover:text-zinc-200'

@@ -116,7 +116,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-project-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto"
       onClick={onClose}
     >
       <motion.div
@@ -125,12 +125,12 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         exit={{ opacity: 0, scale: 0.96, y: 16 }}
         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-5xl rounded-2xl border border-zinc-800 bg-[#09090B] text-zinc-100 shadow-2xl overflow-hidden my-6 flex flex-col max-h-[92vh]"
+        className="w-full max-w-5xl rounded-2xl border border-zinc-800 bg-[#09090B] text-zinc-100 shadow-2xl overflow-hidden my-2 sm:my-6 flex flex-col max-h-[95vh] sm:max-h-[92vh]"
       >
         {/* Header Bar */}
-        <div className="flex items-center justify-between gap-4 px-6 py-4 border-b border-zinc-800 bg-[#0C0C0F] shrink-0">
+        <div className="flex items-center justify-between gap-3 sm:gap-4 px-3.5 sm:px-6 py-3 sm:py-4 border-b border-zinc-800 bg-[#0C0C0F] shrink-0">
           <div className="min-w-0">
-            <div className="flex items-center gap-2 text-xs text-zinc-400">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-zinc-400">
               <span className="font-mono-tabular text-[#2563EB] font-semibold">
                 Project {project.index}
               </span>
@@ -139,17 +139,17 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               <span aria-hidden="true">·</span>
               <span className="font-mono-tabular">{project.year}</span>
             </div>
-            <h3 id="modal-project-title" className="text-xl sm:text-2xl font-bold text-white truncate">
+            <h3 id="modal-project-title" className="text-lg sm:text-2xl font-bold text-white truncate">
               {project.title}
             </h3>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:text-white hover:bg-zinc-800 transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:text-white hover:bg-zinc-800 transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Repository</span>
@@ -158,7 +158,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               type="button"
               onClick={onClose}
               aria-label="Close modal dialog"
-              className="p-2 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/80 transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/80 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -166,7 +166,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-2 px-6 py-2.5 border-b border-zinc-800/80 bg-[#0A0A0C] overflow-x-auto shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2 sm:py-2.5 border-b border-zinc-800/80 bg-[#0A0A0C] overflow-x-auto no-scrollbar shrink-0">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -175,7 +175,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
+                className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
                   isActive
                     ? 'bg-[#2563EB] text-white shadow-sm'
                     : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
@@ -189,7 +189,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         </div>
 
         {/* Modal Scrollable Content Body */}
-        <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-8">
+        <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
           {/* TAB 1: OVERVIEW & CASE STUDY */}
           {activeTab === 'overview' && (
             <div className="space-y-8">
@@ -198,7 +198,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 {/* Desktop Window Frame */}
                 <div className="rounded-xl overflow-hidden border border-zinc-800 bg-[#0B0B0E] shadow-2xl">
                   {/* Window Chrome Titlebar */}
-                  <div className="flex items-center justify-between gap-4 px-4 py-2.5 bg-[#101014] border-b border-zinc-800/90 text-xs">
+                  <div className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#101014] border-b border-zinc-800/90 text-xs">
                     {/* Traffic Light Dots */}
                     <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
                       <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 border border-red-600/40" />
@@ -207,7 +207,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                     </div>
 
                     {/* Window Center Title */}
-                    <div className="flex items-center gap-2 text-zinc-400 font-mono-tabular truncate px-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-zinc-400 font-mono-tabular truncate px-1 sm:px-2">
                       <Monitor className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
                       <span className="text-zinc-200 font-medium truncate">{project.title}</span>
                       <span className="text-zinc-600">/</span>
@@ -215,8 +215,8 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                     </div>
 
                     {/* Window Right Action Controls */}
-                    <div className="flex items-center gap-3 shrink-0">
-                      <span className="text-[11px] font-mono-tabular text-zinc-500">
+                    <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                      <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-500">
                         {activeScreenshotIdx + 1} / {screenshots.length}
                       </span>
                       <button
@@ -282,12 +282,12 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   </div>
 
                   {/* Caption & Context Drawer */}
-                  <div className="px-4 py-3 bg-[#0C0C0F] border-t border-zinc-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                  <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0C0C0F] border-t border-zinc-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 text-xs">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded bg-[#2563EB]/20 text-[#60A5FA] border border-blue-500/30 font-medium shrink-0">
+                      <span className="px-2 py-0.5 rounded bg-[#2563EB]/20 text-[#60A5FA] border border-blue-500/30 font-medium shrink-0 text-[11px] sm:text-xs">
                         {activeScreenshot.title}
                       </span>
-                      <p className="text-zinc-300 leading-relaxed">
+                      <p className="text-zinc-300 leading-relaxed text-xs">
                         {activeScreenshot.caption}
                       </p>
                     </div>
@@ -299,7 +299,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
 
                 {/* Multiple Screenshot Thumbnail Grid Switcher */}
                 {screenshots.length > 1 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 pt-1">
                     {screenshots.map((s, idx) => {
                       const isActive = idx === activeScreenshotIdx;
                       return (
@@ -307,7 +307,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                           key={s.title}
                           type="button"
                           onClick={() => setActiveScreenshotIdx(idx)}
-                          className={`p-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer flex items-center gap-3 ${
+                          className={`p-2 sm:p-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer flex items-center gap-2.5 sm:gap-3 ${
                             isActive
                               ? 'border-[#2563EB] bg-blue-950/20 shadow-sm'
                               : 'border-zinc-800/80 bg-zinc-950 hover:border-zinc-700 hover:bg-zinc-900/50'
@@ -345,13 +345,13 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               </div>
 
               {/* Metrics Strip */}
-              <div className="grid grid-cols-3 gap-4 p-4 rounded-xl border border-zinc-800/80 bg-zinc-950">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl border border-zinc-800/80 bg-zinc-950">
                 {project.metrics.map((m) => (
                   <div key={m.label} className="text-center sm:text-left space-y-0.5">
-                    <div className="font-mono-tabular text-xl sm:text-2xl font-bold text-white">
+                    <div className="font-mono-tabular text-lg sm:text-2xl font-bold text-white">
                       {m.value}
                     </div>
-                    <div className="text-xs text-zinc-400">{m.label}</div>
+                    <div className="text-[10px] sm:text-xs text-zinc-400">{m.label}</div>
                   </div>
                 ))}
               </div>
@@ -438,20 +438,20 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 </p>
               </div>
 
-              <div className="relative pl-6 sm:pl-8 border-l border-zinc-800 space-y-6">
+              <div className="relative pl-4 sm:pl-8 border-l border-zinc-800 space-y-4 sm:space-y-6">
                 {project.architecture.map((node, index) => (
                   <div key={node.layer} className="relative group">
                     {/* Node Dot */}
-                    <span className="absolute -left-[31px] sm:-left-[39px] top-4 w-3.5 h-3.5 rounded-full bg-zinc-900 border-2 border-[#2563EB]" />
+                    <span className="absolute -left-[23px] sm:-left-[39px] top-4 w-3.5 h-3.5 rounded-full bg-zinc-900 border-2 border-[#2563EB]" />
 
-                    <div className="p-5 rounded-xl border border-zinc-800/80 bg-zinc-950 space-y-2">
+                    <div className="p-3.5 sm:p-5 rounded-xl border border-zinc-800/80 bg-zinc-950 space-y-1.5 sm:space-y-2">
                       <div className="flex items-center justify-between text-xs text-zinc-400">
                         <span className="font-mono-tabular text-[#2563EB] font-semibold">
                           Layer 0{index + 1}
                         </span>
                         <span className="font-medium text-zinc-300">{node.layer}</span>
                       </div>
-                      <h5 className="text-base font-semibold text-white">{node.component}</h5>
+                      <h5 className="text-sm sm:text-base font-semibold text-white">{node.component}</h5>
                       <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                         {node.responsibility}
                       </p>
@@ -472,18 +472,18 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 </p>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {technicalDecisions.map((item, idx) => (
                   <div
                     key={item.title}
-                    className="p-5 rounded-xl border border-zinc-800/80 bg-zinc-950 space-y-3"
+                    className="p-3.5 sm:p-5 rounded-xl border border-zinc-800/80 bg-zinc-950 space-y-2 sm:space-y-3"
                   >
                     <div className="flex items-center gap-2 text-xs font-mono-tabular text-[#2563EB]">
                       <span>0{idx + 1}.</span>
                       <span className="text-zinc-200 font-semibold">{item.title}</span>
                     </div>
 
-                    <div className="text-xs sm:text-sm text-white font-medium pl-4 border-l-2 border-[#2563EB]">
+                    <div className="text-xs sm:text-sm text-white font-medium pl-3 sm:pl-4 border-l-2 border-[#2563EB]">
                       {item.decision}
                     </div>
 
@@ -498,18 +498,18 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-zinc-800 bg-[#0C0C0F] shrink-0 text-xs">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 px-3.5 sm:px-6 py-3 sm:py-4 border-t border-zinc-800 bg-[#0C0C0F] shrink-0 text-xs">
           <div className="flex items-center gap-2 text-zinc-400">
             <span>Status:</span>
             <span className="text-emerald-400 font-medium">{project.status}</span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 w-full sm:w-auto">
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors cursor-pointer w-full sm:w-auto"
             >
               <span>Explore Code on GitHub</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

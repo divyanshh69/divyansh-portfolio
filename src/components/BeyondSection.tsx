@@ -40,11 +40,11 @@ export const BeyondSection: React.FC = () => {
     <section
       id="beyond"
       aria-labelledby="beyond-heading"
-      className="py-20 md:py-28 border-b border-zinc-900 relative"
+      className="py-14 sm:py-20 md:py-28 border-b border-zinc-900 relative"
     >
-      <div className="max-w-[1280px] mx-auto px-6 space-y-20">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 space-y-14 sm:space-y-20">
         {/* Section Header */}
-        <div className="max-w-3xl space-y-3">
+        <div className="max-w-3xl space-y-2.5 sm:space-y-3">
           <div className="flex items-center gap-2 text-xs text-zinc-400">
             <span className="font-mono-tabular text-[#2563EB]">06.</span>
             <span>Beyond the Resume</span>
@@ -53,7 +53,7 @@ export const BeyondSection: React.FC = () => {
           </div>
           <h2
             id="beyond-heading"
-            className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight [text-wrap:balance]"
+            className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight [text-wrap:balance]"
           >
             How I think, where I excel, and where I am actively growing.
           </h2>
@@ -63,29 +63,29 @@ export const BeyondSection: React.FC = () => {
         </div>
 
         {/* Feature 1: How I Think — Mental Models Strip */}
-        <div className="space-y-4">
+        <div className="space-y-3.5 sm:space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Brain className="w-4 h-4 text-[#2563EB]" />
-              <h3 className="text-lg font-bold text-white">How I Approach Problem Solving</h3>
+              <h3 className="text-base sm:text-lg font-bold text-white">How I Approach Problem Solving</h3>
             </div>
             <span className="text-xs font-mono-tabular text-zinc-500 hidden sm:inline">
               Core Principles
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
             {mentalModels.map((model, idx) => {
               const Icon = model.icon;
               return (
                 <CardTilt key={model.title} maxTilt={5} className="rounded-xl">
-                  <div className="p-6 rounded-xl border border-zinc-800/90 bg-[#0A0A0C] hover:border-zinc-700 transition-colors h-full flex flex-col justify-between space-y-4 shadow-lg">
-                    <div className="space-y-3">
+                  <div className="p-4.5 sm:p-6 rounded-xl border border-zinc-800/90 bg-[#0A0A0C] hover:border-zinc-700 transition-colors h-full flex flex-col justify-between space-y-3 sm:space-y-4 shadow-lg">
+                    <div className="space-y-2.5 sm:space-y-3">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-mono-tabular text-[#2563EB]">0{idx + 1}.</span>
                         <Icon className="w-4 h-4 text-zinc-400" />
                       </div>
-                      <h4 className="text-base font-semibold text-white">{model.title}</h4>
+                      <h4 className="text-sm sm:text-base font-semibold text-white">{model.title}</h4>
                       <div className="text-xs font-medium text-blue-400 font-mono-tabular">
                         "{model.principle}"
                       </div>
@@ -101,16 +101,16 @@ export const BeyondSection: React.FC = () => {
         </div>
 
         {/* Feature 2: Dual Column: Strengths & Growth Areas with Interactive Filter */}
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h3 className="text-lg font-bold text-white">Self-Assessment & Reflection</h3>
+        <div className="space-y-5 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+            <h3 className="text-base sm:text-lg font-bold text-white">Self-Assessment & Reflection</h3>
 
             {/* Filter Toggle */}
-            <div className="flex items-center gap-1.5 p-1 bg-[#0A0A0C] border border-zinc-800 rounded-lg text-xs w-fit">
+            <div className="flex items-center gap-1 sm:gap-1.5 p-1 bg-[#0A0A0C] border border-zinc-800 rounded-lg text-xs w-full sm:w-fit overflow-x-auto no-scrollbar">
               <button
                 type="button"
                 onClick={() => setViewFilter('all')}
-                className={`px-3 py-1 rounded font-medium transition-colors cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 rounded font-medium transition-colors cursor-pointer whitespace-nowrap ${
                   viewFilter === 'all' ? 'bg-[#2563EB] text-white' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
@@ -119,7 +119,7 @@ export const BeyondSection: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setViewFilter('strengths')}
-                className={`px-3 py-1 rounded font-medium transition-colors cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 rounded font-medium transition-colors cursor-pointer whitespace-nowrap ${
                   viewFilter === 'strengths' ? 'bg-[#2563EB] text-white' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
@@ -128,7 +128,7 @@ export const BeyondSection: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setViewFilter('growth')}
-                className={`px-3 py-1 rounded font-medium transition-colors cursor-pointer ${
+                className={`px-2.5 sm:px-3 py-1 rounded font-medium transition-colors cursor-pointer whitespace-nowrap ${
                   viewFilter === 'growth' ? 'bg-[#2563EB] text-white' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
@@ -137,20 +137,20 @@ export const BeyondSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-start">
             {/* Column 1: Core Strengths */}
             {(viewFilter === 'all' || viewFilter === 'strengths') && (
               <div
-                className={`p-7 sm:p-8 rounded-2xl border border-zinc-800/90 bg-[#0A0A0C] space-y-6 shadow-xl ${
+                className={`p-4.5 sm:p-8 rounded-2xl border border-zinc-800/90 bg-[#0A0A0C] space-y-4 sm:space-y-6 shadow-xl ${
                   viewFilter === 'strengths' ? 'lg:col-span-2' : ''
                 }`}
               >
-                <div className="border-b border-zinc-900 pb-4 flex items-center justify-between">
+                <div className="border-b border-zinc-900 pb-3 sm:pb-4 flex items-center justify-between">
                   <div>
                     <span className="font-mono-tabular text-xs text-[#2563EB] font-semibold">
                       Part I
                     </span>
-                    <h4 className="text-2xl font-bold text-white mt-0.5">Strengths I Rely On</h4>
+                    <h4 className="text-xl sm:text-2xl font-bold text-white mt-0.5">Strengths I Rely On</h4>
                   </div>
                   <span className="text-xs text-zinc-400 hidden sm:inline">
                     What I bring to an engineering team
@@ -159,15 +159,15 @@ export const BeyondSection: React.FC = () => {
 
                 <div className="divide-y divide-zinc-900">
                   {beyondResume.strengths.map((str, index) => (
-                    <div key={str.id} className="py-5 first:pt-0 last:pb-0 space-y-2">
+                    <div key={str.id} className="py-4 sm:py-5 first:pt-0 last:pb-0 space-y-1.5 sm:space-y-2">
                       <div className="flex items-center gap-2 text-xs text-zinc-400">
                         <span className="font-mono-tabular text-[#2563EB] font-bold">
                           0{index + 1}.
                         </span>
-                        <h5 className="text-base font-semibold text-white">{str.title}</h5>
+                        <h5 className="text-sm sm:text-base font-semibold text-white">{str.title}</h5>
                       </div>
-                      <p className="text-sm text-zinc-300 leading-relaxed">{str.description}</p>
-                      <div className="pt-1.5 flex items-start gap-2 text-xs text-zinc-400">
+                      <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">{str.description}</p>
+                      <div className="pt-1 flex items-start gap-2 text-xs text-zinc-400">
                         <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB] shrink-0 mt-0.5" />
                         <span>
                           <strong className="text-zinc-200">Demonstrated in:</strong> {str.evidence}
@@ -182,16 +182,16 @@ export const BeyondSection: React.FC = () => {
             {/* Column 2: Honest Growth Areas */}
             {(viewFilter === 'all' || viewFilter === 'growth') && (
               <div
-                className={`p-7 sm:p-8 rounded-2xl border border-zinc-800/90 bg-[#0A0A0C] space-y-6 shadow-xl ${
+                className={`p-4.5 sm:p-8 rounded-2xl border border-zinc-800/90 bg-[#0A0A0C] space-y-4 sm:space-y-6 shadow-xl ${
                   viewFilter === 'growth' ? 'lg:col-span-2' : ''
                 }`}
               >
-                <div className="border-b border-zinc-900 pb-4 flex items-center justify-between">
+                <div className="border-b border-zinc-900 pb-3 sm:pb-4 flex items-center justify-between">
                   <div>
                     <span className="font-mono-tabular text-xs text-amber-400 font-semibold">
                       Part II
                     </span>
-                    <h4 className="text-2xl font-bold text-white mt-0.5">Areas of Active Growth</h4>
+                    <h4 className="text-xl sm:text-2xl font-bold text-white mt-0.5">Areas of Active Growth</h4>
                   </div>
                   <span className="text-xs text-zinc-400 hidden sm:inline">
                     Honest self-reflection & action plan
@@ -200,17 +200,17 @@ export const BeyondSection: React.FC = () => {
 
                 <div className="divide-y divide-zinc-900">
                   {beyondResume.growthAreas.map((grw, index) => (
-                    <div key={grw.id} className="py-5 first:pt-0 last:pb-0 space-y-2.5">
+                    <div key={grw.id} className="py-4 sm:py-5 first:pt-0 last:pb-0 space-y-2 sm:space-y-2.5">
                       <div className="flex items-center gap-2 text-xs text-zinc-400">
                         <span className="font-mono-tabular text-amber-400 font-bold">
                           0{index + 1}.
                         </span>
-                        <h5 className="text-base font-semibold text-white">{grw.title}</h5>
+                        <h5 className="text-sm sm:text-base font-semibold text-white">{grw.title}</h5>
                       </div>
-                      <p className="text-sm text-zinc-300 leading-relaxed">
+                      <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
                         {grw.honestReflection}
                       </p>
-                      <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800/80 text-xs text-zinc-300 leading-relaxed">
+                      <div className="p-3 sm:p-3.5 rounded-xl bg-zinc-950 border border-zinc-800/80 text-xs text-zinc-300 leading-relaxed">
                         <span className="text-amber-400 font-semibold">Action Plan: </span>
                         {grw.activeActionPlan}
                       </div>
@@ -223,10 +223,10 @@ export const BeyondSection: React.FC = () => {
         </div>
 
         {/* Feature 3: Interactive Mindset & Facets Explorer */}
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-5 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
             <div>
-              <h3 className="text-xl font-bold text-white">
+              <h3 className="text-lg sm:text-xl font-bold text-white">
                 Beyond Code & Development Mindset
               </h3>
               <p className="text-xs text-zinc-400 mt-0.5">
@@ -238,7 +238,7 @@ export const BeyondSection: React.FC = () => {
             <div
               role="tablist"
               aria-label="Personal mindset facets"
-              className="flex flex-wrap items-center gap-1.5 p-1.5 bg-[#0A0A0C] border border-zinc-800/80 rounded-xl w-fit"
+              className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 bg-[#0A0A0C] border border-zinc-800/80 rounded-xl w-full sm:w-fit overflow-x-auto no-scrollbar"
             >
               {beyondResume.facets.map((facet) => {
                 const isSelected = facet.id === activeFacetId;
@@ -249,7 +249,7 @@ export const BeyondSection: React.FC = () => {
                     type="button"
                     aria-selected={isSelected}
                     onClick={() => setActiveFacetId(facet.id)}
-                    className={`px-3.5 py-2 text-xs font-medium rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                    className={`px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs font-medium rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                       isSelected
                         ? 'bg-[#2563EB] text-white shadow-sm'
                         : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900'
@@ -269,26 +269,26 @@ export const BeyondSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.22 }}
-              className="p-7 sm:p-8 rounded-2xl border border-zinc-800/80 bg-[#0A0A0C] space-y-6 shadow-xl"
+              className="p-4.5 sm:p-8 rounded-2xl border border-zinc-800/80 bg-[#0A0A0C] space-y-4 sm:space-y-6 shadow-xl"
             >
-              <div className="border-b border-zinc-900 pb-4 flex flex-wrap items-center justify-between gap-2">
-                <h4 className="text-lg font-bold text-white flex items-center gap-2">
+              <div className="border-b border-zinc-900 pb-3 sm:pb-4 flex flex-wrap items-center justify-between gap-2">
+                <h4 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#2563EB]" />
                   <span>{activeFacet.label}</span>
                 </h4>
                 <p className="text-xs text-zinc-400">{activeFacet.headline}</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                 {activeFacet.items.map((item, idx) => (
                   <div
                     key={item.title}
-                    className="p-5 rounded-xl border border-zinc-900 bg-zinc-950/70 hover:border-zinc-800 transition-colors space-y-2.5"
+                    className="p-4 sm:p-5 rounded-xl border border-zinc-900 bg-zinc-950/70 hover:border-zinc-800 transition-colors space-y-2"
                   >
                     <div className="font-mono-tabular text-xs text-[#2563EB]">
                       0{idx + 1}
                     </div>
-                    <h5 className="text-base font-semibold text-white">{item.title}</h5>
+                    <h5 className="text-sm sm:text-base font-semibold text-white">{item.title}</h5>
                     <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                       {item.detail}
                     </p>

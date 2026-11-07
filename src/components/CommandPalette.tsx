@@ -214,7 +214,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           role="dialog"
           aria-modal="true"
           aria-label="Command Palette"
-          className="fixed inset-0 z-50 flex items-start justify-center pt-20 sm:pt-28 px-4 bg-black/80 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-start justify-center pt-12 sm:pt-28 px-3 sm:px-4 bg-black/80 backdrop-blur-md"
           onClick={onClose}
         >
           <motion.div
@@ -226,7 +226,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             className="w-full max-w-xl rounded-2xl border border-zinc-800 bg-[#0A0A0C] shadow-2xl overflow-hidden text-zinc-100 divide-y divide-zinc-900"
           >
             {/* Search Input Bar */}
-            <div className="flex items-center gap-3 px-4 py-3.5 bg-[#0D0D11]">
+            <div className="flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-3 sm:py-3.5 bg-[#0D0D11]">
               <Search className="w-4 h-4 text-zinc-400 shrink-0" />
               <input
                 ref={inputRef}
@@ -243,14 +243,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                 type="button"
                 onClick={onClose}
                 aria-label="Close command palette"
-                className="p-1 rounded-md text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+                className="p-1 rounded-md text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Command Results */}
-            <div className="max-h-80 overflow-y-auto p-2 space-y-1">
+            <div className="max-h-80 overflow-y-auto p-1.5 sm:p-2 space-y-1">
               {filteredCommands.length === 0 ? (
                 <div className="py-8 text-center text-xs text-zinc-500">
                   No matching commands found.
@@ -264,13 +264,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                       type="button"
                       onClick={cmd.action}
                       onMouseEnter={() => setSelectedIndex(idx)}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-left transition-colors cursor-pointer ${
+                      className={`w-full flex items-center justify-between px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl text-left transition-colors cursor-pointer ${
                         isSelected
                           ? 'bg-[#2563EB] text-white'
                           : 'text-zinc-300 hover:bg-zinc-900/80 hover:text-white'
                       }`}
                     >
-                      <div className="min-w-0 pr-3">
+                      <div className="min-w-0 pr-2 sm:pr-3">
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-semibold truncate">{cmd.label}</span>
                           <span
@@ -304,13 +304,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             </div>
 
             {/* Footer Shortcut Tips */}
-            <div className="flex items-center justify-between px-4 py-2.5 text-[11px] font-mono-tabular text-zinc-500 bg-[#08080A]">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-mono-tabular text-zinc-500 bg-[#08080A]">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <span>↑↓ Navigate</span>
                 <span>↵ Select</span>
                 <span>ESC Close</span>
               </div>
-              <span className="text-zinc-400">Divyansh Nayak · Digital Space</span>
+              <span className="text-zinc-400 hidden sm:inline">Divyansh Nayak · Digital Space</span>
             </div>
           </motion.div>
         </div>

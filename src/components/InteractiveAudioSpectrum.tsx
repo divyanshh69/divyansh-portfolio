@@ -135,17 +135,17 @@ export const InteractiveAudioSpectrum: React.FC<InteractiveAudioSpectrumProps> =
   }, [isPlaying, compact]);
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 p-4 space-y-4 backdrop-blur-md">
+    <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 p-3 sm:p-4 space-y-3 sm:space-y-4 backdrop-blur-md">
       {/* Track Info & Status Header */}
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3 overflow-hidden">
+      <div className="flex items-center justify-between gap-2 sm:gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3 overflow-hidden">
           <div
-            className={`w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center shrink-0 ${
+            className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center shrink-0 ${
               isPlaying ? 'text-[#60A5FA]' : 'text-zinc-500'
             }`}
           >
             <Disc3
-              className={`w-5 h-5 ${isPlaying ? 'animate-spin' : ''}`}
+              className={`w-4 h-4 sm:w-5 sm:h-5 ${isPlaying ? 'animate-spin' : ''}`}
               style={{ animationDuration: '4s' }}
             />
           </div>
@@ -163,7 +163,8 @@ export const InteractiveAudioSpectrum: React.FC<InteractiveAudioSpectrumProps> =
         <div className="flex items-center gap-1.5 shrink-0">
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono-tabular bg-blue-500/10 text-blue-400 border border-blue-500/20">
             <Sparkles className="w-2.5 h-2.5" />
-            <span>UI Simulation</span>
+            <span className="hidden sm:inline">UI Simulation</span>
+            <span className="sm:hidden">Demo</span>
           </span>
         </div>
       </div>

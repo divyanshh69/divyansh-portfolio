@@ -67,11 +67,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="py-20 md:py-28 border-b border-zinc-900 relative"
+      className="py-14 sm:py-20 md:py-28 border-b border-zinc-900 relative"
     >
-      <div className="max-w-[1280px] mx-auto px-6">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         {/* Header & Category Filter */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-10 md:mb-14">
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2 text-xs text-zinc-400">
               <span className="font-mono-tabular text-[#2563EB]">03.</span>
@@ -81,7 +81,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             </div>
             <h2
               id="projects-heading"
-              className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight [text-wrap:balance]"
+              className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight [text-wrap:balance]"
             >
               Projects built from concept to working software.
             </h2>
@@ -94,7 +94,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           <div
             role="group"
             aria-label="Filter projects by domain"
-            className="flex flex-wrap items-center gap-1.5 p-1.5 bg-[#0A0A0C] border border-zinc-800/80 rounded-xl w-fit shrink-0"
+            className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 bg-[#0A0A0C] border border-zinc-800/80 rounded-xl w-full sm:w-fit shrink-0 overflow-x-auto no-scrollbar"
           >
             {PROJECT_CATEGORIES.map((category) => {
               const isActive = selectedCategory === category;
@@ -103,7 +103,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   key={category}
                   type="button"
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-3.5 py-2 text-xs font-medium rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
+                  className={`px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-medium rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                     isActive
                       ? 'bg-[#2563EB] text-white shadow-sm'
                       : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900'
@@ -117,7 +117,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         </div>
 
         {/* Featured Project Showcase Cards */}
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
           {filteredProjects.map((project) => {
             const hasImgError = imageErrors[project.id];
             const isMetroFlow = project.id === 'metroflow';
@@ -143,7 +143,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     {/* Project Visual Preview Column */}
                     <div
                       onClick={() => openProjectModal(project, 'overview', activeCardIdx)}
-                      className="lg:col-span-7 relative overflow-hidden bg-zinc-950 min-h-[320px] sm:min-h-[420px] cursor-pointer group/img"
+                      className="lg:col-span-7 relative overflow-hidden bg-zinc-950 min-h-[260px] sm:min-h-[420px] cursor-pointer group/img"
                     >
                       {!hasImgError ? (
                         <img
@@ -156,7 +156,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover/img:scale-[1.03]"
                         />
                       ) : (
-                        <div className="w-full h-full flex flex-col items-center justify-center p-10 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black text-center">
+                        <div className="w-full h-full flex flex-col items-center justify-center p-8 sm:p-10 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black text-center">
                           <Layers className="w-10 h-10 text-[#2563EB] mb-3" aria-hidden="true" />
                           <p className="text-base font-semibold text-white">{project.title}</p>
                           <p className="text-xs text-zinc-400 mt-1">{project.subtitle}</p>
@@ -164,8 +164,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       )}
 
                       {/* Top Badges */}
-                      <div className="absolute top-4 left-4 right-4 flex items-center justify-between text-xs z-10">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-black/75 backdrop-blur-md border border-zinc-800 text-zinc-200 font-mono-tabular">
+                      <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between text-xs z-10">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg bg-black/75 backdrop-blur-md border border-zinc-800 text-zinc-200 font-mono-tabular text-[11px] sm:text-xs">
                           {isMetroFlow ? (
                             <>
                               <Disc3 className="w-3.5 h-3.5 text-blue-400 animate-spin" />
@@ -179,7 +179,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                           )}
                         </span>
 
-                        <span className="px-2.5 py-1 rounded-lg bg-[#2563EB]/90 backdrop-blur-md text-white font-mono-tabular text-[11px] font-semibold">
+                        <span className="px-2 sm:px-2.5 py-1 rounded-lg bg-[#2563EB]/90 backdrop-blur-md text-white font-mono-tabular text-[10px] sm:text-[11px] font-semibold">
                           {project.year}
                         </span>
                       </div>
@@ -187,7 +187,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       {/* Desktop View Switcher Pills Overlay */}
                       {project.screenshots && project.screenshots.length > 1 && (
                         <div
-                          className="absolute top-14 left-4 z-20 flex items-center gap-1.5 p-1 rounded-lg bg-black/80 backdrop-blur-md border border-zinc-800/90 text-xs shadow-lg"
+                          className="absolute top-12 left-3 sm:top-14 sm:left-4 z-20 flex items-center gap-1 sm:gap-1.5 p-1 rounded-lg bg-black/85 backdrop-blur-md border border-zinc-800/90 text-xs shadow-lg max-w-[calc(100%-1.5rem)] overflow-x-auto no-scrollbar"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <span className="text-[10px] font-mono-tabular text-zinc-400 px-1 hidden sm:inline">
@@ -205,7 +205,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                                     [project.id]: sIdx,
                                   }))
                                 }
-                                className={`px-2 py-0.5 rounded text-[11px] font-mono-tabular transition-colors cursor-pointer ${
+                                className={`px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono-tabular transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
                                   isSelected
                                     ? 'bg-[#2563EB] text-white font-semibold'
                                     : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80'
@@ -220,32 +220,32 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       )}
 
                       {/* Bottom scrim with quick metrics and active view caption */}
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/65 to-transparent p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4 z-10">
-                        <div className="space-y-2">
-                          <div className="flex flex-wrap items-center gap-6">
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/65 to-transparent p-4 sm:p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 z-10">
+                        <div className="space-y-1.5 sm:space-y-2">
+                          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                             {project.metrics.map((m) => (
                               <div key={m.label}>
-                                <div className="font-mono-tabular text-sm font-semibold text-white">
+                                <div className="font-mono-tabular text-xs sm:text-sm font-semibold text-white">
                                   {m.value}
                                 </div>
-                                <div className="text-[11px] text-zinc-400">{m.label}</div>
+                                <div className="text-[10px] sm:text-[11px] text-zinc-400">{m.label}</div>
                               </div>
                             ))}
                           </div>
 
                           {project.screenshots && (
-                            <div className="text-[11px] text-zinc-300 pt-0.5 flex items-center gap-1.5">
-                              <span className="text-blue-400 font-semibold font-mono-tabular">
+                            <div className="text-[10px] sm:text-[11px] text-zinc-300 pt-0.5 flex items-center gap-1.5">
+                              <span className="text-blue-400 font-semibold font-mono-tabular shrink-0">
                                 {currentScreenshot.title}:
                               </span>
-                              <span className="text-zinc-400 truncate max-w-[260px] sm:max-w-xs">
+                              <span className="text-zinc-400 truncate max-w-[200px] sm:max-w-xs">
                                 {currentScreenshot.caption}
                               </span>
                             </div>
                           )}
                         </div>
 
-                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-zinc-900/90 hover:bg-[#2563EB] border border-zinc-700 px-3.5 py-2 rounded-xl transition-colors whitespace-nowrap shrink-0">
+                        <span className="inline-flex items-center justify-center gap-1 text-xs font-semibold text-white bg-zinc-900/90 hover:bg-[#2563EB] border border-zinc-700 px-3.5 py-2 rounded-xl transition-colors whitespace-nowrap shrink-0 w-full sm:w-auto">
                           <span>View Case Study</span>
                           <ArrowUpRight className="w-3.5 h-3.5" />
                         </span>
@@ -253,8 +253,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     </div>
 
                     {/* Project Narrative & Controls Column */}
-                    <div className="lg:col-span-5 p-7 sm:p-9 flex flex-col justify-between space-y-6">
-                      <div className="space-y-4">
+                    <div className="lg:col-span-5 p-4.5 sm:p-7 md:p-9 flex flex-col justify-between space-y-5 sm:space-y-6">
+                      <div className="space-y-3.5 sm:space-y-4">
                         {/* Unboxed Metadata Row */}
                         <div className="flex flex-wrap items-center gap-2 text-xs text-zinc-400">
                           <span className="font-mono-tabular text-[#2563EB] font-semibold">
@@ -268,21 +268,21 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                           <span className="text-emerald-400 font-medium">{project.status}</span>
                         </div>
 
-                        <div className="space-y-1.5">
-                          <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                        <div className="space-y-1">
+                          <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">
                             {project.title}
                           </h3>
-                          <p className="text-sm font-medium text-zinc-300">
+                          <p className="text-xs sm:text-sm font-medium text-zinc-300">
                             {project.subtitle}
                           </p>
                         </div>
 
-                        <p className="text-sm text-zinc-400 leading-relaxed">
+                        <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                           {project.shortDescription}
                         </p>
 
                         {/* Key Engineering Highlights */}
-                        <ul className="space-y-2 pt-1">
+                        <ul className="space-y-1.5 sm:space-y-2 pt-1">
                           {project.highlights.slice(0, 3).map((highlight) => (
                             <li
                               key={highlight}
@@ -298,7 +298,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         </ul>
                       </div>
 
-                      <div className="space-y-5 pt-4 border-t border-zinc-900">
+                      <div className="space-y-4 sm:space-y-5 pt-3 sm:pt-4 border-t border-zinc-900">
                         {/* Technologies List */}
                         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-400">
                           <span className="text-zinc-500">Stack:</span>
@@ -315,11 +315,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         </div>
 
                         {/* Action Buttons */}
-                        <div className="flex flex-wrap items-center gap-2.5">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
                           <button
                             type="button"
                             onClick={() => openProjectModal(project, 'overview')}
-                            className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-md shadow-blue-500/20"
+                            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-md shadow-blue-500/20"
                           >
                             <span>Case Study</span>
                             <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -328,7 +328,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                           <button
                             type="button"
                             onClick={() => openProjectModal(project, 'interactive')}
-                            className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-zinc-200 bg-zinc-900 border border-zinc-800 rounded-lg hover:bg-zinc-800 hover:text-white transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 text-xs font-medium text-zinc-200 bg-zinc-900 border border-zinc-800 rounded-lg hover:bg-zinc-800 hover:text-white transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                           >
                             <Play className="w-3 h-3 text-[#2563EB]" aria-hidden="true" />
                             <span>Interactive Preview</span>
@@ -337,10 +337,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                           <button
                             type="button"
                             onClick={() => openProjectModal(project, 'architecture')}
-                            className="inline-flex items-center gap-2 px-3 py-2.5 text-xs font-medium text-zinc-400 bg-zinc-900/60 border border-zinc-800/80 rounded-lg hover:text-zinc-200 hover:bg-zinc-800 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-2.5 text-xs font-medium text-zinc-400 bg-zinc-900/60 border border-zinc-800/80 rounded-lg hover:text-zinc-200 hover:bg-zinc-800 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                           >
                             <Layers className="w-3 h-3 text-zinc-400" />
-                            <span className="hidden sm:inline">Architecture</span>
+                            <span>Architecture</span>
                           </button>
 
                           <a
@@ -348,7 +348,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`View ${project.title} source code on GitHub`}
-                            className="inline-flex items-center gap-1.5 px-3 py-2.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors whitespace-nowrap shrink-0"
+                            className="inline-flex items-center justify-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-2.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors whitespace-nowrap shrink-0"
                           >
                             <Github className="w-3.5 h-3.5" aria-hidden="true" />
                             <span>Code</span>

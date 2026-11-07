@@ -62,7 +62,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
     <section
       id="home"
       aria-label="Introduction and Hero"
-      className="relative overflow-hidden border-b border-zinc-900 pt-10 pb-16 md:py-20"
+      className="relative overflow-hidden border-b border-zinc-900 pt-8 pb-14 sm:pt-10 sm:pb-16 md:py-20"
     >
       {/* Interactive generative background layer */}
       <InteractiveHeroCanvas />
@@ -73,19 +73,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(37,99,235,0.1),transparent_48%),radial-gradient(circle_at_85%_80%,rgba(255,255,255,0.03),transparent_40%)]"
       />
 
-      <div className="relative max-w-[1280px] mx-auto px-6">
+      <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6">
         {/* 2-Column Split-Screen Hero */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Typographic Hierarchy & Cinematic Reveal */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-7 flex flex-col justify-between py-2"
+            className="lg:col-span-7 flex flex-col justify-between py-1 sm:py-2"
           >
-            <div className="space-y-6">
+            <div className="space-y-5 sm:space-y-6">
               {/* Unboxed Kicker with Status & Live Clock */}
-              <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 text-xs md:text-sm">
+              <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs md:text-sm">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono-tabular text-xs">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
                   <span>Available for SDE 2026</span>
@@ -95,16 +95,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                     · {currentTime}
                   </span>
                 )}
-                <span className="text-zinc-400 tracking-wide font-medium">
+                <span className="text-zinc-400 tracking-wide font-medium text-xs sm:text-sm">
                   CS Engineering Student · Developer · Builder
                 </span>
               </motion.div>
 
               {/* Primary Name & Statement with Cinematic Typographic Reveal */}
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <motion.h1
                   variants={itemVariants}
-                  className="font-display text-4xl sm:text-5xl lg:text-[3.75rem] font-bold tracking-tight text-white leading-[1.06] [text-wrap:balance]"
+                  className="font-display text-3xl sm:text-5xl lg:text-[3.75rem] font-bold tracking-tight text-white leading-[1.1] sm:leading-[1.06] [text-wrap:balance]"
                 >
                   <span className="bg-gradient-to-r from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent">
                     {personal.name}
@@ -113,7 +113,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
 
                 <motion.p
                   variants={itemVariants}
-                  className="font-editorial text-xl sm:text-2xl text-zinc-300 font-normal leading-snug max-w-2xl [text-wrap:balance]"
+                  className="font-editorial text-lg sm:text-2xl text-zinc-300 font-normal leading-snug max-w-2xl [text-wrap:balance]"
                 >
                   {personal.headline}
                 </motion.p>
@@ -122,18 +122,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               {/* Confident Introduction */}
               <motion.p
                 variants={itemVariants}
-                className="text-base text-zinc-400 leading-relaxed max-w-[64ch]"
+                className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-[64ch]"
               >
                 {personal.shortIntro}
               </motion.p>
             </div>
 
             {/* Primary & Secondary Call-To-Action Buttons */}
-            <motion.div variants={itemVariants} className="pt-8 flex flex-wrap items-center gap-4">
+            <motion.div variants={itemVariants} className="pt-6 sm:pt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
               <button
                 type="button"
                 onClick={() => onNavigate('projects')}
-                className="group relative inline-flex items-center gap-2.5 px-6 py-3.5 text-sm font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="group relative inline-flex items-center justify-center gap-2.5 px-5 py-3 sm:px-6 sm:py-3.5 text-xs sm:text-sm font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 <span>Explore My Work</span>
                 <ArrowRight
@@ -145,7 +145,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               <button
                 type="button"
                 onClick={() => onNavigate('about')}
-                className="group inline-flex items-center gap-2 px-6 py-3.5 text-sm font-medium text-zinc-200 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800/80 hover:text-white transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563EB]"
+                className="group inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5 text-xs sm:text-sm font-medium text-zinc-200 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800/80 hover:text-white transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563EB]"
               >
                 <span>About Me</span>
                 <ArrowDownRight
@@ -157,7 +157,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               <button
                 type="button"
                 onClick={() => onNavigate('now')}
-                className="inline-flex items-center gap-2 px-4 py-3.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
               >
                 <Activity className="w-3.5 h-3.5 text-emerald-400" />
                 <span>What I’m Building Now</span>
@@ -175,7 +175,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
             <CardTilt maxTilt={6} className="w-full">
               <div className="relative w-full rounded-2xl overflow-hidden border border-zinc-800 bg-[#0A0A0C] shadow-2xl flex flex-col justify-between">
                 {/* HUD View Switcher Tabs */}
-                <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800/90 bg-[#0C0C10] z-20">
+                <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 border-b border-zinc-800/90 bg-[#0C0C10] z-20">
                   <div className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
                     <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
@@ -185,11 +185,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-1 p-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs">
+                  <div className="flex items-center gap-1 p-0.5 sm:p-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs">
                     <button
                       type="button"
                       onClick={() => setActiveHudTab('workspace')}
-                      className={`px-2.5 py-1 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                      className={`px-2 sm:px-2.5 py-1 rounded text-[10px] sm:text-[11px] font-medium transition-colors cursor-pointer ${
                         activeHudTab === 'workspace'
                           ? 'bg-[#2563EB] text-white shadow-sm'
                           : 'text-zinc-400 hover:text-zinc-200'
@@ -200,7 +200,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                     <button
                       type="button"
                       onClick={() => setActiveHudTab('metroflow')}
-                      className={`px-2.5 py-1 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                      className={`px-2 sm:px-2.5 py-1 rounded text-[10px] sm:text-[11px] font-medium transition-colors cursor-pointer ${
                         activeHudTab === 'metroflow'
                           ? 'bg-[#2563EB] text-white shadow-sm'
                           : 'text-zinc-400 hover:text-zinc-200'
@@ -211,7 +211,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                     <button
                       type="button"
                       onClick={() => setActiveHudTab('campuspulse')}
-                      className={`px-2.5 py-1 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                      className={`px-2 sm:px-2.5 py-1 rounded text-[10px] sm:text-[11px] font-medium transition-colors cursor-pointer ${
                         activeHudTab === 'campuspulse'
                           ? 'bg-[#2563EB] text-white shadow-sm'
                           : 'text-zinc-400 hover:text-zinc-200'
@@ -223,7 +223,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                 </div>
 
                 {/* HUD Interactive Content Viewport */}
-                <div className="relative min-h-[340px] sm:min-h-[400px] flex flex-col justify-between p-4 bg-zinc-950">
+                <div className="relative min-h-[300px] sm:min-h-[400px] flex flex-col justify-between p-3 sm:p-4 bg-zinc-950">
                   {/* TAB 1: WORKSPACE IMAGE VIEW */}
                   {activeHudTab === 'workspace' && (
                     <div className="relative w-full h-full min-h-[330px] rounded-xl overflow-hidden flex flex-col justify-between">
@@ -327,15 +327,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-14 pt-8 border-t border-zinc-900 grid grid-cols-2 lg:grid-cols-4 gap-6"
+          className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-zinc-900 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
         >
           {personal.metrics.map((metric) => (
             <div key={metric.label} className="space-y-1">
-              <div className="font-mono-tabular text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+              <div className="font-mono-tabular text-xl sm:text-2xl lg:text-3xl font-semibold text-white tracking-tight">
                 {metric.value}
               </div>
-              <div className="text-sm font-medium text-zinc-300">{metric.label}</div>
-              <div className="text-xs text-zinc-400">{metric.context}</div>
+              <div className="text-xs sm:text-sm font-medium text-zinc-300">{metric.label}</div>
+              <div className="text-[11px] sm:text-xs text-zinc-400">{metric.context}</div>
             </div>
           ))}
         </motion.div>
