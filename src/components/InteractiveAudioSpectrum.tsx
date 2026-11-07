@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, SkipForward, Volume2, VolumeX, Disc3, Radio } from 'lucide-react';
+import { Play, Pause, SkipForward, Volume2, VolumeX, Disc3, Sparkles } from 'lucide-react';
 
 export interface AudioTrack {
   id: string;
@@ -10,30 +10,30 @@ export interface AudioTrack {
   bpm: number;
 }
 
-export const METROFLOW_TRACKS: AudioTrack[] = [
+export const METROFLOW_SAMPLE_TRACKS: AudioTrack[] = [
   {
-    id: 'track-1',
-    title: 'Solaris Drift',
-    artist: 'Echovolt',
+    id: 'sample-1',
+    title: 'Sample Audio Track 01',
+    artist: 'MetroFlow Demo Library',
     duration: '03:42',
-    format: '24-bit / 96kHz ALAC',
-    bpm: 124,
+    format: 'Local Audio File (Demo)',
+    bpm: 120,
   },
   {
-    id: 'track-2',
-    title: 'Nocturnal Architecture',
-    artist: 'Kilo & Frame',
+    id: 'sample-2',
+    title: 'Sample Audio Track 02',
+    artist: 'MetroFlow Demo Library',
     duration: '04:15',
-    format: 'Lossless FLAC',
-    bpm: 118,
+    format: 'Local Audio File (Demo)',
+    bpm: 116,
   },
   {
-    id: 'track-3',
-    title: 'Submerge Protocol',
-    artist: 'Lumin',
+    id: 'sample-3',
+    title: 'Sample Audio Track 03',
+    artist: 'MetroFlow Demo Library',
     duration: '02:58',
-    format: '24-bit / 48kHz ALAC',
-    bpm: 132,
+    format: 'Local Audio File (Demo)',
+    bpm: 128,
   },
 ];
 
@@ -52,13 +52,13 @@ export const InteractiveAudioSpectrum: React.FC<InteractiveAudioSpectrumProps> =
   const [playbackProgress, setPlaybackProgress] = useState(38);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const currentTrack = METROFLOW_TRACKS[currentTrackIndex];
+  const currentTrack = METROFLOW_SAMPLE_TRACKS[currentTrackIndex];
 
   const handleNextTrack = () => {
-    const nextIdx = (currentTrackIndex + 1) % METROFLOW_TRACKS.length;
+    const nextIdx = (currentTrackIndex + 1) % METROFLOW_SAMPLE_TRACKS.length;
     setCurrentTrackIndex(nextIdx);
     setPlaybackProgress(0);
-    onTrackChange?.(METROFLOW_TRACKS[nextIdx]);
+    onTrackChange?.(METROFLOW_SAMPLE_TRACKS[nextIdx]);
   };
 
   const handleTogglePlay = () => {
@@ -75,7 +75,7 @@ export const InteractiveAudioSpectrum: React.FC<InteractiveAudioSpectrumProps> =
     return () => clearInterval(interval);
   }, [isPlaying]);
 
-  // Real-time canvas spectrum visualization
+  // Real-time canvas spectrum visualization simulation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -103,17 +103,16 @@ export const InteractiveAudioSpectrum: React.FC<InteractiveAudioSpectrumProps> =
         if (!isPlaying || prefersReducedMotion) {
           height = 4 + Math.sin(i * 0.4) * 2;
         } else {
-          // Simulated multi-frequency waveform synthesis
+          // Simulated waveform oscillation for UI preview
           const freq = Math.sin(t * 1.8 + i * 0.32) * Math.cos(t * 0.9 + i * 0.18);
-          const beat = Math.sin(t * 3.2) > 0.8 ? 1.4 : 1.0;
+          const beat = Math.sin(t * 3.2) > 0.8 ? 1.3 : 1.0;
           const normalized = Math.abs(freq);
-          height = Math.max(3, normalized * (canvas.height * 0.82) * beat);
+          height = Math.max(3, normalized * (canvas.height * 0.8) * beat);
         }
 
         const x = startX + i * (barWidth + gap);
         const y = canvas.height - height;
 
-        // Gradient for premium macOS audio aesthetic
         const gradient = ctx.createLinearGradient(0, y, 0, canvas.height);
         gradient.addColorStop(0, '#60A5FA');
         gradient.addColorStop(0.6, '#2563EB');
@@ -163,13 +162,13 @@ export const InteractiveAudioSpectrum: React.FC<InteractiveAudioSpectrumProps> =
 
         <div className="flex items-center gap-1.5 shrink-0">
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono-tabular bg-blue-500/10 text-blue-400 border border-blue-500/20">
-            <Radio className="w-2.5 h-2.5 animate-pulse" />
-            <span>CoreAudio 60fps</span>
+            <Sparkles className="w-2.5 h-2.5" />
+            <span>UI Simulation</span>
           </span>
         </div>
       </div>
 
-      {/* Real-Time Waveform Spectrum Canvas */}
+      {/* Waveform Spectrum Preview Canvas */}
       <div className="relative h-16 w-full flex items-center justify-center bg-black/40 rounded-lg border border-zinc-900 overflow-hidden">
         <canvas
           ref={canvasRef}
@@ -178,10 +177,10 @@ export const InteractiveAudioSpectrum: React.FC<InteractiveAudioSpectrumProps> =
           className="w-full h-full object-contain pointer-events-none"
         />
         <div className="absolute left-3 top-2 text-[10px] font-mono-tabular text-zinc-500">
-          FFT Buffer: 1024 / 44.1kHz
+          Visual Waveform Preview
         </div>
-        <div className="absolute right-3 top-2 text-[10px] font-mono-tabular text-emerald-400">
-          Sub-8ms
+        <div className="absolute right-3 top-2 text-[10px] font-mono-tabular text-zinc-400">
+          Local Playback Mode
         </div>
       </div>
 
@@ -224,18 +223,18 @@ export const InteractiveAudioSpectrum: React.FC<InteractiveAudioSpectrumProps> =
           <button
             type="button"
             onClick={() => setIsMuted((prev) => !prev)}
-            aria-label={isMuted ? 'Simulated output muted' : 'Mute audio'}
+            aria-label={isMuted ? 'Waveform mode muted' : 'Mute visualizer'}
             className="text-xs text-zinc-400 hover:text-zinc-200 flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900/60 border border-zinc-800 cursor-pointer"
           >
             {isMuted ? (
               <>
                 <VolumeX className="w-3.5 h-3.5 text-zinc-400" />
-                <span className="text-[11px] font-mono-tabular">Silent Wave</span>
+                <span className="text-[11px] font-mono-tabular">Visual Wave</span>
               </>
             ) : (
               <>
                 <Volume2 className="w-3.5 h-3.5 text-[#60A5FA]" />
-                <span className="text-[11px] font-mono-tabular">Live Tone</span>
+                <span className="text-[11px] font-mono-tabular">Active</span>
               </>
             )}
           </button>
@@ -244,4 +243,3 @@ export const InteractiveAudioSpectrum: React.FC<InteractiveAudioSpectrumProps> =
     </div>
   );
 };
-

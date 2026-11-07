@@ -37,16 +37,16 @@ export const SkillsSection: React.FC = () => {
               <span className="font-mono-tabular text-[#2563EB]">02.</span>
               <span>Skills & Technologies</span>
               <span aria-hidden="true">·</span>
-              <span>Practical Stack & Engineering Depth</span>
+              <span>Languages, Frameworks & Development Tools</span>
             </div>
             <h2
               id="skills-heading"
               className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight [text-wrap:balance]"
             >
-              Tools chosen for clarity, speed, and maintainability.
+              Technologies I use to build software.
             </h2>
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-              Rather than arbitrary percentage bars, every technology below is documented by how I apply it in real projects and architectures.
+              Rather than arbitrary skill bars, each technology reflects practical usage in my coursework and personal projects.
             </p>
           </div>
 

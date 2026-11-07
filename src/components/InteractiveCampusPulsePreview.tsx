@@ -18,42 +18,42 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
   const [events, setEvents] = useState<EventItem[]>([
     {
       id: 'cp-1',
-      title: 'Systems & Low-Latency C++ Workshop',
+      title: 'Sample Event: Coding Workshop',
       club: 'Coding Society',
       category: 'Technical',
       venue: 'Systems Lab 302',
       time: 'Tomorrow, 4:00 PM',
-      rsvps: 128,
+      rsvps: 42,
       userRsvp: false,
     },
     {
       id: 'cp-2',
-      title: 'Annual 36-Hr Collegiate Hackathon',
+      title: 'Sample Event: Hackathon Kickoff',
       club: 'Developer Club',
       category: 'Technical',
       venue: 'Main Auditorium',
       time: 'Nov 14, 9:00 AM',
-      rsvps: 240,
+      rsvps: 88,
       userRsvp: true,
     },
     {
       id: 'cp-3',
-      title: 'Acoustic Sound & Synth Night',
+      title: 'Sample Event: Acoustic Night',
       club: 'Music Collective',
       category: 'Cultural',
       venue: 'Student Amphitheater',
       time: 'Nov 18, 6:30 PM',
-      rsvps: 95,
+      rsvps: 35,
       userRsvp: false,
     },
     {
       id: 'cp-4',
-      title: 'Design Systems & Typographic Hierarchy',
+      title: 'Sample Event: UI Design Session',
       club: 'Design Guild',
       category: 'Design',
       venue: 'Creative Studio B',
       time: 'Nov 20, 3:00 PM',
-      rsvps: 64,
+      rsvps: 26,
       userRsvp: false,
     },
   ]);
@@ -92,10 +92,12 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-900 pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <h4 className="text-sm font-semibold text-white">CampusPulse Operations Engine</h4>
+            <span className="w-2 h-2 rounded-full bg-blue-400" />
+            <h4 className="text-sm font-semibold text-white">CampusPulse Interface Demo</h4>
           </div>
-          <p className="text-xs text-zinc-400 mt-0.5">Role-Based Access & Event Telemetry Sandbox</p>
+          <p className="text-xs text-zinc-400 mt-0.5">
+            Interactive demonstration of event listings and scheduling validation
+          </p>
         </div>
 
         <div className="flex items-center gap-1.5 p-1 bg-zinc-900 border border-zinc-800 rounded-lg">
@@ -167,7 +169,7 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
                 </div>
                 <div className="text-[10px] text-zinc-400 flex items-center gap-1">
                   <Users className="w-2.5 h-2.5" />
-                  Attending
+                  RSVPs
                 </div>
               </div>
 
@@ -183,11 +185,11 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
                 {ev.userRsvp ? (
                   <>
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>RSVP'd</span>
+                    <span>RSVP'd (Demo)</span>
                   </>
                 ) : (
                   <>
-                    <span>Join Event</span>
+                    <span>RSVP (Demo)</span>
                   </>
                 )}
               </button>
@@ -196,14 +198,14 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
         ))}
       </div>
 
-      {/* Conflict Engine Tester */}
+      {/* Conflict Validation Demo */}
       <div className="pt-3 border-t border-zinc-900 space-y-2.5">
         <div className="flex items-center justify-between text-xs">
           <span className="font-medium text-zinc-300 flex items-center gap-1.5">
             <Sparkles className="w-3 h-3 text-blue-400" />
-            Conflict-Aware Venue Scheduler Check
+            Venue Conflict Validation Demo
           </span>
-          <span className="text-[11px] text-zinc-500 font-mono-tabular">Zero Clash Guarantee</span>
+          <span className="text-[11px] text-zinc-500 font-mono-tabular">Scheduling Logic</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
@@ -222,9 +224,9 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
             onChange={(e) => setTestSlot(e.target.value)}
             className="px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-md text-zinc-200 focus:outline-none"
           >
-            <option value="Nov 14, 9:00 AM">Nov 14, 9:00 AM (Hackathon Slot)</option>
-            <option value="Nov 15, 2:00 PM">Nov 15, 2:00 PM (Open Slot)</option>
-            <option value="Nov 16, 5:00 PM">Nov 16, 5:00 PM (Open Slot)</option>
+            <option value="Nov 14, 9:00 AM">Nov 14, 9:00 AM (Clashing Slot)</option>
+            <option value="Nov 15, 2:00 PM">Nov 15, 2:00 PM (Available Slot)</option>
+            <option value="Nov 16, 5:00 PM">Nov 16, 5:00 PM (Available Slot)</option>
           </select>
         </div>
 
@@ -239,14 +241,14 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
             <>
               <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
               <span>
-                <strong>Conflict Detected:</strong> Slot overlaps with "Annual Hackathon" in Main Auditorium.
+                <strong>Conflict Flagged:</strong> Room is already booked for "Sample Event: Hackathon Kickoff" in Main Auditorium.
               </span>
             </>
           ) : (
             <>
               <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
               <span>
-                <strong>Venue Available:</strong> No overlapping events found for {testVenue} at this time.
+                <strong>Slot Available:</strong> No overlapping event reservation for {testVenue} at this time.
               </span>
             </>
           )}
@@ -255,4 +257,3 @@ export const InteractiveCampusPulsePreview: React.FC = () => {
     </div>
   );
 };
-

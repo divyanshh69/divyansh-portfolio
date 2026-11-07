@@ -249,10 +249,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                       {/* Live overlay badges */}
                       <div className="relative z-10 flex items-center justify-between text-[11px] font-mono-tabular">
                         <span className="px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-zinc-800 text-zinc-300">
-                          Active Build: 2026.1
+                          Student Developer · 2026
                         </span>
                         <span className="px-2.5 py-1 rounded-md bg-blue-500/20 backdrop-blur-md border border-blue-500/30 text-blue-300">
-                          Latency: &lt;8ms
+                          macOS & Full-Stack
                         </span>
                       </div>
 
@@ -260,12 +260,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                       <div className="relative z-10 space-y-1.5 pt-20">
                         <div className="flex items-center gap-2 text-xs text-zinc-300">
                           <Layers className="w-3.5 h-3.5 text-[#2563EB]" aria-hidden="true" />
-                          <span>Featured Engineering Focus</span>
+                          <span>Projects In Development</span>
                           <span aria-hidden="true">·</span>
                           <span className="font-mono-tabular">2026</span>
                         </div>
                         <p className="text-sm font-medium text-white leading-snug">
-                          Crafting MetroFlow for macOS & CampusPulse for university communities.
+                          Building MetroFlow for macOS & CampusPulse for college communities.
                         </p>
                       </div>
                     </div>
@@ -277,7 +277,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                       <div className="flex items-center justify-between text-xs text-zinc-400">
                         <span className="font-semibold text-white flex items-center gap-1.5">
                           <Disc3 className="w-3.5 h-3.5 text-blue-400 animate-spin" />
-                          MetroFlow Audio Engine
+                          MetroFlow Interface Demo
                         </span>
                         <button
                           type="button"
@@ -287,7 +287,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                           }}
                           className="text-[11px] text-[#60A5FA] hover:underline cursor-pointer"
                         >
-                          Open Full Case Study →
+                          View Project Details →
                         </button>
                       </div>
                       <InteractiveAudioSpectrum compact />
@@ -300,7 +300,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                       <div className="flex items-center justify-between text-xs text-zinc-400">
                         <span className="font-semibold text-white flex items-center gap-1.5">
                           <Calendar className="w-3.5 h-3.5 text-blue-400" />
-                          CampusPulse Telemetry
+                          CampusPulse Platform Demo
                         </span>
                         <button
                           type="button"
@@ -310,7 +310,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                           }}
                           className="text-[11px] text-[#60A5FA] hover:underline cursor-pointer"
                         >
-                          Open Full Case Study →
+                          View Project Details →
                         </button>
                       </div>
                       <InteractiveCampusPulsePreview />

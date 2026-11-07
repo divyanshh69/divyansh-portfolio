@@ -14,25 +14,25 @@ export const BeyondSection: React.FC = () => {
 
   const mentalModels = [
     {
-      title: 'Software as Physical Architecture',
-      principle: 'Structure precedes ornament',
+      title: 'Learn by Building Real Projects',
+      principle: 'Hands-on execution over passive tutorials',
       description:
-        'Just as a building cannot stand on aesthetic paint alone, a web or desktop application will feel brittle if state boundaries, data flow, and database models are haphazard.',
+        'I understand software architecture and design patterns best when taking a project from an empty folder into a working application with real users.',
+      icon: BookOpen,
+    },
+    {
+      title: 'Care for the User Experience',
+      principle: 'Clear layouts & responsive feedback',
+      description:
+        'Even in student projects, I pay close attention to UI details—consistent styling, accessible keyboard shortcuts, and intuitive layouts that make software enjoyable.',
+      icon: Sparkles,
+    },
+    {
+      title: 'Curiosity Across the Stack',
+      principle: 'Connecting frontend, backend & databases',
+      description:
+        'I enjoy connecting the pieces—designing clean React and SwiftUI interfaces, structuring REST endpoints with Express, and modeling relational data in PostgreSQL.',
       icon: Layers,
-    },
-    {
-      title: 'Latency Is the Enemy of Flow',
-      principle: 'Sub-16ms feedback loops',
-      description:
-        'When a keypress, search query, or tab transition responds in under 16ms, the software recedes and the user enters flow. Every millisecond of latency breaks immersion.',
-      icon: Target,
-    },
-    {
-      title: 'Deep Generalist Execution',
-      principle: 'Bridging low-level systems to tactile UI',
-      description:
-        'I reject the artificial separation between backend systems and frontend polish. True craft emerges when the person tuning the SQL query also obsesses over the frame rate.',
-      icon: Compass,
     },
   ];
 

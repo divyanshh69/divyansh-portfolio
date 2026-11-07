@@ -35,7 +35,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-home',
       category: 'Navigation',
       label: 'Home & Hero Space',
-      detail: 'Introduction, live studio & metrics',
+      detail: 'Introduction, project highlights & core focus',
       action: () => {
         onNavigate('home');
         onClose();
@@ -55,7 +55,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-skills',
       category: 'Navigation',
       label: 'Skills & Tech Stack',
-      detail: 'TypeScript, C++, Swift, React, PostgreSQL & Systems',
+      detail: 'TypeScript, C++, Swift, React, PostgreSQL & Git',
       action: () => {
         onNavigate('skills');
         onClose();
@@ -65,7 +65,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-projects',
       category: 'Navigation',
       label: 'Featured Projects',
-      detail: 'Flagship engineering builds (MetroFlow & CampusPulse)',
+      detail: 'Personal and college projects (MetroFlow & CampusPulse)',
       action: () => {
         onNavigate('projects');
         onClose();
@@ -94,7 +94,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'cmd-now',
       category: 'Navigation',
-      label: 'Now / Active Sprint',
+      label: 'Now / Active Focus',
       detail: 'What I am building, learning & exploring right now',
       action: () => {
         onNavigate('now');
@@ -114,8 +114,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'cmd-proj-metroflow',
       category: 'Projects',
-      label: 'MetroFlow — macOS Audio Application',
-      detail: 'Inspect native AVFoundation architecture & audio spectrum',
+      label: 'MetroFlow — macOS Music Application',
+      detail: 'Native macOS music player built with Swift & SwiftUI',
       action: () => {
         onNavigate('projects');
         onOpenProject?.('metroflow');
@@ -125,8 +125,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'cmd-proj-campuspulse',
       category: 'Projects',
-      label: 'CampusPulse — Club Operations Platform',
-      detail: 'Inspect full-stack PostgreSQL + RBAC event platform',
+      label: 'CampusPulse — Club Management Platform',
+      detail: 'Full-stack college club platform with React, Node.js & PostgreSQL',
       action: () => {
         onNavigate('projects');
         onOpenProject?.('campuspulse');

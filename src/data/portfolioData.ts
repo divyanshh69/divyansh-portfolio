@@ -24,6 +24,12 @@ export interface ProjectArchitectureNode {
   responsibility: string;
 }
 
+export interface ProjectScreenshot {
+  title: string;
+  image: string;
+  caption: string;
+}
+
 export interface ProjectItem {
   id: string;
   index: string;
@@ -37,6 +43,7 @@ export interface ProjectItem {
   problemStatement: string;
   engineeringSolution: string;
   image: string;
+  screenshots?: ProjectScreenshot[];
   technologies: string[];
   highlights: string[];
   architecture: ProjectArchitectureNode[];
@@ -113,34 +120,34 @@ export const PORTFOLIO_DATA = {
   personal: {
     name: 'Divyansh Nayak',
     title: 'Computer Science Engineering Student · Developer · Builder',
-    headline: 'Designing and engineering software that feels tactile, intentional, and resilient.',
+    headline: 'Designing and building native macOS and full-stack web applications.',
     shortIntro:
-      'I am a Computer Science Engineering student focused on building native-grade desktop experiences and scalable full-stack web platforms. I care deeply about the intersection of clean system architecture, low-latency interfaces, and thoughtful human interaction.',
+      'I am a Computer Science Engineering student focused on building clean native desktop tools and practical full-stack web platforms. I enjoy turning project ideas into responsive, well-structured software that is intuitive and dependable.',
     location: 'India',
     email: 'divyanshnayak713@gmail.com',
     github: 'https://github.com/divyanshnayak',
     linkedin: 'https://linkedin.com/in/divyanshnayak',
     heroImage: heroWorkspaceImg,
     metrics: [
-      { value: '2', label: 'Flagship Platforms Shipped', context: 'macOS Native & Web' },
-      { value: '14+', label: 'Core Technologies Practiced', context: 'Systems to UI' },
-      { value: '850+', label: 'Commits & Iterations', context: 'Consistent Craft' },
-      { value: '2026', label: 'Current Engineering Focus', context: 'Full-Stack & Systems' },
+      { value: 'B.Tech CSE', label: 'Undergraduate Program', context: 'Computer Science & Engineering' },
+      { value: 'MetroFlow', label: 'macOS Music Player', context: 'Swift, SwiftUI & AVFoundation' },
+      { value: 'CampusPulse', label: 'Club Management Platform', context: 'React, Node.js & PostgreSQL' },
+      { value: '2026', label: 'Engineering Focus', context: 'Open to Software Roles' },
     ],
   },
 
   about: {
-    sectionTitle: 'Beyond the Standard Transcript',
-    lead: 'Software engineering to me is not just completing tickets or passing exams—it is the craft of turning abstract ideas into living, responsive tools that people genuinely enjoy using.',
+    sectionTitle: 'Beyond the Transcript',
+    lead: 'Software engineering to me is about learning by building—taking ideas from classroom theory and turning them into practical, functional tools for real people.',
     pillars: [
       {
         id: 'background',
         index: '01',
         title: 'My Background',
-        subtitle: 'From curiosity about how apps work to building from scratch',
+        subtitle: 'From curiosity about how software works to building projects',
         content:
-          'My path into computer science began with dissecting the everyday applications on my screen—wondering why some interfaces felt effortless while others felt sluggish. That curiosity evolved from writing small utility scripts into architecting complete full-stack platforms and native desktop tools.',
-        keyTakeaway: 'Self-driven builder who learns best by shipping real products.',
+          'My journey into computer science started with a genuine curiosity about how everyday software is constructed. That interest motivated me to move beyond small scripts and start architecting complete web applications and exploring native macOS app development.',
+        keyTakeaway: 'Hands-on developer who learns best by building real projects.',
       },
       {
         id: 'education',
@@ -148,35 +155,35 @@ export const PORTFOLIO_DATA = {
         title: 'Education',
         subtitle: 'Bachelor of Technology in Computer Science & Engineering',
         content:
-          'Pursuing a rigorous foundation in Data Structures & Algorithms, Operating Systems, Database Management Systems, Computer Networks, and Object-Oriented Software Engineering—while bridging classroom theory with practical product engineering.',
-        keyTakeaway: 'Strong algorithmic fundamentals paired with modern web & native stacks.',
+          'Currently completing foundational coursework in Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, Operating Systems, and Computer Networks, while applying those concepts directly to personal projects.',
+        keyTakeaway: 'Strong academic CS fundamentals paired with practical project experience.',
       },
       {
         id: 'interests',
         index: '03',
         title: 'Interests',
-        subtitle: 'Interface craft, audio software, and developer ergonomics',
+        subtitle: 'Desktop software, clean user interfaces, and full-stack web',
         content:
-          'I gravitate toward projects where performance meets design: desktop media software, real-time collaborative workspaces, design systems, and automation tools that eliminate repetitive friction for students and developers.',
-        keyTakeaway: 'Obsessed with 60fps interaction fidelity and clean API boundaries.',
+          'I enjoy building software that solves practical problems: native desktop media apps with clean interfaces, campus tools that streamline student activities, and responsive web applications built with TypeScript and React.',
+        keyTakeaway: 'Motivated by clean architecture, intuitive UI, and fast feedback loops.',
       },
       {
         id: 'goals',
         index: '04',
         title: 'Goals',
-        subtitle: 'Growing into a high-impact product & systems engineer',
+        subtitle: 'Growing as a software engineer and contributing to real products',
         content:
-          'My immediate goal is to contribute to ambitious engineering teams where I can own features end-to-end—from database schema design and API performance to pixel-accurate frontend execution—while deepening my systems programming expertise.',
-        keyTakeaway: 'Focused on high-ownership engineering roles and open-source impact.',
+          'My goal is to join a supportive engineering team where I can contribute to production software, learn from experienced mentors, and continue developing my skills across the stack.',
+        keyTakeaway: 'Looking for software engineering internship and entry-level opportunities.',
       },
       {
         id: 'motivation',
         index: '05',
         title: 'What Motivates Me',
-        subtitle: 'The moment a complex system clicks into a simple experience',
+        subtitle: 'Seeing a project work seamlessly for someone else',
         content:
-          'Nothing beats watching a real user—whether a fellow student organizing a campus event on CampusPulse or a listener queuing tracks in MetroFlow—navigate something I built without needing instructions.',
-        keyTakeaway: 'Driven by clarity, craft, and tangible utility for real people.',
+          'Nothing is more rewarding than watching a friend or fellow student use something I built—whether it is managing a club event on CampusPulse or playing music on MetroFlow—and finding it easy and intuitive.',
+        keyTakeaway: 'Driven by curiosity, utility, and continuous improvement.',
       },
     ],
   },
@@ -304,96 +311,130 @@ export const PORTFOLIO_DATA = {
       subtitle: 'A modern, distraction-free music application designed for macOS',
       category: 'macOS / Native',
       year: '2026',
-      status: 'Active Flagship Build',
+      status: 'Active Project',
       shortDescription:
-        'A modern music application designed for macOS that pairs native desktop ergonomics and lossless audio playback with an editorial, high-contrast visual interface.',
+        'A native music application for macOS that pairs distraction-free listening and local audio playback with a dark, minimal visual interface.',
       fullOverview:
-        'MetroFlow reimagines desktop music listening for macOS users who value album art, instant keyboard-driven navigation, and clean acoustic visualization over bloated streaming feeds. Designed with native macOS spatial aesthetics, it delivers sub-10ms library search and seamless queue choreography.',
+        'MetroFlow is a native macOS music player built for focused listening. Built with Swift and SwiftUI/AppKit, it focuses on local audio files, intuitive keyboard controls, and responsive waveform visualization in a clean Mac-native layout.',
       problemStatement:
-        'Most modern desktop music players are heavy web wrappers that consume excessive RAM, lag during large library scrubbing, and clutter the listening experience with social feeds.',
+        'Many modern desktop music players are heavy web wrappers that consume significant system memory and clutter the listening experience with social feeds and recommendations.',
       engineeringSolution:
-        'Engineered a lightweight native-first architecture with an indexed local metadata cache, hardware-accelerated waveform rendering at 60fps, and a global command bar for instant track switching.',
+        'Built a native macOS application using Swift and AppKit/SwiftUI with local audio playback via AVFoundation, responsive UI layouts, and an integrated mini-player mode.',
       image: projectMetroflowImg,
-      technologies: ['Swift', 'macOS AppKit / SwiftUI', 'AVFoundation', 'CoreAudio', 'SQLite FTS5'],
+      screenshots: [
+        {
+          title: 'Main Player Interface',
+          image: projectMetroflowImg,
+          caption: 'Dark, distraction-free player layout with album art and audio waveform visualizer.',
+        },
+        {
+          title: 'Keyboard Controls',
+          image: projectMetroflowImg,
+          caption: 'Quick track switching, volume control, and playback commands designed for keyboard flow.',
+        },
+        {
+          title: 'Compact Mini-Player',
+          image: projectMetroflowImg,
+          caption: 'Minimal desktop mode designed to stay out of the way while working or studying.',
+        },
+      ],
+      technologies: ['Swift', 'SwiftUI / AppKit', 'AVFoundation', 'macOS SDK'],
       highlights: [
-        'Real-time acoustic waveform visualizer synchronized with CoreAudio output buffers',
-        'Instant command palette (⌘K) for searching tracks, albums, and playlists in under 8ms',
-        'Minimal mini-player mode that docks cleanly into the macOS menu bar workflow',
-        'Lossless FLAC & ALAC metadata parser with gapless album transitions',
+        'Built natively for macOS using Swift and Apple’s AVFoundation framework',
+        'Responsive waveform visualization for real-time visual feedback during playback',
+        'Keyboard shortcuts for playback controls, volume, and track navigation',
+        'Lightweight mini-player mode designed for focused work sessions',
       ],
       architecture: [
         {
-          layer: 'Presentation Layer',
-          component: 'Native Dark Canvas & Mini-Player',
-          responsibility: 'Renders album grids, 60fps audio spectrum bars, and keyboard-first navigation.',
+          layer: 'User Interface',
+          component: 'SwiftUI & AppKit Views',
+          responsibility: 'Renders the main window, album artwork, playback controls, and mini-player.',
         },
         {
           layer: 'Audio Engine',
-          component: 'AVAudioEngine & Gapless Buffer Pipeline',
-          responsibility: 'Manages gapless track pre-buffering, EQ nodes, and real-time FFT frequency analysis.',
+          component: 'AVFoundation Media Playback',
+          responsibility: 'Handles local audio decoding, playback state management, and volume adjustment.',
         },
         {
-          layer: 'Data & Indexing',
-          component: 'SQLite Full-Text Search (FTS5)',
-          responsibility: 'Indexes local & synced track metadata for instant zero-latency filtering.',
+          layer: 'Library Management',
+          component: 'Local Track Indexer',
+          responsibility: 'Scans and organizes local audio files, track metadata, and playlist queues.',
         },
       ],
       metrics: [
-        { label: 'Search Latency', value: '< 8ms' },
-        { label: 'Frame Rate', value: '60 fps' },
-        { label: 'Memory Footprint', value: '~64 MB' },
+        { label: 'Platform', value: 'macOS Native' },
+        { label: 'Audio Engine', value: 'AVFoundation' },
+        { label: 'Language', value: 'Swift' },
       ],
       githubUrl: 'https://github.com/divyanshnayak/metroflow',
-      liveDemoUrl: '#projects-metroflow-preview',
+      liveDemoUrl: '#projects',
     },
     {
       id: 'campuspulse',
       index: '02',
       title: 'CampusPulse',
-      subtitle: 'A unified college club management and campus event operations platform',
+      subtitle: 'A college club management and campus event operations platform',
       category: 'Full-Stack Web',
       year: '2026',
-      status: 'Production Platform',
+      status: 'Active College Project',
       shortDescription:
-        'A college club management platform that centralizes student society registrations, event scheduling, role-based approvals, and real-time attendance analytics.',
+        'A college club management platform designed to centralize student society registrations, event schedules, and room bookings in one web platform.',
       fullOverview:
-        'CampusPulse replaces scattered WhatsApp groups, Google Forms, and manual spreadsheets across university clubs with a single, cohesive operating system. Club leads can publish events, manage member rosters, track room bookings, and verify student check-ins from one unified dashboard.',
+        'CampusPulse was born out of observing how university clubs struggle with scattered communication across group chats and shared spreadsheets. The platform provides club leads with a clear dashboard to post events, manage member lists, and check for venue availability without schedule clashes.',
       problemStatement:
-        'College clubs struggle with fragmented communication, duplicate event clashes, manual attendance spreadsheets, and zero historical continuity when leadership transitions each academic year.',
+        'Student societies face frequent venue clashes, scattered event notices across multiple group chats, and manual attendance tracking with spreadsheets.',
       engineeringSolution:
-        'Built a role-based full-stack web platform featuring conflict-aware event scheduling, QR-based participant check-ins, automated roster permissions, and structured club archives.',
+        'Developed a full-stack web application with role-based permissions, an event scheduling calendar with venue conflict detection, and student RSVP tracking.',
       image: projectCampuspulseImg,
+      screenshots: [
+        {
+          title: 'Club & Events Dashboard',
+          image: projectCampuspulseImg,
+          caption: 'Central dashboard showing upcoming campus events and active student societies.',
+        },
+        {
+          title: 'Venue Conflict Detection',
+          image: projectCampuspulseImg,
+          caption: 'Scheduling logic that flags overlapping room bookings before events are finalized.',
+        },
+        {
+          title: 'Event RSVP & Attendance',
+          image: projectCampuspulseImg,
+          caption: 'Participant registration flow with clear attendee tracking for club leads.',
+        },
+      ],
       technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL'],
       highlights: [
-        'Role-based access control (RBAC) for Faculty Advisors, Club Presidents, Core Leads, and Members',
-        'Conflict-aware campus calendar that flags overlapping auditorium or lab bookings automatically',
-        'One-click event registration with instant attendance telemetry and CSV export',
-        'Dedicated club discovery directory with category filtering and recruitment application workflows',
+        'Role-based permissions separating club organizers, faculty advisors, and student members',
+        'Conflict-aware event calendar that checks for overlapping auditorium and lab bookings',
+        'Student event discovery with category filtering and one-click RSVP registration',
+        'Normalized PostgreSQL schema connecting student clubs, event dates, and member records',
       ],
       architecture: [
         {
-          layer: 'Client Interface',
-          component: 'React + TypeScript Workspace',
-          responsibility: 'Provides responsive dashboards for club discovery, event calendars, and roster management.',
+          layer: 'Frontend Application',
+          component: 'React + TypeScript Client',
+          responsibility: 'Provides responsive dashboards for event browsing, club discovery, and administrative management.',
         },
         {
-          layer: 'API & Auth Gateway',
-          component: 'Express REST API + RBAC Middleware',
-          responsibility: 'Enforces university role permissions, validates event payloads, and handles registrations.',
+          layer: 'Backend API',
+          component: 'Express REST Service',
+          responsibility: 'Validates event details, checks for venue scheduling conflicts, and manages authentication.',
         },
         {
-          layer: 'Persistence Layer',
-          component: 'PostgreSQL Relational Schema',
-          responsibility: 'Maintains normalized records for clubs, memberships, venues, and attendance logs.',
+          layer: 'Database Layer',
+          component: 'PostgreSQL Relational Database',
+          responsibility: 'Stores structured records for student societies, event schedules, venues, and registrations.',
         },
       ],
       metrics: [
-        { label: 'Core Modules', value: '6 Modules' },
-        { label: 'Role Tiers', value: '4 RBAC Levels' },
-        { label: 'Admin Time Saved', value: '~70%' },
+        { label: 'Architecture', value: 'Full-Stack' },
+        { label: 'Stack', value: 'React / Node.js' },
+        { label: 'Database', value: 'PostgreSQL' },
       ],
       githubUrl: 'https://github.com/divyanshnayak/campuspulse',
-      liveDemoUrl: '#projects-campuspulse-preview',
+      liveDemoUrl: '#projects',
     },
   ] as ProjectItem[],
 
@@ -440,40 +481,40 @@ export const PORTFOLIO_DATA = {
     {
       id: 'j-proj-campuspulse',
       period: 'Late 2025 — 2026',
-      title: 'Architected & Built CampusPulse',
-      organization: 'Flagship Full-Stack Platform',
+      title: 'Built CampusPulse Platform',
+      organization: 'College Project',
       category: 'Projects',
       summary:
-        'Designed and engineered a comprehensive college club management platform to unify event discovery, member rosters, and club administration.',
+        'Designed and built a college club management web application to centralize society event discovery, registrations, and room bookings.',
       outcomes: [
-        'Implemented multi-role RBAC, conflict-free event scheduling, and club analytics dashboards',
-        'Structured modular frontend and backend architecture for long-term maintainability',
+        'Implemented role-based permissions, venue conflict checks, and event registration flows',
+        'Structured modular React components and an Express REST API with PostgreSQL',
       ],
     },
     {
       id: 'j-proj-metroflow',
       period: '2026',
       title: 'Created MetroFlow for macOS',
-      organization: 'Native Desktop Engineering',
+      organization: 'Personal Project',
       category: 'Projects',
       summary:
-        'Ventured beyond browser boundaries to craft a modern, high-contrast music application tailored specifically for macOS ergonomics and lossless audio playback.',
+        'Built a native macOS music application in Swift designed for local audio files, focused listening, and clean dark aesthetics.',
       outcomes: [
-        'Built 60fps real-time waveform visualization and ultra-fast local library search',
-        'Refined native dark UI aesthetics with strict attention to typography and keyboard shortcuts',
+        'Built a responsive audio waveform visualizer and clean keyboard navigation',
+        'Engineered a lightweight mini-player layout docking cleanly on macOS desktop',
       ],
     },
     {
       id: 'j-goal-future',
       period: '2026 — Beyond',
-      title: 'Next Horizon: High-Impact Software & Systems Engineering',
-      organization: 'Future Roadmap',
+      title: 'Next Step: Software Engineering Roles & Practical Growth',
+      organization: 'Development Roadmap',
       category: 'Future Goals',
       summary:
-        'Expanding into high-concurrency distributed systems, native cross-platform tooling in Rust/Swift, and contributing to production-scale engineering teams.',
+        'Seeking software engineering internship and entry-level opportunities to contribute to real-world software, learn team workflows, and deepen engineering skills.',
       outcomes: [
-        'Shipping CampusPulse v2 with real-time WebSocket notifications and mobile check-ins',
-        'Open-sourcing modular UI primitives and native macOS audio utilities',
+        'Continuing to build practical tools and open-source projects',
+        'Deepening practical knowledge of backend services and system programming',
       ],
     },
   ] as JourneyItem[],
@@ -482,75 +523,75 @@ export const PORTFOLIO_DATA = {
     {
       id: 'ach-1',
       category: 'Hackathons',
-      title: 'Finalist — 36-Hour Collegiate Software Hackathon',
-      issuerOrEvent: 'National Technical Symposium',
+      title: 'Finalist — Collegiate Software Hackathon',
+      issuerOrEvent: 'Technical Symposium Hackathon',
       date: '2025',
       detail:
-        'Selected among top engineering teams for building a production-ready campus workflow prototype with zero mock dependencies.',
-      credentialRef: 'Top 5% Cohort Finish',
+        'Selected among top project teams for building a working full-stack prototype within an intensive 36-hour sprint.',
+      credentialRef: 'Hackathon Finalist',
     },
     {
       id: 'ach-2',
       category: 'Leadership & Clubs',
-      title: 'Core Technical Organizer & Student Mentor',
+      title: 'Technical Society Core Member & Workshop Lead',
       issuerOrEvent: 'Campus Developer Community',
-      date: '2024 — 2026',
+      date: '2024 — Present',
       detail:
-        'Led technical architecture sessions, code reviews, and collaborative project sprints for undergraduate developers.',
-      credentialRef: '150+ Students Mentored',
+        'Conducted developer sessions on web fundamentals, Git workflows, and collaborative project building for junior students.',
+      credentialRef: 'Club Technical Lead',
     },
     {
       id: 'ach-3',
       category: 'Academic',
-      title: 'Distinction in Core Computer Science Systems Labs',
+      title: 'Consistent Performance in Core CS Systems Labs',
       issuerOrEvent: 'Department of Computer Science & Engineering',
-      date: '2024 — 2025',
+      date: '2024 — Present',
       detail:
-        'Consistent top performance in Data Structures & Algorithms, Database Management Systems, and Object-Oriented Programming.',
-      credentialRef: 'Core CS Honors Track',
+        'Demonstrated strong practical understanding in Data Structures, Relational Databases, and Object-Oriented Software Development.',
+      credentialRef: 'Academic Track',
     },
     {
       id: 'ach-4',
       category: 'Certifications',
-      title: 'Full-Stack Architecture & Modern TypeScript Engineering',
-      issuerOrEvent: 'Verified Technical Specialization',
+      title: 'Full-Stack Web Development Course Completion',
+      issuerOrEvent: 'Online Engineering Specialization',
       date: '2025',
       detail:
-        'Completed intensive verification covering relational schema design, RESTful API security, React performance patterns, and automated testing.',
-      credentialRef: 'Verified Credential',
+        'Covered relational database schema design, RESTful API development, React component patterns, and modern TypeScript.',
+      credentialRef: 'Course Completed',
     },
   ] as AchievementItem[],
 
   beyondResume: {
     intro:
-      'A resume shows what I have built, but how I think, collaborate, and iterate matters just as much. Here is an honest look at where I excel and where I am actively pushing myself to grow.',
+      'A resume shows what I have built, but how I think, learn, and grow matters just as much. Here is an honest look at where I feel confident and where I am actively working to improve.',
     strengths: [
       {
         id: 'str-1',
-        title: 'Product-Minded Systems Thinking',
+        title: 'Full-Stack Mindset',
         description:
-          'I do not view backend schemas and frontend animations as separate worlds. When designing a database table, I am already thinking about how fast the UI will feel to the end user.',
-        evidence: 'Demonstrated in CampusPulse’s instant roster filtering and MetroFlow’s sub-10ms library search.',
+          'I like understanding how both ends of a system connect. When designing a database table in PostgreSQL, I am already thinking about how the client interface will consume and render the data cleanly.',
+        evidence: 'Applied in CampusPulse’s event schedules and MetroFlow’s local playback state.',
       },
       {
         id: 'str-2',
-        title: 'Obsessive UI & Interaction Polish',
+        title: 'Care for User Interface Details',
         description:
-          'I sweat the small details that elevate software from "working" to "memorable"—typographic hierarchy, keyboard accessibility, focus states, and smooth compositor transitions.',
-        evidence: 'Every project is built with custom layout math and deliberate motion budgets rather than generic templates.',
+          'I pay attention to the details that make software pleasant to use—consistent spacing, readable typography, dark mode contrast, keyboard shortcuts, and smooth feedback.',
+        evidence: 'Demonstrated in MetroFlow’s Mac-native interface and custom interactive portfolio components.',
       },
       {
         id: 'str-3',
-        title: 'Self-Sufficient Rapid Prototyping',
+        title: 'Self-Driven Project Execution',
         description:
-          'Give me an ambiguous problem statement and I will break it down into a clean data model, a working API, and an interactive interface without waiting for hand-holding.',
-        evidence: 'Took both MetroFlow and CampusPulse from blank repositories to cohesive architectures independently.',
+          'Give me an interesting problem statement and I enjoy breaking it down into a data model, building the API, and implementing the interface through independent problem solving.',
+        evidence: 'Built both MetroFlow and CampusPulse from initial idea to working functional code.',
       },
       {
         id: 'str-4',
-        title: 'Clean, Maintainable Code Hygiene',
+        title: 'Modular, Readable Code Structure',
         description:
-          'I write modular TypeScript with clear separation between data, business logic, and presentation so that future contributors (or future me) can extend features effortlessly.',
+          'I write clean, typed TypeScript and modular components with clear separation between data, business logic, and presentation.',
         evidence: 'Strict type safety and decoupled component structures across all repositories.',
       },
     ] as StrengthItem[],
@@ -558,123 +599,123 @@ export const PORTFOLIO_DATA = {
     growthAreas: [
       {
         id: 'grw-1',
-        title: 'Large-Scale Distributed Infrastructure',
+        title: 'Production Backend Deployment & DevOps',
         honestReflection:
-          'While I am comfortable building single-instance APIs and relational databases, my hands-on experience with multi-region replication, message queues, and Kubernetes at massive scale is still early.',
+          'As an undergraduate, most of my backend projects have run in local development or simple server environments. I am eager to gain more experience with containerization, CI/CD pipelines, and cloud services.',
         activeActionPlan:
-          'Currently designing Redis caching layers, event-driven workers, and containerized deployments for CampusPulse v2.',
+          'Currently learning Docker basics and practicing automated testing and deployment for CampusPulse.',
       },
       {
         id: 'grw-2',
-        title: 'Perfectionism vs. Early Shipping Speed',
+        title: 'Balancing Polish with Fast Shipping',
         honestReflection:
-          'Because I care deeply about visual and architectural polish, I sometimes spend extra hours refining micro-interactions before releasing an initial version.',
+          'Because I enjoy interface polish and clean design, I sometimes spend extra time tweaking visual details before shipping an initial working version.',
         activeActionPlan:
-          'Practicing strict milestone timeboxing: shipping a functional core first, then layering cinematic polish in dedicated passes.',
+          'Practicing milestone timeboxing: building the essential functional features first, then adding polish in dedicated passes.',
       },
       {
         id: 'grw-3',
-        title: 'Low-Level Systems & Memory Optimization',
+        title: 'Deepening Systems & C++ Programming',
         honestReflection:
-          'Coming primarily from high-level TypeScript and modern app frameworks, I want deeper intuition around manual memory layout, concurrency primitives, and systems-level profiling.',
+          'While I feel comfortable with TypeScript, React, and Python, I want to build stronger intuition around low-level memory layout, pointers, and systems programming.',
         activeActionPlan:
-          'Actively learning Rust and studying CoreAudio buffer pipelines in MetroFlow to strengthen my low-level engineering foundation.',
+          'Actively practicing C++ data structures and exploring operating system concepts through university coursework and problem sets.',
       },
     ] as GrowthAreaItem[],
 
     facets: [
       {
         id: 'principles',
-        label: 'Personal Principles',
-        headline: 'The rules I hold myself to when writing code and building products',
+        label: 'How I Approach Software',
+        headline: 'Principles I follow when writing code and building projects',
         items: [
           {
-            title: 'Clarity over cleverness',
-            detail: 'Readable code and intuitive interfaces always win over convoluted one-liners or flashy distractions.',
+            title: 'Learn by building real projects',
+            detail: 'You understand architecture far better when you write code from an empty directory to a working application.',
           },
           {
-            title: 'Speed is a core feature',
-            detail: 'A beautiful interface that lags by 400ms feels broken. Responsiveness is the foundation of user trust.',
+            title: 'Clarity and readability first',
+            detail: 'Readable code and straightforward component structures are always easier to debug, maintain, and share with others.',
           },
           {
-            title: 'Own the entire stack',
-            detail: 'Never say "that is a backend problem" or "that is a design problem"—care about the whole experience.',
+            title: 'Responsive, respectful interfaces',
+            detail: 'Software should feel quick and respectful of user time—clear layouts, keyboard shortcuts, and no unnecessary bloat.',
           },
         ],
       },
       {
         id: 'building',
         label: 'Things I Enjoy Building',
-        headline: 'The kinds of software problems that make me lose track of time',
+        headline: 'The kinds of projects that make me lose track of time',
         items: [
           {
-            title: 'Native-feeling desktop & media apps',
-            detail: 'Tools like MetroFlow that respect keyboard shortcuts, system resources, and high-craft dark interfaces.',
+            title: 'Native desktop apps with Swift',
+            detail: 'Tools like MetroFlow that feel at home on macOS, respect keyboard controls, and provide focused utility.',
           },
           {
-            title: 'Community & workflow platforms',
-            detail: 'Systems like CampusPulse that replace chaotic spreadsheets with structured, collaborative clarity.',
+            title: 'Full-stack campus & community tools',
+            detail: 'Platforms like CampusPulse that replace disorganized group chats with structured, collaborative event calendars.',
           },
           {
-            title: 'Interactive design & developer tools',
-            detail: 'Reusable UI primitives, command palettes, and utilities that make other builders faster.',
+            title: 'Interactive web components',
+            detail: 'Clean UI primitives, dashboards, and interactive visualizers that make interfaces engaging and intuitive.',
           },
         ],
       },
       {
         id: 'habits',
-        label: 'Daily Habits',
-        headline: 'Routines that compound my engineering craft day by day',
+        label: 'Daily Development Habits',
+        headline: 'Routines that help me improve my coding skills',
         items: [
           {
-            title: 'Deep work blocks without notifications',
-            detail: 'Setting aside uninterrupted 2-hour nocturnal or early-morning sessions for complex architecture and debugging.',
+            title: 'Dedicated deep work sessions',
+            detail: 'Setting aside uninterrupted blocks for writing code, debugging complex issues, and studying CS theory.',
           },
           {
-            title: 'Deconstructing great product UIs',
-            detail: 'Inspecting how Linear, Raycast, and Apple engineer their transitions, keyboard flows, and typography.',
+            title: 'Studying well-crafted software',
+            detail: 'Inspecting how apps like Raycast, Linear, and macOS utilities design their keyboard navigation and layout hierarchy.',
           },
           {
-            title: 'Writing architectural notes before code',
-            detail: 'Sketching data models and component boundaries on paper or markdown before opening the editor.',
+            title: 'Planning schema and components first',
+            detail: 'Sketching database relations and UI component breakdowns in notes before writing code.',
           },
         ],
       },
       {
         id: 'interests',
         label: 'Interests Beyond Code',
-        headline: 'What inspires my taste and keeps my perspective fresh',
+        headline: 'What keeps me energized outside the terminal',
         items: [
           {
-            title: 'High-fidelity music & acoustic design',
-            detail: 'Exploring album production, spatial audio, and minimal industrial hardware design.',
+            title: 'Music & Audio Listening',
+            detail: 'Listening to electronic and ambient music while coding, which directly motivated me to build the MetroFlow music player.',
           },
           {
-            title: 'Editorial typography & brutalist architecture',
-            detail: 'Studying grid systems, Swiss graphic design, and how physical spaces guide human attention.',
+            title: 'Software UI & Ergonomics',
+            detail: 'Appreciating minimal dark interfaces, clean typography, keyboard navigation, and thoughtful micro-interactions.',
           },
           {
-            title: 'Tech mentorship & hackathons',
-            detail: 'Brainstorming late-night product ideas with peers and helping freshmen ship their first web apps.',
+            title: 'Campus Hackathons & Learning',
+            detail: 'Collaborating with college peers on weekend projects, brainstorming ideas, and participating in hackathons.',
           },
         ],
       },
       {
         id: 'improving',
-        label: 'Currently Working to Improve',
+        label: 'Current Improvement Focus',
         headline: 'Deliberate practice areas for the current semester',
         items: [
           {
-            title: 'Automated test coverage & TDD discipline',
-            detail: 'Writing fast unit and integration tests alongside business logic rather than as an afterthought.',
+            title: 'Automated testing discipline',
+            detail: 'Writing unit and integration tests alongside application logic rather than treating tests as an afterthought.',
           },
           {
-            title: 'Technical writing & architecture RFCs',
-            detail: 'Documenting system trade-offs and engineering post-mortems with greater precision.',
+            title: 'Technical documentation',
+            detail: 'Writing clear READMEs, architecture notes, and setup guides for projects.',
           },
           {
-            title: 'Open-source contributions',
-            detail: 'Moving from consuming open-source packages to submitting meaningful PRs and maintaining public repos.',
+            title: 'Open-source exploration',
+            detail: 'Studying open-source repositories and learning how maintainers structure large codebases.',
           },
         ],
       },
@@ -683,51 +724,51 @@ export const PORTFOLIO_DATA = {
 
   now: {
     lastUpdated: 'November 2026',
-    locationStatus: 'On Campus & In the Code Lab',
+    locationStatus: 'On Campus & Active in Projects',
     items: [
       {
         id: 'now-building',
         emoji: '🔨',
         category: 'Currently Building',
-        headline: 'MetroFlow Audio Engine & CampusPulse Analytics',
+        headline: 'MetroFlow Player Polish & CampusPulse Event Flow',
         summary:
-          'Refining MetroFlow’s real-time audio spectrum visualizer and playlist keyboard navigation on macOS, while expanding CampusPulse’s club analytics and QR event check-in flow.',
-        recentMilestone: 'Completed sub-10ms local track search indexing and dark-mode mini-player layout.',
-        nextStep: 'Implementing smart queue persistence and custom audio equalizer presets.',
-        updatedAt: 'Active Sprint',
+          'Refining the audio visualizer UI and keyboard shortcuts in MetroFlow for macOS, while improving event registration and room scheduling in CampusPulse.',
+        recentMilestone: 'Added responsive waveform visualizer and dark mini-player layout in MetroFlow.',
+        nextStep: 'Testing venue scheduling validation and attendee lists in CampusPulse.',
+        updatedAt: 'Active Project',
       },
       {
         id: 'now-learning',
         emoji: '📚',
         category: 'Currently Learning',
-        headline: 'Rust Systems Programming & Distributed Backend Patterns',
+        headline: 'Algorithms, Data Structures & Backend Practices',
         summary:
-          'Deepening my understanding of memory-safe systems programming in Rust alongside scalable backend patterns like Redis caching, rate limiting, and event-driven queues.',
-        recentMilestone: 'Built a multithreaded CLI file indexer and studied ownership semantics.',
-        nextStep: 'Benchmarking Rust WebAssembly modules for client-side audio waveform processing.',
+          'Practicing algorithmic problem solving in C++ while studying relational database design and REST API security fundamentals.',
+        recentMilestone: 'Completed core problem sets on graphs, trees, and relational normalization.',
+        nextStep: 'Building full-stack projects with automated test suites.',
         updatedAt: 'Daily Study',
       },
       {
         id: 'now-goal',
         emoji: '🎯',
         category: 'Current Goal',
-        headline: 'High-Impact Software Engineering Internships & Open-Source Shipping',
+        headline: 'Software Engineering Internships & Early Career Roles',
         summary:
-          'Seeking challenging software engineering opportunities where I can contribute to production systems, learn from seasoned engineers, and ship user-facing products at scale.',
-        recentMilestone: 'Consolidated flagship projects with clean documentation and live architectural breakdowns.',
-        nextStep: 'Publishing technical deep-dives on building MetroFlow and CampusPulse.',
-        updatedAt: '2026 — 2027 Target',
+          'Seeking software engineering internship and entry-level opportunities where I can learn from experienced engineers and contribute to production software.',
+        recentMilestone: 'Documented core projects with clear case studies and responsive demos.',
+        nextStep: 'Connecting with engineering teams and contributing to developer projects.',
+        updatedAt: '2026 Focus',
       },
       {
         id: 'now-exploring',
         emoji: '💡',
         category: 'Currently Exploring',
-        headline: 'Spatial Micro-Interactions & Local-First Software Architecture',
+        headline: 'SwiftUI Native Development & Modern Web Interfaces',
         summary:
-          'Investigating how web and desktop applications can feel instantaneous using local-first sync engines (CRDTs / IndexedDB) and hardware-accelerated shader/motion primitives.',
-        recentMilestone: 'Experimented with hybrid GSAP + Framer Motion choreography for editorial storytelling.',
-        nextStep: 'Prototyping an offline-capable sync layer for student club notes in CampusPulse.',
-        updatedAt: 'R&D Sandbox',
+          'Exploring native macOS app development with SwiftUI and learning how clean micro-interactions and keyboard navigation make everyday software more enjoyable to use.',
+        recentMilestone: 'Experimented with Framer Motion and canvas animations for interactive portfolio previews.',
+        nextStep: 'Exploring macOS menu bar utility concepts.',
+        updatedAt: 'Exploration',
       },
     ] as NowItem[],
   },

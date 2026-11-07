@@ -72,16 +72,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               <span className="font-mono-tabular text-[#2563EB]">03.</span>
               <span>Featured Projects</span>
               <span aria-hidden="true">·</span>
-              <span>Selected Product & Systems Engineering</span>
+              <span>Personal & College Projects</span>
             </div>
             <h2
               id="projects-heading"
               className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight [text-wrap:balance]"
             >
-              Flagship builds engineered from the ground up.
+              Projects built from concept to working software.
             </h2>
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-              Every project is designed as a complete product experience—pairing thoughtful visual craft with resilient underlying architecture.
+              Each project represents practical problem-solving—combining clean interface design with well-structured application code.
             </p>
           </div>
 
@@ -186,7 +186,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         </div>
 
                         <span className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-zinc-900/90 hover:bg-[#2563EB] border border-zinc-700 px-3.5 py-2 rounded-xl transition-colors whitespace-nowrap shrink-0">
-                          <span>Inspect Deep Dive</span>
+                          <span>View Case Study</span>
                           <ArrowUpRight className="w-3.5 h-3.5" />
                         </span>
                       </div>
@@ -271,7 +271,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                             className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-zinc-200 bg-zinc-900 border border-zinc-800 rounded-lg hover:bg-zinc-800 hover:text-white transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                           >
                             <Play className="w-3 h-3 text-[#2563EB]" aria-hidden="true" />
-                            <span>Interactive Simulator</span>
+                            <span>Interactive Preview</span>
                           </button>
 
                           <button
@@ -280,7 +280,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                             className="inline-flex items-center gap-2 px-3 py-2.5 text-xs font-medium text-zinc-400 bg-zinc-900/60 border border-zinc-800/80 rounded-lg hover:text-zinc-200 hover:bg-zinc-800 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                           >
                             <Layers className="w-3 h-3 text-zinc-400" />
-                            <span className="hidden sm:inline">Blueprint</span>
+                            <span className="hidden sm:inline">Architecture</span>
                           </button>
 
                           <a

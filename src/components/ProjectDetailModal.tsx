@@ -44,49 +44,54 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
     { id: 'decisions', label: 'Engineering Trade-Offs', icon: Code2 },
   ] as const;
 
-  // Curated engineering trade-off notes
+  // Authentic technical decisions and architectural approach
   const technicalDecisions =
     project.id === 'metroflow'
       ? [
           {
-            title: 'Native Swift + AppKit vs. Electron Wrapper',
-            decision: 'Engineered entirely in native Swift and AppKit/SwiftUI rather than Electron or Chromium wrappers.',
+            title: 'Native Swift & SwiftUI vs. Cross-Platform Wrapper',
+            decision: 'Built directly with Swift and SwiftUI/AppKit for macOS rather than a cross-platform web container.',
             rationale:
-              'Electron instances often consume 300MB+ RAM for simple audio streaming and introduce 30-50ms latency during audio buffer scrubbing. Native AppKit allows direct integration with macOS CoreAudio and AVFoundation, achieving sub-10ms latency and ~64MB baseline footprint.',
+              'Building natively allows direct integration with macOS window styling, system keyboard shortcuts, and Apple’s AVFoundation for reliable local audio playback with minimal system overhead.',
           },
           {
-            title: 'Real-Time Hardware-Accelerated FFT Waveforms',
-            decision: 'Rendered audio spectrum visualizer via dedicated CoreAnimation/Metal draw passes at 60fps.',
+            title: 'Visual Audio Feedback',
+            decision: 'Implemented an integrated waveform frequency visualization alongside playback.',
             rationale:
-              'Web Canvas or DOM-based spectrum analyzers drop frames during high UI load. Hardware acceleration guarantees gapless audio visualization synchronized directly with output audio buffers.',
+              'Provides responsive visual feedback while tracks are playing, making the interface feel active and visually engaging while keeping the layout minimal.',
           },
           {
-            title: 'SQLite Full-Text Search (FTS5) for Instant Querying',
-            decision: 'Indexed local music library using SQLite FTS5 with tokenized stem matching.',
+            title: 'Focused Local-First Library Design',
+            decision: 'Prioritized offline playback and simple folder-based library organization.',
             rationale:
-              'Enables instantaneous (<8ms) search across tens of thousands of tracks, artists, and playlists without taxing CPU or network dependencies.',
+              'Avoids background data syncing, external account requirements, and social feed clutter, focusing purely on playing local music files smoothly.',
           },
         ]
       : [
           {
-            title: 'PostgreSQL Relational Schema vs. Document NoSQL',
-            decision: 'Selected PostgreSQL with strict foreign key constraints and transactional integrity.',
+            title: 'Relational Database Schema (PostgreSQL)',
+            decision: 'Structured data in PostgreSQL with relational integrity across clubs, events, and registrations.',
             rationale:
-              'Campus club operations rely heavily on normalized relational data: club leads, event approvals, room bookings, and participant check-ins. Relational constraints prevent phantom bookings and duplicate membership states.',
+              'Campus club operations rely on relational links: events belong to clubs, venues are reserved during specific time slots, and students register for specific events. Relational foreign keys keep the data consistent.',
           },
           {
-            title: 'Hierarchical Role-Based Access Control (RBAC)',
-            decision: 'Constructed custom middleware supporting 4 distinct privilege tiers.',
+            title: 'Role-Based Permissions for Campus Societies',
+            decision: 'Implemented middleware to separate permissions between club leads, faculty, and student members.',
             rationale:
-              'Enforces granular boundaries between Faculty Advisors (budget/venue sign-off), Club Presidents (event publishing), Core Leads (attendance tracking), and Student Members (discovery and registration).',
+              'Separates event creation and room booking privileges from standard student attendance, keeping club administrative controls organized.',
           },
           {
-            title: 'Conflict-Aware Time & Venue Engine',
-            decision: 'Implemented server-side overlap validation algorithms before writing event reservations.',
+            title: 'Venue Conflict Validation Logic',
+            decision: 'Added checks to verify venue availability before confirming an event date and location.',
             rationale:
-              'Prevents university auditoriums, smart classrooms, and labs from being double-booked by competing student societies.',
+              'Helps student societies avoid double-booking campus halls and computer labs by flagging overlapping schedules ahead of time.',
           },
         ];
+
+  const screenshots = project.screenshots || [
+    { title: 'Overview', image: project.image, caption: project.subtitle },
+  ];
+  const activeScreenshot = screenshots[activeScreenshotIdx] || screenshots[0];
 
   return (
     <div
@@ -170,33 +175,57 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
           {/* TAB 1: OVERVIEW & CASE STUDY */}
           {activeTab === 'overview' && (
             <div className="space-y-8">
-              {/* Large High-Res Visual Preview */}
-              <div className="relative rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 group">
-                <div className={`relative overflow-hidden ${isZoomed ? 'max-h-none' : 'max-h-[380px]'}`}>
-                  <img
-                    src={project.image}
-                    alt={`${project.title} Interface Preview`}
-                    className="w-full h-full object-cover object-center transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
-                </div>
-
-                {/* Image controls & badges */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/75 backdrop-blur-md border border-zinc-700/80 text-zinc-200">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-                    <span>{project.subtitle}</span>
+              {/* Large High-Res Visual Preview Container */}
+              <div className="space-y-3">
+                <div className="relative rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 group">
+                  <div className={`relative overflow-hidden ${isZoomed ? 'max-h-none' : 'max-h-[380px]'}`}>
+                    <img
+                      src={activeScreenshot.image}
+                      alt={`${project.title} — ${activeScreenshot.title}`}
+                      className="w-full h-full object-cover object-center transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20 pointer-events-none" />
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setIsZoomed((prev) => !prev)}
-                    className="p-2 rounded-lg bg-black/75 backdrop-blur-md border border-zinc-700/80 text-zinc-300 hover:text-white transition-colors cursor-pointer"
-                    title={isZoomed ? 'Fit image' : 'Expand full image'}
-                  >
-                    {isZoomed ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-                  </button>
+                  {/* Image controls & badges */}
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/80 backdrop-blur-md border border-zinc-700/80 text-zinc-200">
+                      <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                      <span className="font-semibold">{activeScreenshot.title}:</span>
+                      <span className="text-zinc-300 hidden sm:inline">{activeScreenshot.caption}</span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setIsZoomed((prev) => !prev)}
+                      className="p-2 rounded-lg bg-black/80 backdrop-blur-md border border-zinc-700/80 text-zinc-300 hover:text-white transition-colors cursor-pointer"
+                      title={isZoomed ? 'Fit image' : 'Expand full image'}
+                    >
+                      {isZoomed ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                    </button>
+                  </div>
                 </div>
+
+                {/* Gallery Thumbnail Viewport Switcher */}
+                {screenshots.length > 1 && (
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <span className="text-xs text-zinc-500 font-mono-tabular">Viewpoint:</span>
+                    {screenshots.map((s, idx) => (
+                      <button
+                        key={s.title}
+                        type="button"
+                        onClick={() => setActiveScreenshotIdx(idx)}
+                        className={`px-3 py-1 text-xs rounded-lg transition-colors cursor-pointer ${
+                          idx === activeScreenshotIdx
+                            ? 'bg-[#2563EB] text-white font-medium'
+                            : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                        }`}
+                      >
+                        {s.title}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Metrics Strip */}
@@ -265,13 +294,13 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             </div>
           )}
 
-          {/* TAB 2: INTERACTIVE SANDBOX */}
+          {/* TAB 2: INTERACTIVE PREVIEW */}
           {activeTab === 'interactive' && (
             <div className="space-y-6">
               <div className="space-y-1">
-                <h4 className="text-base font-bold text-white">Live Functional Simulator</h4>
+                <h4 className="text-base font-bold text-white">Interactive Interface Preview</h4>
                 <p className="text-xs text-zinc-400">
-                  Interact directly with the core mechanics and telemetry of {project.title}.
+                  Explore an interactive demonstration of the visual interface and key features of {project.title}.
                 </p>
               </div>
 
@@ -283,13 +312,13 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             </div>
           )}
 
-          {/* TAB 3: SYSTEM ARCHITECTURE */}
+          {/* TAB 3: SYSTEM STRUCTURE */}
           {activeTab === 'architecture' && (
             <div className="space-y-6">
               <div className="space-y-1">
-                <h4 className="text-base font-bold text-white">Multi-Tier Architecture Blueprint</h4>
+                <h4 className="text-base font-bold text-white">System Structure & Component Roles</h4>
                 <p className="text-xs text-zinc-400">
-                  Deconstruction of how the layers interact to ensure performance and isolation.
+                  Overview of the client interface, application logic, and data layer.
                 </p>
               </div>
 
@@ -317,13 +346,13 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             </div>
           )}
 
-          {/* TAB 4: ENGINEERING TRADE-OFFS */}
+          {/* TAB 4: TECHNICAL APPROACH */}
           {activeTab === 'decisions' && (
             <div className="space-y-6">
               <div className="space-y-1">
-                <h4 className="text-base font-bold text-white">Technical Decisions & Trade-Offs</h4>
+                <h4 className="text-base font-bold text-white">Technical Decisions & Approach</h4>
                 <p className="text-xs text-zinc-400">
-                  The rationale behind why specific architectural choices and libraries were selected.
+                  Why specific tools and structures were chosen for {project.title}.
                 </p>
               </div>
 

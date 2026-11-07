@@ -39,7 +39,7 @@ export const NowSection: React.FC = () => {
               <span className="font-mono-tabular text-[#2563EB]">07.</span>
               <span>Now</span>
               <span aria-hidden="true">·</span>
-              <span>Live Engineering Radar & Current Sprint</span>
+              <span>Current Focus & Active Projects</span>
             </div>
             <h2
               id="now-heading"
@@ -48,14 +48,14 @@ export const NowSection: React.FC = () => {
               What I am building, studying, and exploring right now.
             </h2>
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-              Inspired by Derek Sivers' /now movement—a transparent real-time snapshot of my active priorities, learning roadmap, and immediate software ambitions.
+              A transparent look at my current project priorities, study areas, and upcoming software development goals.
             </p>
           </div>
 
           <div className="text-xs text-zinc-400 space-y-1 md:text-right shrink-0 p-3.5 rounded-xl border border-zinc-800 bg-[#0A0A0C]">
             <div className="flex items-center gap-2 md:justify-end">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-zinc-200 font-medium">Sprint Active · {now.lastUpdated}</span>
+              <span className="text-zinc-200 font-medium">Active Focus · {now.lastUpdated}</span>
             </div>
             <div className="text-zinc-400">{now.locationStatus}</div>
           </div>
@@ -145,7 +145,7 @@ export const NowSection: React.FC = () => {
             </div>
           </div>
           <span className="font-mono-tabular text-xs text-zinc-400 whitespace-nowrap shrink-0 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800">
-            Sprint Status: {activeItem.updatedAt}
+            Status: {activeItem.updatedAt}
           </span>
         </div>
       </div>
