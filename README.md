@@ -1,20 +1,82 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Divyansh Nayak — Portfolio
 
-# Run and deploy your AI Studio app
+A personal portfolio website showcasing my projects, skills, and journey as a Computer Science Engineering student.
 
-This contains everything you need to run your app locally.
+## 🚀 About
 
-View your app in AI Studio: https://ai.studio/apps/f09a57a0-5c1d-4ea3-a9ec-301c1d7f20c7
+This portfolio highlights the projects I am building, my technical skills, and my experience as a B.Tech Computer Science & Engineering student at Medi-Caps University.
 
-## Run Locally
+## ✨ Features
 
-**Prerequisites:**  Node.js
+- Modern and responsive user interface
+- Interactive project showcase
+- Dedicated project screenshots and previews
+- Skills and technology overview
+- Academic and development journey timeline
+- Direct links to GitHub and LinkedIn
+- Optimized experience for desktop and mobile devices
 
+## 🛠️ Tech Stack
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+
+## 📂 Featured Projects
+
+### 🎵 MetroFlow
+
+A modern music application designed for macOS, focused on providing a clean and engaging music experience.
+
+**Repository:** https://github.com/divyanshh69/MetroFlow-MAC
+
+### 🎓 CampusPulse
+
+A college club management platform designed to help manage members, events, attendance, and club operations.
+
+**Repository:** https://github.com/divyanshh69/CampusPulse
+
+## 💻 Run Locally
+
+### Prerequisites
+
+Make sure you have Node.js installed.
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/divyanshh69/divyansh-portfolio.git
+```
+
+Navigate to the project folder:
+
+```bash
+cd divyansh-portfolio
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will then be available locally at the address shown in your terminal.
+
+## 🔗 Connect With Me
+
+- **GitHub:** https://github.com/divyanshh69
+- **LinkedIn:** https://www.linkedin.com/in/divyansh-nayak-703390370/
+- **Email:** divyanshnayak713@gmail.com
+
+---
+
+Built and maintained by **Divyansh Nayak**.
