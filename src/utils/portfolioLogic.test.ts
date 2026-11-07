@@ -102,3 +102,20 @@ test('external URLs match the verified personal and project links', () => {
   const campuspulse = PORTFOLIO_DATA.projects.find((p) => p.id === 'campuspulse');
   assert.equal(campuspulse?.githubUrl, 'https://github.com/divyanshh69/CampusPulse');
 });
+
+test('journey milestones reflect accurate academic timeline and experience', () => {
+  const edu = PORTFOLIO_DATA.journey.find((j) => j.category === 'Education');
+  assert.ok(edu);
+  assert.equal(edu.period, 'Aug 2025 — Present');
+  assert.equal(edu.organization, 'Medi-Caps University');
+
+  const hackathon = PORTFOLIO_DATA.journey.find((j) => j.category === 'Hackathons');
+  assert.ok(hackathon);
+  assert.equal(hackathon.period, '2026');
+
+  // Verify no journey entry starts with 2023 or 2024
+  for (const item of PORTFOLIO_DATA.journey) {
+    assert.ok(!item.period.includes('2023'), `Item ${item.id} should not reference 2023`);
+    assert.ok(!item.period.includes('2024'), `Item ${item.id} should not reference 2024`);
+  }
+});

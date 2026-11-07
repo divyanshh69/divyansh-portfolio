@@ -133,8 +133,8 @@ export const PORTFOLIO_DATA = {
     linkedin: 'https://www.linkedin.com/in/divyansh-nayak-703390370/',
     heroImage: heroWorkspaceImg,
     metrics: [
-      { value: 'B.Tech CSE', label: 'Undergraduate Program', context: 'Computer Science & Engineering' },
-      { value: 'MetroFlow', label: 'macOS Music Player', context: 'Swift, SwiftUI & AVFoundation' },
+      { value: 'B.Tech CSE', label: 'Undergraduate Program', context: 'Medi-Caps University · 2nd Year' },
+      { value: 'MetroFlow', label: 'macOS Music Player', context: 'Swift, SwiftUI & CoreAudio' },
       { value: 'CampusPulse', label: 'Club Management Platform', context: 'React, Node.js & PostgreSQL' },
       { value: '2026', label: 'Engineering Focus', context: 'Open to Software Roles' },
     ],
@@ -157,10 +157,10 @@ export const PORTFOLIO_DATA = {
         id: 'education',
         index: '02',
         title: 'Education',
-        subtitle: 'Bachelor of Technology in Computer Science & Engineering',
+        subtitle: '2nd-Year B.Tech CSE at Medi-Caps University',
         content:
-          'Currently completing foundational coursework in Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, Operating Systems, and Computer Networks, while applying those concepts directly to personal projects.',
-        keyTakeaway: 'Strong academic CS fundamentals paired with practical project experience.',
+          'Enrolled at Medi-Caps University in August 2025. Currently a 2nd-year student building a solid foundation in Data Structures, Object-Oriented Programming, and Database Systems, while actively applying these concepts to practical software projects.',
+        keyTakeaway: 'Solid computer science foundation paired with active project development.',
       },
       {
         id: 'interests',
@@ -445,41 +445,28 @@ export const PORTFOLIO_DATA = {
   journey: [
     {
       id: 'j-edu-1',
-      period: '2023 — Present',
-      title: 'B.Tech in Computer Science & Engineering',
-      organization: 'University Undergraduate Program',
+      period: 'Aug 2025 — Present',
+      title: 'B.Tech in Computer Science & Engineering (2nd Year)',
+      organization: 'Medi-Caps University',
       category: 'Education',
       summary:
-        'Building a deep theoretical and practical foundation in algorithms, operating systems, computer networks, relational databases, and software design patterns.',
+        'Enrolled in August 2025 and currently in 2nd year, building a strong academic foundation in core computer science fundamentals while actively developing practical software projects.',
       outcomes: [
-        'Completed core coursework in Data Structures, Algorithms, DBMS, and Operating Systems',
-        'Translated academic database & systems concepts directly into full-stack projects',
+        'Studying core CS subjects including Data Structures, Object-Oriented Programming, and Database Systems',
+        'Directly applying classroom theory to practical software builds like CampusPulse and MetroFlow',
       ],
     },
     {
       id: 'j-club-1',
-      period: '2024 — Present',
-      title: 'Technical Lead & Core Developer',
-      organization: 'University Coding & Developer Society',
+      period: 'Aug 2025 — Present',
+      title: 'Student Developer & Club Member',
+      organization: 'Campus Developer Community',
       category: 'Club Roles',
       summary:
-        'Organizing technical workshops, mentoring junior students in web architecture and Git workflows, and spearheading internal software tooling for campus events.',
+        'Active participant in campus student developer groups, engaging in peer learning, exploring modern web technologies, and collaborating with fellow student builders.',
       outcomes: [
-        'Observed firsthand the operational friction in student societies that inspired CampusPulse',
-        'Facilitated hands-on code labs on React, TypeScript, and modern full-stack engineering',
-      ],
-    },
-    {
-      id: 'j-hack-1',
-      period: '2025',
-      title: 'Inter-College Hackathon Finalist & Builder',
-      organization: '36-Hour Product Engineering Sprint',
-      category: 'Hackathons',
-      summary:
-        'Architected and shipped a working full-stack prototype under tight time constraints, focusing on real-time collaboration, clean UI execution, and resilient API design.',
-      outcomes: [
-        'Delivered end-to-end authentication, database schema, and polished dark-mode UI in 36 hours',
-        'Recognized by jury for product polish and practical deployment readiness',
+        'Engaged in collaborative coding sessions and developer discussions with college peers',
+        'Observed firsthand the club communication and scheduling challenges that inspired CampusPulse',
       ],
     },
     {
@@ -493,6 +480,19 @@ export const PORTFOLIO_DATA = {
       outcomes: [
         'Implemented role-based permissions, venue conflict checks, and event registration flows',
         'Structured modular React components and an Express REST API with PostgreSQL',
+      ],
+    },
+    {
+      id: 'j-hack-1',
+      period: '2026',
+      title: 'Hackathon Participation & Rapid Prototyping',
+      organization: 'Collegiate Hackathons',
+      category: 'Hackathons',
+      summary:
+        'Participated in collegiate hackathon sprints, teaming up with peers to design, build, and present functional full-stack prototypes under tight deadlines.',
+      outcomes: [
+        'Collaborated on full-stack application prototypes under sprint constraints',
+        'Gained practical experience in team coordination, rapid debugging, and project presentation',
       ],
     },
     {
@@ -527,42 +527,42 @@ export const PORTFOLIO_DATA = {
     {
       id: 'ach-1',
       category: 'Hackathons',
-      title: 'Finalist — Collegiate Software Hackathon',
-      issuerOrEvent: 'Technical Symposium Hackathon',
-      date: '2025',
+      title: 'Collegiate Hackathon Participant',
+      issuerOrEvent: 'Collegiate Software Sprints',
+      date: '2026',
       detail:
-        'Selected among top project teams for building a working full-stack prototype within an intensive 36-hour sprint.',
-      credentialRef: 'Hackathon Finalist',
+        'Collaborated with student developer teams during intensive hackathon sprints, rapidly turning concepts into working software prototypes.',
+      credentialRef: 'Hackathon Participant',
     },
     {
       id: 'ach-2',
-      category: 'Leadership & Clubs',
-      title: 'Technical Society Core Member & Workshop Lead',
-      issuerOrEvent: 'Campus Developer Community',
-      date: '2024 — Present',
+      category: 'Campus & Clubs',
+      title: 'Student Developer & Club Member',
+      issuerOrEvent: 'Medi-Caps Developer Community',
+      date: 'Aug 2025 — Present',
       detail:
-        'Conducted developer sessions on web fundamentals, Git workflows, and collaborative project building for junior students.',
-      credentialRef: 'Club Technical Lead',
+        'Active participant in campus tech community sessions, collaborating on web projects and engaging in student developer workshops.',
+      credentialRef: 'Active Member',
     },
     {
       id: 'ach-3',
       category: 'Academic',
-      title: 'Consistent Performance in Core CS Systems Labs',
-      issuerOrEvent: 'Department of Computer Science & Engineering',
-      date: '2024 — Present',
+      title: 'Academic Track in Computer Science & Engineering',
+      issuerOrEvent: 'Medi-Caps University (CSE)',
+      date: 'Aug 2025 — Present',
       detail:
-        'Demonstrated strong practical understanding in Data Structures, Relational Databases, and Object-Oriented Software Development.',
+        'Consistently developing practical understanding across Data Structures, Object-Oriented Programming, and database systems.',
       credentialRef: 'Academic Track',
     },
     {
       id: 'ach-4',
-      category: 'Certifications',
-      title: 'Full-Stack Web Development Course Completion',
-      issuerOrEvent: 'Online Engineering Specialization',
-      date: '2025',
+      category: 'Learning',
+      title: 'Self-Directed Web & Systems Development',
+      issuerOrEvent: 'Practical Development & Projects',
+      date: '2025 — 2026',
       detail:
-        'Covered relational database schema design, RESTful API development, React component patterns, and modern TypeScript.',
-      credentialRef: 'Course Completed',
+        'Completed practical self-directed study in modern web development, React component architecture, and relational database schema design.',
+      credentialRef: 'Self-Directed Learning',
     },
   ] as AchievementItem[],
 
