@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   X,
@@ -13,6 +13,10 @@ import {
   Code2,
   Play,
   FileText,
+  ChevronLeft,
+  ChevronRight,
+  Monitor,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { ProjectItem } from '../data/portfolioData';
 import { InteractiveAudioSpectrum } from './InteractiveAudioSpectrum';
@@ -21,19 +25,25 @@ import { InteractiveCampusPulsePreview } from './InteractiveCampusPulsePreview';
 interface ProjectDetailModalProps {
   project: ProjectItem | null;
   initialTab?: 'overview' | 'architecture' | 'interactive' | 'decisions';
+  initialScreenshotIdx?: number;
   onClose: () => void;
 }
 
 export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
   project,
   initialTab = 'overview',
+  initialScreenshotIdx = 0,
   onClose,
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'interactive' | 'decisions'>(
     initialTab
   );
   const [isZoomed, setIsZoomed] = useState(false);
-  const [activeScreenshotIdx, setActiveScreenshotIdx] = useState(0);
+  const [activeScreenshotIdx, setActiveScreenshotIdx] = useState(initialScreenshotIdx);
+
+  useEffect(() => {
+    setActiveScreenshotIdx(initialScreenshotIdx);
+  }, [initialScreenshotIdx, project?.id]);
 
   if (!project) return null;
 
@@ -92,6 +102,14 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
     { title: 'Overview', image: project.image, caption: project.subtitle },
   ];
   const activeScreenshot = screenshots[activeScreenshotIdx] || screenshots[0];
+
+  const handlePrevScreenshot = () => {
+    setActiveScreenshotIdx((prev) => (prev > 0 ? prev - 1 : screenshots.length - 1));
+  };
+
+  const handleNextScreenshot = () => {
+    setActiveScreenshotIdx((prev) => (prev < screenshots.length - 1 ? prev + 1 : 0));
+  };
 
   return (
     <div
@@ -175,55 +193,153 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
           {/* TAB 1: OVERVIEW & CASE STUDY */}
           {activeTab === 'overview' && (
             <div className="space-y-8">
-              {/* Large High-Res Visual Preview Container */}
-              <div className="space-y-3">
-                <div className="relative rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 group">
-                  <div className={`relative overflow-hidden ${isZoomed ? 'max-h-none' : 'max-h-[380px]'}`}>
-                    <img
-                      src={activeScreenshot.image}
-                      alt={`${project.title} — ${activeScreenshot.title}`}
-                      className="w-full h-full object-cover object-center transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/20 pointer-events-none" />
-                  </div>
-
-                  {/* Image controls & badges */}
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/80 backdrop-blur-md border border-zinc-700/80 text-zinc-200">
-                      <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-                      <span className="font-semibold">{activeScreenshot.title}:</span>
-                      <span className="text-zinc-300 hidden sm:inline">{activeScreenshot.caption}</span>
+              {/* Elevated Desktop Screenshot Showcase */}
+              <div className="space-y-4">
+                {/* Desktop Window Frame */}
+                <div className="rounded-xl overflow-hidden border border-zinc-800 bg-[#0B0B0E] shadow-2xl">
+                  {/* Window Chrome Titlebar */}
+                  <div className="flex items-center justify-between gap-4 px-4 py-2.5 bg-[#101014] border-b border-zinc-800/90 text-xs">
+                    {/* Traffic Light Dots */}
+                    <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 border border-red-600/40" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 border border-amber-600/40" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 border border-emerald-600/40" />
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => setIsZoomed((prev) => !prev)}
-                      className="p-2 rounded-lg bg-black/80 backdrop-blur-md border border-zinc-700/80 text-zinc-300 hover:text-white transition-colors cursor-pointer"
-                      title={isZoomed ? 'Fit image' : 'Expand full image'}
-                    >
-                      {isZoomed ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-                    </button>
+                    {/* Window Center Title */}
+                    <div className="flex items-center gap-2 text-zinc-400 font-mono-tabular truncate px-2">
+                      <Monitor className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+                      <span className="text-zinc-200 font-medium truncate">{project.title}</span>
+                      <span className="text-zinc-600">/</span>
+                      <span className="text-zinc-400 truncate">{activeScreenshot.title}</span>
+                    </div>
+
+                    {/* Window Right Action Controls */}
+                    <div className="flex items-center gap-3 shrink-0">
+                      <span className="text-[11px] font-mono-tabular text-zinc-500">
+                        {activeScreenshotIdx + 1} / {screenshots.length}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setIsZoomed((prev) => !prev)}
+                        className="p-1 rounded-md hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+                        title={isZoomed ? 'Default view' : 'Expand full view'}
+                        aria-label={isZoomed ? 'Default view' : 'Expand full view'}
+                      >
+                        {isZoomed ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Screenshot Viewport Container */}
+                  <div
+                    className={`relative overflow-hidden bg-[#070709] flex items-center justify-center transition-all duration-300 ${
+                      isZoomed
+                        ? 'min-h-[520px] max-h-[85vh]'
+                        : project.id === 'metroflow'
+                        ? 'aspect-[1024/665] max-h-[480px]'
+                        : 'aspect-[1024/587] max-h-[480px]'
+                    }`}
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeScreenshotIdx}
+                        initial={{ opacity: 0, scale: 0.99 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.99 }}
+                        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-full h-full flex items-center justify-center"
+                      >
+                        <img
+                          src={activeScreenshot.image}
+                          alt={`${project.title} — ${activeScreenshot.title}`}
+                          className="w-full h-full object-contain object-center"
+                        />
+                      </motion.div>
+                    </AnimatePresence>
+
+                    {/* Left & Right Chevrons */}
+                    {screenshots.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={handlePrevScreenshot}
+                          aria-label="Previous screenshot"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/75 hover:bg-black/95 text-zinc-300 hover:text-white border border-zinc-700/80 backdrop-blur-sm transition-all cursor-pointer shadow-lg opacity-80 hover:opacity-100 hover:scale-105"
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleNextScreenshot}
+                          aria-label="Next screenshot"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/75 hover:bg-black/95 text-zinc-300 hover:text-white border border-zinc-700/80 backdrop-blur-sm transition-all cursor-pointer shadow-lg opacity-80 hover:opacity-100 hover:scale-105"
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Caption & Context Drawer */}
+                  <div className="px-4 py-3 bg-[#0C0C0F] border-t border-zinc-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded bg-[#2563EB]/20 text-[#60A5FA] border border-blue-500/30 font-medium shrink-0">
+                        {activeScreenshot.title}
+                      </span>
+                      <p className="text-zinc-300 leading-relaxed">
+                        {activeScreenshot.caption}
+                      </p>
+                    </div>
+                    <span className="text-[11px] text-zinc-500 font-mono-tabular shrink-0 hidden md:inline">
+                      Desktop Capture Preview
+                    </span>
                   </div>
                 </div>
 
-                {/* Gallery Thumbnail Viewport Switcher */}
+                {/* Multiple Screenshot Thumbnail Grid Switcher */}
                 {screenshots.length > 1 && (
-                  <div className="flex flex-wrap items-center gap-2 pt-1">
-                    <span className="text-xs text-zinc-500 font-mono-tabular">Viewpoint:</span>
-                    {screenshots.map((s, idx) => (
-                      <button
-                        key={s.title}
-                        type="button"
-                        onClick={() => setActiveScreenshotIdx(idx)}
-                        className={`px-3 py-1 text-xs rounded-lg transition-colors cursor-pointer ${
-                          idx === activeScreenshotIdx
-                            ? 'bg-[#2563EB] text-white font-medium'
-                            : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-200'
-                        }`}
-                      >
-                        {s.title}
-                      </button>
-                    ))}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                    {screenshots.map((s, idx) => {
+                      const isActive = idx === activeScreenshotIdx;
+                      return (
+                        <button
+                          key={s.title}
+                          type="button"
+                          onClick={() => setActiveScreenshotIdx(idx)}
+                          className={`p-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer flex items-center gap-3 ${
+                            isActive
+                              ? 'border-[#2563EB] bg-blue-950/20 shadow-sm'
+                              : 'border-zinc-800/80 bg-zinc-950 hover:border-zinc-700 hover:bg-zinc-900/50'
+                          }`}
+                        >
+                          <div className="w-10 h-8 rounded overflow-hidden shrink-0 bg-zinc-900 border border-zinc-800">
+                            <img
+                              src={s.image}
+                              alt=""
+                              className="w-full h-full object-cover object-top opacity-80"
+                            />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center justify-between gap-1">
+                              <span
+                                className={`text-xs font-medium truncate ${
+                                  isActive ? 'text-blue-300 font-semibold' : 'text-zinc-300'
+                                }`}
+                              >
+                                {s.title}
+                              </span>
+                              <span className="font-mono-tabular text-[10px] text-zinc-500 shrink-0">
+                                0{idx + 1}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-zinc-400 truncate mt-0.5">
+                              {s.caption}
+                            </p>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                 )}
               </div>

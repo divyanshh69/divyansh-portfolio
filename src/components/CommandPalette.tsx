@@ -137,9 +137,19 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-github',
       category: 'Connect',
       label: 'View GitHub Profile',
-      detail: 'github.com/divyanshnayak',
+      detail: 'github.com/divyanshh69',
       action: () => {
         window.open(PORTFOLIO_DATA.personal.github, '_blank', 'noopener,noreferrer');
+        onClose();
+      },
+    },
+    {
+      id: 'cmd-linkedin',
+      category: 'Connect',
+      label: 'View LinkedIn Profile',
+      detail: 'linkedin.com/in/divyansh-nayak-703390370',
+      action: () => {
+        window.open(PORTFOLIO_DATA.personal.linkedin, '_blank', 'noopener,noreferrer');
         onClose();
       },
     },

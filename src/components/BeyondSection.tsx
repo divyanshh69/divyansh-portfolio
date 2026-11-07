@@ -49,7 +49,7 @@ export const BeyondSection: React.FC = () => {
             <span className="font-mono-tabular text-[#2563EB]">06.</span>
             <span>Beyond the Resume</span>
             <span aria-hidden="true">·</span>
-            <span>How I Think, Engineering Character, Strengths & Growth</span>
+            <span>Thinking, Strengths, Growth & Approach</span>
           </div>
           <h2
             id="beyond-heading"
@@ -67,7 +67,7 @@ export const BeyondSection: React.FC = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Brain className="w-4 h-4 text-[#2563EB]" />
-              <h3 className="text-lg font-bold text-white">How I Think — Engineering Mental Models</h3>
+              <h3 className="text-lg font-bold text-white">How I Approach Problem Solving</h3>
             </div>
             <span className="text-xs font-mono-tabular text-zinc-500 hidden sm:inline">
               Core Principles
@@ -227,7 +227,7 @@ export const BeyondSection: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-xl font-bold text-white">
-                Personal Operating System & Beyond Code
+                Beyond Code & Development Mindset
               </h3>
               <p className="text-xs text-zinc-400 mt-0.5">
                 Explore the habits, principles, interests, and deliberate improvements that shape my perspective.

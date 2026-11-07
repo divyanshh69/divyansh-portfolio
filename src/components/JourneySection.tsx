@@ -60,7 +60,7 @@ export const JourneySection: React.FC = () => {
                 id="journey-heading"
                 className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight [text-wrap:balance]"
               >
-                From foundational CS theory to shipping flagship products.
+                From foundational CS theory to building practical software.
               </h2>
               <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
                 A chronological look at the coursework, developer communities, hackathons, and independent engineering builds that shaped my craft.

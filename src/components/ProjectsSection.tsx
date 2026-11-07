@@ -31,6 +31,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
   const [modalTab, setModalTab] = useState<'overview' | 'architecture' | 'interactive' | 'decisions'>('overview');
+  const [cardScreenshotIdx, setCardScreenshotIdx] = useState<Record<string, number>>({});
+  const [modalScreenshotIdx, setModalScreenshotIdx] = useState<number>(0);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   const filteredProjects = filterProjects(PORTFOLIO_DATA.projects, selectedCategory);
@@ -41,15 +43,18 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       if (found) {
         setActiveProject(found);
         setModalTab('overview');
+        setModalScreenshotIdx(cardScreenshotIdx[found.id] ?? 0);
       }
     }
   }, [externalSelectedProject]);
 
   const openProjectModal = (
     project: ProjectItem,
-    initialTab: 'overview' | 'architecture' | 'interactive' | 'decisions' = 'overview'
+    initialTab: 'overview' | 'architecture' | 'interactive' | 'decisions' = 'overview',
+    screenshotIdx?: number
   ) => {
     setModalTab(initialTab);
+    setModalScreenshotIdx(screenshotIdx ?? cardScreenshotIdx[project.id] ?? 0);
     setActiveProject(project);
   };
 
@@ -116,6 +121,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           {filteredProjects.map((project) => {
             const hasImgError = imageErrors[project.id];
             const isMetroFlow = project.id === 'metroflow';
+            const activeCardIdx = cardScreenshotIdx[project.id] ?? 0;
+            const currentScreenshot =
+              project.screenshots?.[activeCardIdx] || {
+                title: project.title,
+                image: project.image,
+                caption: project.subtitle,
+              };
 
             return (
               <CardTilt key={project.id} maxTilt={4} className="rounded-2xl">
@@ -130,18 +142,18 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
                     {/* Project Visual Preview Column */}
                     <div
-                      onClick={() => openProjectModal(project, 'overview')}
-                      className="lg:col-span-7 relative overflow-hidden bg-zinc-950 min-h-[300px] sm:min-h-[400px] cursor-pointer group/img"
+                      onClick={() => openProjectModal(project, 'overview', activeCardIdx)}
+                      className="lg:col-span-7 relative overflow-hidden bg-zinc-950 min-h-[320px] sm:min-h-[420px] cursor-pointer group/img"
                     >
                       {!hasImgError ? (
                         <img
-                          src={project.image}
-                          alt={`${project.title} — ${project.subtitle}`}
+                          src={currentScreenshot.image}
+                          alt={`${project.title} — ${currentScreenshot.title}`}
                           referrerPolicy="no-referrer"
                           onError={() =>
                             setImageErrors((prev) => ({ ...prev, [project.id]: true }))
                           }
-                          className="w-full h-full object-cover object-center transition-transform duration-700 group-hover/img:scale-[1.04]"
+                          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover/img:scale-[1.03]"
                         />
                       ) : (
                         <div className="w-full h-full flex flex-col items-center justify-center p-10 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black text-center">
@@ -172,17 +184,65 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         </span>
                       </div>
 
-                      {/* Bottom scrim with quick metrics and peek prompt */}
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4 z-10">
-                        <div className="flex flex-wrap items-center gap-6">
-                          {project.metrics.map((m) => (
-                            <div key={m.label}>
-                              <div className="font-mono-tabular text-sm font-semibold text-white">
-                                {m.value}
+                      {/* Desktop View Switcher Pills Overlay */}
+                      {project.screenshots && project.screenshots.length > 1 && (
+                        <div
+                          className="absolute top-14 left-4 z-20 flex items-center gap-1.5 p-1 rounded-lg bg-black/80 backdrop-blur-md border border-zinc-800/90 text-xs shadow-lg"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <span className="text-[10px] font-mono-tabular text-zinc-400 px-1 hidden sm:inline">
+                            Desktop Views:
+                          </span>
+                          {project.screenshots.map((s, sIdx) => {
+                            const isSelected = activeCardIdx === sIdx;
+                            return (
+                              <button
+                                key={s.title}
+                                type="button"
+                                onClick={() =>
+                                  setCardScreenshotIdx((prev) => ({
+                                    ...prev,
+                                    [project.id]: sIdx,
+                                  }))
+                                }
+                                className={`px-2 py-0.5 rounded text-[11px] font-mono-tabular transition-colors cursor-pointer ${
+                                  isSelected
+                                    ? 'bg-[#2563EB] text-white font-semibold'
+                                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80'
+                                }`}
+                                title={s.caption}
+                              >
+                                View 0{sIdx + 1}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {/* Bottom scrim with quick metrics and active view caption */}
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/65 to-transparent p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4 z-10">
+                        <div className="space-y-2">
+                          <div className="flex flex-wrap items-center gap-6">
+                            {project.metrics.map((m) => (
+                              <div key={m.label}>
+                                <div className="font-mono-tabular text-sm font-semibold text-white">
+                                  {m.value}
+                                </div>
+                                <div className="text-[11px] text-zinc-400">{m.label}</div>
                               </div>
-                              <div className="text-[11px] text-zinc-400">{m.label}</div>
+                            ))}
+                          </div>
+
+                          {project.screenshots && (
+                            <div className="text-[11px] text-zinc-300 pt-0.5 flex items-center gap-1.5">
+                              <span className="text-blue-400 font-semibold font-mono-tabular">
+                                {currentScreenshot.title}:
+                              </span>
+                              <span className="text-zinc-400 truncate max-w-[260px] sm:max-w-xs">
+                                {currentScreenshot.caption}
+                              </span>
                             </div>
-                          ))}
+                          )}
                         </div>
 
                         <span className="inline-flex items-center gap-1 text-xs font-semibold text-white bg-zinc-900/90 hover:bg-[#2563EB] border border-zinc-700 px-3.5 py-2 rounded-xl transition-colors whitespace-nowrap shrink-0">
@@ -310,6 +370,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           <ProjectDetailModal
             project={activeProject}
             initialTab={modalTab}
+            initialScreenshotIdx={modalScreenshotIdx}
             onClose={handleCloseModal}
           />
         )}
