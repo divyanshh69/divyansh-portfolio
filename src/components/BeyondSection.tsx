@@ -47,9 +47,9 @@ export const BeyondSection: React.FC = () => {
         <div className="max-w-3xl space-y-2.5 sm:space-y-3">
           <div className="flex items-center gap-2 text-xs text-zinc-400">
             <span className="font-mono-tabular text-[#2563EB]">06.</span>
-            <span>Beyond the Resume</span>
+            <span>Mindset</span>
             <span aria-hidden="true">·</span>
-            <span>Thinking, Strengths, Growth & Approach</span>
+            <span>Problem Solving & Growth</span>
           </div>
           <h2
             id="beyond-heading"
@@ -106,7 +106,7 @@ export const BeyondSection: React.FC = () => {
             <h3 className="text-base sm:text-lg font-bold text-white">Self-Assessment & Reflection</h3>
 
             {/* Filter Toggle */}
-            <div className="flex items-center gap-1 sm:gap-1.5 p-1 bg-[#0A0A0C] border border-zinc-800 rounded-lg text-xs w-full sm:w-fit overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1 sm:gap-1.5 p-1 liquid-glass-pill rounded-lg text-xs w-full sm:w-fit overflow-x-auto no-scrollbar">
               <button
                 type="button"
                 onClick={() => setViewFilter('all')}

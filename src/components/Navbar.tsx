@@ -18,7 +18,7 @@ export const NAV_SECTIONS: { id: SectionId; label: string }[] = [
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
   { id: 'journey', label: 'Journey' },
-  { id: 'beyond', label: 'Beyond' },
+  { id: 'beyond', label: 'Mindset' },
   { id: 'now', label: 'Now' },
   { id: 'contact', label: 'Contact' },
 ];
@@ -63,13 +63,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'skills', label: 'Skills' },
     { id: 'projects', label: 'Projects' },
     { id: 'journey', label: 'Journey' },
-    { id: 'beyond', label: 'Beyond' },
+    { id: 'beyond', label: 'Mindset' },
     { id: 'now', label: 'Now' },
   ];
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-[#050505]/90 backdrop-blur-md border-b border-zinc-800/80">
+      <header className="sticky top-0 z-40 w-full bg-[#050505]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.03)]">
         {/* Scroll Progress Bar */}
         <div
           aria-hidden="true"
@@ -126,11 +126,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={onOpenCommandPalette}
                 aria-label="Open Command Menu (⌘K)"
                 title="Open Command Menu (⌘K)"
-                className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono-tabular text-zinc-400 bg-zinc-900 border border-zinc-800 rounded-lg hover:text-white hover:border-zinc-700 transition-colors cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono-tabular text-zinc-400 liquid-glass-pill hover:text-white hover:border-white/20 transition-all cursor-pointer"
               >
-                <Search className="w-3 h-3 text-zinc-500" />
+                <Search className="w-3 h-3 text-zinc-400" />
                 <span className="text-[11px]">Search</span>
-                <kbd className="px-1 py-0.5 text-[10px] bg-zinc-800 rounded text-zinc-400 border border-zinc-700">
+                <kbd className="px-1 py-0.5 text-[10px] bg-white/[0.08] rounded text-zinc-300 border border-white/[0.1]">
                   ⌘K
                 </kbd>
               </button>
@@ -166,7 +166,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18 }}
-            className="lg:hidden fixed inset-x-0 top-[53px] sm:top-[57px] z-30 bg-[#09090B]/98 backdrop-blur-xl border-b border-zinc-800 px-4 sm:px-6 py-4 sm:py-5 shadow-2xl"
+            className="lg:hidden fixed inset-x-0 top-[53px] sm:top-[57px] z-30 liquid-glass border-b border-white/[0.08] px-4 sm:px-6 py-4 sm:py-5 shadow-2xl"
           >
             <nav aria-label="Mobile Navigation" className="grid grid-cols-2 gap-2">
               {NAV_SECTIONS.map((sec, index) => {
@@ -178,8 +178,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onClick={(e) => handleLinkClick(e, sec.id)}
                     className={`flex items-center justify-between px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-lg text-left text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
                       isActive
-                        ? 'bg-[#2563EB] text-white'
-                        : 'bg-zinc-900/70 text-zinc-300 hover:bg-zinc-800 hover:text-white'
+                        ? 'bg-[#2563EB] text-white shadow-sm'
+                        : 'bg-zinc-900/60 text-zinc-300 hover:bg-zinc-800 hover:text-white border border-white/[0.04]'
                     }`}
                   >
                     <span>{sec.label}</span>

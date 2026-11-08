@@ -79,9 +79,9 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
             <div className="space-y-3 sm:space-y-4">
               <div className="flex items-center gap-2 text-xs text-zinc-400">
                 <span className="font-mono-tabular text-[#2563EB]">08.</span>
-                <span>Contact & Connect</span>
+                <span>Contact</span>
                 <span aria-hidden="true">·</span>
-                <span>Open for Engineering Opportunities & Collaborations</span>
+                <span>Get in Touch</span>
               </div>
               <h2
                 id="contact-heading"
@@ -95,7 +95,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
             </div>
 
             {/* Direct Email & Quick Copy Card */}
-            <div className="p-4.5 sm:p-6 rounded-2xl border border-zinc-800/90 bg-[#0A0A0C] flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+            <div className="p-4.5 sm:p-6 rounded-2xl border border-white/[0.08] bg-[#0A0A0C] flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 shadow-lg">
               <div className="space-y-1 min-w-0">
                 <div className="text-xs text-zinc-400">Direct Email</div>
                 <a
@@ -109,7 +109,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-zinc-100 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-colors whitespace-nowrap shrink-0 cursor-pointer w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-zinc-100 liquid-glass-pill rounded-xl hover:text-white hover:border-white/20 transition-colors whitespace-nowrap shrink-0 cursor-pointer w-full sm:w-auto"
               >
                 {copiedEmail ? (
                   <>
@@ -132,7 +132,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                   href={personal.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-4 sm:p-5 rounded-2xl border border-zinc-800/80 bg-[#0A0A0C] hover:border-zinc-700 transition-all flex flex-col justify-between space-y-3 sm:space-y-4 h-full shadow-md"
+                  className="group p-4 sm:p-5 rounded-2xl border border-white/[0.08] bg-[#0A0A0C] hover:border-white/20 transition-all flex flex-col justify-between space-y-3 sm:space-y-4 h-full shadow-md"
                 >
                   <div className="flex items-center justify-between text-zinc-400 group-hover:text-white transition-colors">
                     <Github className="w-5 h-5" aria-hidden="true" />
@@ -150,7 +150,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                   href={personal.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-4 sm:p-5 rounded-2xl border border-zinc-800/80 bg-[#0A0A0C] hover:border-zinc-700 transition-all flex flex-col justify-between space-y-3 sm:space-y-4 h-full shadow-md"
+                  className="group p-4 sm:p-5 rounded-2xl border border-white/[0.08] bg-[#0A0A0C] hover:border-white/20 transition-all flex flex-col justify-between space-y-3 sm:space-y-4 h-full shadow-md"
                 >
                   <div className="flex items-center justify-between text-zinc-400 group-hover:text-white transition-colors">
                     <Linkedin className="w-5 h-5" aria-hidden="true" />
@@ -166,7 +166,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
               <CardTilt maxTilt={4} className="rounded-2xl">
                 <a
                   href={`mailto:${personal.email}`}
-                  className="group p-4 sm:p-5 rounded-2xl border border-zinc-800/80 bg-[#0A0A0C] hover:border-zinc-700 transition-all flex flex-col justify-between space-y-3 sm:space-y-4 h-full shadow-md"
+                  className="group p-4 sm:p-5 rounded-2xl border border-white/[0.08] bg-[#0A0A0C] hover:border-white/20 transition-all flex flex-col justify-between space-y-3 sm:space-y-4 h-full shadow-md"
                 >
                   <div className="flex items-center justify-between text-zinc-400 group-hover:text-white transition-colors">
                     <Mail className="w-5 h-5" aria-hidden="true" />
@@ -174,7 +174,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-white">Email</div>
-                    <div className="text-xs text-zinc-400 mt-0.5">Direct Dispatch</div>
+                    <div className="text-xs text-zinc-400 mt-0.5">Inquiries & Notes</div>
                   </div>
                 </a>
               </CardTilt>
@@ -183,9 +183,9 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
 
           {/* Right Column: Interactive Message Note Dispatch */}
           <div className="lg:col-span-6">
-            <div className="p-4.5 sm:p-8 rounded-2xl border border-zinc-800/90 bg-[#0A0A0C] space-y-5 sm:space-y-6">
+            <div className="p-4.5 sm:p-8 rounded-2xl border border-white/[0.08] bg-[#0A0A0C] space-y-5 sm:space-y-6 shadow-xl">
               <div>
-                <h3 className="text-lg sm:text-xl font-bold text-white">Send a Direct Note</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-white">Send a Message</h3>
                 <p className="text-xs text-zinc-400 mt-1">
                   Leave a message right here to start a conversation.
                 </p>
@@ -292,10 +292,10 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
 
                 <button
                   type="submit"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-xs font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-colors cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-xs font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-colors cursor-pointer shadow-md shadow-blue-500/20"
                 >
                   <Send className="w-3.5 h-3.5" aria-hidden="true" />
-                  <span>Send Message to Divyansh</span>
+                  <span>Send Message</span>
                 </button>
               </form>
 
@@ -331,7 +331,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
           <div className="space-y-1">
             <div className="text-sm font-semibold text-white">{personal.name}</div>
             <p className="text-xs text-zinc-400">
-              Built with care, clear architecture, and intentional motion.
+              Built with React, TypeScript & Tailwind CSS.
             </p>
           </div>
 

@@ -39,7 +39,7 @@ export const NowSection: React.FC = () => {
               <span className="font-mono-tabular text-[#2563EB]">07.</span>
               <span>Now</span>
               <span aria-hidden="true">·</span>
-              <span>Current Focus & Active Projects</span>
+              <span>Current Focus</span>
             </div>
             <h2
               id="now-heading"
@@ -52,7 +52,7 @@ export const NowSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="text-xs text-zinc-400 space-y-1 md:text-right shrink-0 p-3 sm:p-3.5 rounded-xl border border-zinc-800 bg-[#0A0A0C]">
+          <div className="text-xs text-zinc-400 space-y-1 md:text-right shrink-0 p-3 sm:p-3.5 rounded-xl liquid-glass-surface">
             <div className="flex items-center gap-2 md:justify-end">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-zinc-200 font-medium">Active Focus · {now.lastUpdated}</span>
@@ -62,7 +62,7 @@ export const NowSection: React.FC = () => {
         </div>
 
         {/* Filter Bar */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 bg-[#0A0A0C] border border-zinc-800/80 rounded-xl w-full sm:w-fit overflow-x-auto no-scrollbar">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 liquid-glass-pill rounded-xl w-full sm:w-fit overflow-x-auto no-scrollbar">
           {categories.map((cat) => {
             const isActive = filterCategory === cat;
             return (

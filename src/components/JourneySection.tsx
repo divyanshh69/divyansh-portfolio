@@ -52,9 +52,9 @@ export const JourneySection: React.FC = () => {
             <div className="space-y-3 max-w-2xl">
               <div className="flex items-center gap-2 text-xs text-zinc-400">
                 <span className="font-mono-tabular text-[#2563EB]">04.</span>
-                <span>Journey & Timeline</span>
+                <span>Journey</span>
                 <span aria-hidden="true">·</span>
-                <span>Milestones, Roles & Future Trajectory</span>
+                <span>Experience & Timeline</span>
               </div>
               <h2
                 id="journey-heading"
@@ -71,7 +71,7 @@ export const JourneySection: React.FC = () => {
             <div
               role="group"
               aria-label="Filter journey milestones"
-              className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 bg-[#0A0A0C] border border-zinc-800/80 rounded-xl w-full sm:w-fit overflow-x-auto no-scrollbar"
+              className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 liquid-glass-pill rounded-xl w-full sm:w-fit overflow-x-auto no-scrollbar"
             >
               {JOURNEY_CATEGORIES.map((category) => {
                 const isActive = selectedCategory === category;
@@ -166,17 +166,17 @@ export const JourneySection: React.FC = () => {
           </div>
         </div>
 
-        {/* Part 2: Achievements & Recognition */}
+        {/* Part 2: Achievements & Milestones */}
         <div className="pt-6 sm:pt-8 border-t border-zinc-900">
           <div className="max-w-2xl space-y-2.5 sm:space-y-3 mb-6 sm:mb-10">
             <div className="flex items-center gap-2 text-xs text-zinc-400">
               <span className="font-mono-tabular text-[#2563EB]">05.</span>
-              <span>Achievements & Milestones</span>
+              <span>Milestones</span>
               <span aria-hidden="true">·</span>
-              <span>Hackathons, Leadership, Academics & Credentials</span>
+              <span>Hackathons & Community</span>
             </div>
             <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">
-              Verified recognition across code, campus, and academics.
+              Recognition across code, campus, and academics.
             </h3>
           </div>
 

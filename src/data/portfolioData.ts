@@ -136,7 +136,7 @@ export const PORTFOLIO_DATA = {
       { value: 'B.Tech CSE', label: 'Undergraduate Program', context: 'Medi-Caps University · 2nd Year' },
       { value: 'MetroFlow', label: 'macOS Music Player', context: 'Swift, SwiftUI & CoreAudio' },
       { value: 'CampusPulse', label: 'Club Management Platform', context: 'React, Node.js & PostgreSQL' },
-      { value: '2026', label: 'Engineering Focus', context: 'Open to Software Roles' },
+      { value: 'Hackathons', label: '2026 Participant', context: 'Rapid Prototyping & Team Builds' },
     ],
   },
 
@@ -239,7 +239,7 @@ export const PORTFOLIO_DATA = {
       category: 'Web Development',
       context: 'Building interactive user interfaces, single-page web applications, and custom hooks.',
       experienceNote: 'Functional components, hooks, state management, and responsive layouts.',
-      usedIn: ['CampusPulse', 'Personal Digital Space'],
+      usedIn: ['CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'tailwind',
@@ -247,7 +247,7 @@ export const PORTFOLIO_DATA = {
       category: 'Web Development',
       context: 'Responsive styling, dark mode UI theming, and consistent layout design.',
       experienceNote: 'Utility classes, custom CSS variables, responsive breakpoints, and clean component styling.',
-      usedIn: ['CampusPulse', 'Personal Digital Space'],
+      usedIn: ['CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'motion',
@@ -255,7 +255,7 @@ export const PORTFOLIO_DATA = {
       category: 'Web Development',
       context: 'Smooth UI animations, scroll-triggered reveals, and micro-interactions.',
       experienceNote: 'Spring animations, staggered reveals, smooth transitions, and respecting prefers-reduced-motion.',
-      usedIn: ['Personal Digital Space', 'CampusPulse UI'],
+      usedIn: ['Personal Portfolio', 'CampusPulse UI'],
     },
     {
       id: 'nodejs',

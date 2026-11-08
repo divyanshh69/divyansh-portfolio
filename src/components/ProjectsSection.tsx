@@ -5,7 +5,7 @@ import {
   Github,
   Layers,
   CheckCircle2,
-  Play,
+  Cpu,
   Sparkles,
   Disc3,
   Calendar,
@@ -30,7 +30,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
-  const [modalTab, setModalTab] = useState<'overview' | 'architecture' | 'interactive' | 'decisions'>('overview');
+  const [modalTab, setModalTab] = useState<'overview' | 'technical' | 'architecture' | 'decisions'>('overview');
   const [cardScreenshotIdx, setCardScreenshotIdx] = useState<Record<string, number>>({});
   const [modalScreenshotIdx, setModalScreenshotIdx] = useState<number>(0);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
@@ -50,7 +50,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
   const openProjectModal = (
     project: ProjectItem,
-    initialTab: 'overview' | 'architecture' | 'interactive' | 'decisions' = 'overview',
+    initialTab: 'overview' | 'technical' | 'architecture' | 'decisions' = 'overview',
     screenshotIdx?: number
   ) => {
     setModalTab(initialTab);
@@ -75,9 +75,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2 text-xs text-zinc-400">
               <span className="font-mono-tabular text-[#2563EB]">03.</span>
-              <span>Featured Projects</span>
+              <span>Projects</span>
               <span aria-hidden="true">·</span>
-              <span>Personal & College Projects</span>
+              <span>Selected Work</span>
             </div>
             <h2
               id="projects-heading"
@@ -94,7 +94,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           <div
             role="group"
             aria-label="Filter projects by domain"
-            className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 bg-[#0A0A0C] border border-zinc-800/80 rounded-xl w-full sm:w-fit shrink-0 overflow-x-auto no-scrollbar"
+            className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 liquid-glass-pill rounded-xl w-full sm:w-fit shrink-0 overflow-x-auto no-scrollbar"
           >
             {PROJECT_CATEGORIES.map((category) => {
               const isActive = selectedCategory === category;
@@ -137,125 +137,123 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
                   transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="group rounded-2xl border border-zinc-800/90 bg-[#0A0A0C] overflow-hidden hover:border-zinc-700 transition-all duration-300 shadow-xl"
+                  className="group rounded-2xl border border-white/[0.08] bg-[#0A0A0E] overflow-hidden hover:border-white/20 transition-all duration-300 shadow-xl"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
                     {/* Project Visual Preview Column */}
-                    <div
-                      onClick={() => openProjectModal(project, 'overview', activeCardIdx)}
-                      className="lg:col-span-7 relative overflow-hidden bg-zinc-950 min-h-[260px] sm:min-h-[420px] cursor-pointer group/img"
-                    >
-                      {!hasImgError ? (
-                        <img
-                          src={currentScreenshot.image}
-                          alt={`${project.title} — ${currentScreenshot.title}`}
-                          referrerPolicy="no-referrer"
-                          onError={() =>
-                            setImageErrors((prev) => ({ ...prev, [project.id]: true }))
-                          }
-                          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover/img:scale-[1.03]"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex flex-col items-center justify-center p-8 sm:p-10 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black text-center">
-                          <Layers className="w-10 h-10 text-[#2563EB] mb-3" aria-hidden="true" />
-                          <p className="text-base font-semibold text-white">{project.title}</p>
-                          <p className="text-xs text-zinc-400 mt-1">{project.subtitle}</p>
+                    <div className="lg:col-span-7 flex flex-col bg-[#070709] border-b lg:border-b-0 lg:border-r border-white/[0.06]">
+                      {/* Window Chrome Header - Contains Window dots, Platform Badge & View Switcher */}
+                      <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0C0C10] border-b border-white/[0.06] flex flex-wrap items-center justify-between gap-2">
+                        {/* Left: Window Dots & Platform Tag */}
+                        <div className="flex items-center gap-2.5">
+                          <div className="flex items-center gap-1.5" aria-hidden="true">
+                            <span className="w-2.5 h-2.5 rounded-full bg-zinc-700/80" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-zinc-700/80" />
+                            <span className="w-2.5 h-2.5 rounded-full bg-zinc-700/80" />
+                          </div>
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md liquid-glass-pill text-zinc-300 font-mono-tabular text-[11px]">
+                            {isMetroFlow ? (
+                              <>
+                                <Disc3 className="w-3 h-3 text-blue-400 animate-spin" />
+                                <span>Native macOS</span>
+                              </>
+                            ) : (
+                              <>
+                                <Calendar className="w-3 h-3 text-blue-400" />
+                                <span>Full-Stack Web</span>
+                              </>
+                            )}
+                          </span>
                         </div>
-                      )}
 
-                      {/* Top Badges */}
-                      <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between text-xs z-10">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-lg bg-black/75 backdrop-blur-md border border-zinc-800 text-zinc-200 font-mono-tabular text-[11px] sm:text-xs">
-                          {isMetroFlow ? (
-                            <>
-                              <Disc3 className="w-3.5 h-3.5 text-blue-400 animate-spin" />
-                              <span>Native macOS · AVFoundation</span>
-                            </>
-                          ) : (
-                            <>
-                              <Calendar className="w-3.5 h-3.5 text-blue-400" />
-                              <span>Full-Stack Web · PostgreSQL</span>
-                            </>
-                          )}
-                        </span>
-
-                        <span className="px-2 sm:px-2.5 py-1 rounded-lg bg-[#2563EB]/90 backdrop-blur-md text-white font-mono-tabular text-[10px] sm:text-[11px] font-semibold">
-                          {project.year}
-                        </span>
+                        {/* Right: Interactive Desktop View Switcher Pills */}
+                        {project.screenshots && project.screenshots.length > 1 && (
+                          <div
+                            role="tablist"
+                            aria-label={`${project.title} screenshot views`}
+                            className="flex items-center gap-1 p-0.5 rounded-lg liquid-glass-pill"
+                          >
+                            <span className="text-[10px] font-mono-tabular text-zinc-400 px-1 hidden md:inline">
+                              Views:
+                            </span>
+                            {project.screenshots.map((s, sIdx) => {
+                              const isSelected = activeCardIdx === sIdx;
+                              const shortLabel = isMetroFlow
+                                ? (sIdx === 0 ? 'Home' : sIdx === 1 ? 'Lyrics' : 'Settings')
+                                : (sIdx === 0 ? 'Dashboard' : sIdx === 1 ? 'Members' : 'Settings');
+                              return (
+                                <button
+                                  key={s.title}
+                                  type="button"
+                                  role="tab"
+                                  aria-selected={isSelected}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setCardScreenshotIdx((prev) => ({
+                                      ...prev,
+                                      [project.id]: sIdx,
+                                    }));
+                                  }}
+                                  className={`px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono-tabular transition-all cursor-pointer whitespace-nowrap ${
+                                    isSelected
+                                      ? 'bg-[#2563EB] text-white font-semibold shadow-sm'
+                                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05]'
+                                  }`}
+                                  title={s.title}
+                                >
+                                  {shortLabel}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
 
-                      {/* Desktop View Switcher Pills Overlay */}
-                      {project.screenshots && project.screenshots.length > 1 && (
-                        <div
-                          className="absolute top-12 left-3 sm:top-14 sm:left-4 z-20 flex items-center gap-1 sm:gap-1.5 p-1 rounded-lg bg-black/85 backdrop-blur-md border border-zinc-800/90 text-xs shadow-lg max-w-[calc(100%-1.5rem)] overflow-x-auto no-scrollbar"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <span className="text-[10px] font-mono-tabular text-zinc-400 px-1 hidden sm:inline">
-                            Desktop Views:
-                          </span>
-                          {project.screenshots.map((s, sIdx) => {
-                            const isSelected = activeCardIdx === sIdx;
-                            return (
-                              <button
-                                key={s.title}
-                                type="button"
-                                onClick={() =>
-                                  setCardScreenshotIdx((prev) => ({
-                                    ...prev,
-                                    [project.id]: sIdx,
-                                  }))
-                                }
-                                className={`px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono-tabular transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
-                                  isSelected
-                                    ? 'bg-[#2563EB] text-white font-semibold'
-                                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80'
-                                }`}
-                                title={s.caption}
-                              >
-                                View 0{sIdx + 1}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      )}
-
-                      {/* Bottom scrim with quick metrics and active view caption */}
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/65 to-transparent p-4 sm:p-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 z-10">
-                        <div className="space-y-1.5 sm:space-y-2">
-                          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-                            {project.metrics.map((m) => (
-                              <div key={m.label}>
-                                <div className="font-mono-tabular text-xs sm:text-sm font-semibold text-white">
-                                  {m.value}
-                                </div>
-                                <div className="text-[10px] sm:text-[11px] text-zinc-400">{m.label}</div>
-                              </div>
-                            ))}
+                      {/* Uncropped Screenshot Viewport */}
+                      <div
+                        onClick={() => openProjectModal(project, 'overview', activeCardIdx)}
+                        className="relative flex-1 w-full bg-[#050508] flex items-center justify-center p-2.5 sm:p-4 cursor-pointer group/img overflow-hidden"
+                        title="Click to view full case study & screenshots"
+                      >
+                        {!hasImgError ? (
+                          <img
+                            src={currentScreenshot.image}
+                            alt={`${project.title} — ${currentScreenshot.title}`}
+                            referrerPolicy="no-referrer"
+                            onError={() =>
+                              setImageErrors((prev) => ({ ...prev, [project.id]: true }))
+                            }
+                            className="w-full max-h-[380px] sm:max-h-[460px] object-contain rounded-lg border border-white/[0.05] shadow-lg transition-transform duration-500 group-hover/img:scale-[1.01]"
+                          />
+                        ) : (
+                          <div className="w-full min-h-[260px] flex flex-col items-center justify-center p-8 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black text-center rounded-lg">
+                            <Layers className="w-10 h-10 text-[#2563EB] mb-3" aria-hidden="true" />
+                            <p className="text-base font-semibold text-white">{project.title}</p>
+                            <p className="text-xs text-zinc-400 mt-1">{project.subtitle}</p>
                           </div>
+                        )}
+                      </div>
 
-                          {project.screenshots && (
-                            <div className="text-[10px] sm:text-[11px] text-zinc-300 pt-0.5 flex items-center gap-1.5">
-                              <span className="text-blue-400 font-semibold font-mono-tabular shrink-0">
-                                {currentScreenshot.title}:
-                              </span>
-                              <span className="text-zinc-400 truncate max-w-[200px] sm:max-w-xs">
-                                {currentScreenshot.caption}
-                              </span>
-                            </div>
-                          )}
+                      {/* Bottom Caption Bar (Completely outside the screenshot - no overlap!) */}
+                      <div className="px-3 sm:px-4 py-2 bg-[#0A0A0E] border-t border-white/[0.06] flex items-center justify-between gap-3 text-[11px]">
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <span className="text-blue-400 font-semibold font-mono-tabular shrink-0">
+                            {currentScreenshot.title}:
+                          </span>
+                          <span className="text-zinc-400 truncate">
+                            {currentScreenshot.caption}
+                          </span>
                         </div>
-
-                        <span className="inline-flex items-center justify-center gap-1 text-xs font-semibold text-white bg-zinc-900/90 hover:bg-[#2563EB] border border-zinc-700 px-3.5 py-2 rounded-xl transition-colors whitespace-nowrap shrink-0 w-full sm:w-auto">
-                          <span>View Case Study</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        <span className="text-zinc-500 font-mono-tabular text-[10px] shrink-0 hidden sm:inline">
+                          Click to enlarge
                         </span>
                       </div>
                     </div>
 
                     {/* Project Narrative & Controls Column */}
-                    <div className="lg:col-span-5 p-4.5 sm:p-7 md:p-9 flex flex-col justify-between space-y-5 sm:space-y-6">
+                    <div className="lg:col-span-5 p-4.5 sm:p-7 md:p-8 flex flex-col justify-between space-y-5 sm:space-y-6">
                       <div className="space-y-3.5 sm:space-y-4">
-                        {/* Unboxed Metadata Row */}
+                        {/* Metadata Row */}
                         <div className="flex flex-wrap items-center gap-2 text-xs text-zinc-400">
                           <span className="font-mono-tabular text-[#2563EB] font-semibold">
                             {project.index}
@@ -280,6 +278,18 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                           {project.shortDescription}
                         </p>
+
+                        {/* Project Technical Highlights / Metrics */}
+                        <div className="grid grid-cols-3 gap-2 py-2 px-3 rounded-xl bg-zinc-900/60 border border-white/[0.05]">
+                          {project.metrics.map((m) => (
+                            <div key={m.label} className="min-w-0">
+                              <div className="font-mono-tabular text-xs sm:text-sm font-semibold text-white truncate">
+                                {m.value}
+                              </div>
+                              <div className="text-[10px] text-zinc-400 truncate">{m.label}</div>
+                            </div>
+                          ))}
+                        </div>
 
                         {/* Key Engineering Highlights */}
                         <ul className="space-y-1.5 sm:space-y-2 pt-1">
@@ -314,41 +324,45 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                           ))}
                         </div>
 
-                        {/* Action Buttons */}
+                        {/* Action Buttons: Clear distinction between Primary and Secondary */}
                         <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                          {/* Primary Action Button */}
                           <button
                             type="button"
                             onClick={() => openProjectModal(project, 'overview')}
-                            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors whitespace-nowrap shrink-0 cursor-pointer shadow-md shadow-blue-500/20"
+                            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-4.5 sm:py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-all duration-150 whitespace-nowrap shrink-0 cursor-pointer shadow-md shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
                           >
-                            <span>Case Study</span>
+                            <span>Case Study & Details</span>
                             <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
                           </button>
 
+                          {/* Secondary Action: Technical Overview */}
                           <button
                             type="button"
-                            onClick={() => openProjectModal(project, 'interactive')}
-                            className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 text-xs font-medium text-zinc-200 bg-zinc-900 border border-zinc-800 rounded-lg hover:bg-zinc-800 hover:text-white transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                            onClick={() => openProjectModal(project, 'technical')}
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-2.5 text-xs font-medium text-zinc-200 liquid-glass-pill rounded-lg hover:text-white hover:border-white/20 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                           >
-                            <Play className="w-3 h-3 text-[#2563EB]" aria-hidden="true" />
-                            <span>Interactive Preview</span>
+                            <Cpu className="w-3.5 h-3.5 text-blue-400" aria-hidden="true" />
+                            <span>Technical Overview</span>
                           </button>
 
+                          {/* Secondary Action: Architecture */}
                           <button
                             type="button"
                             onClick={() => openProjectModal(project, 'architecture')}
-                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-2.5 text-xs font-medium text-zinc-400 bg-zinc-900/60 border border-zinc-800/80 rounded-lg hover:text-zinc-200 hover:bg-zinc-800 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-2.5 text-xs font-medium text-zinc-300 bg-zinc-900/70 border border-zinc-800 rounded-lg hover:text-white hover:bg-zinc-800 transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                           >
                             <Layers className="w-3 h-3 text-zinc-400" />
                             <span>Architecture</span>
                           </button>
 
+                          {/* Secondary Action: Source Code */}
                           <a
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`View ${project.title} source code on GitHub`}
-                            className="inline-flex items-center justify-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-2.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors whitespace-nowrap shrink-0"
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-2.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors whitespace-nowrap shrink-0 ml-auto sm:ml-0"
                           >
                             <Github className="w-3.5 h-3.5" aria-hidden="true" />
                             <span>Code</span>

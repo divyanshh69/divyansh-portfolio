@@ -84,8 +84,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'cmd-beyond',
       category: 'Navigation',
-      label: 'Beyond the Resume',
-      detail: 'How I think, strengths, growth areas & mindset',
+      label: 'Mindset & Approach',
+      detail: 'How I think, strengths, growth areas & engineering approach',
       action: () => {
         onNavigate('beyond');
         onClose();
@@ -223,10 +223,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             exit={{ opacity: 0, scale: 0.95, y: -12 }}
             transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl rounded-2xl border border-zinc-800 bg-[#0A0A0C] shadow-2xl overflow-hidden text-zinc-100 divide-y divide-zinc-900"
+            className="w-full max-w-xl rounded-2xl liquid-glass shadow-2xl overflow-hidden text-zinc-100 divide-y divide-white/[0.06]"
           >
             {/* Search Input Bar */}
-            <div className="flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-3 sm:py-3.5 bg-[#0D0D11]">
+            <div className="flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-3 sm:py-3.5 bg-black/40">
               <Search className="w-4 h-4 text-zinc-400 shrink-0" />
               <input
                 ref={inputRef}
@@ -304,13 +304,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             </div>
 
             {/* Footer Shortcut Tips */}
-            <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-mono-tabular text-zinc-500 bg-[#08080A]">
+            <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-mono-tabular text-zinc-500 bg-black/40">
               <div className="flex items-center gap-2 sm:gap-3">
                 <span>↑↓ Navigate</span>
                 <span>↵ Select</span>
                 <span>ESC Close</span>
               </div>
-              <span className="text-zinc-400 hidden sm:inline">Divyansh Nayak · Digital Space</span>
+              <span className="text-zinc-400 hidden sm:inline">Divyansh Nayak · Portfolio</span>
             </div>
           </motion.div>
         </div>

@@ -5,8 +5,6 @@ import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { SectionId } from './Navbar';
 import { InteractiveHeroCanvas } from './InteractiveHeroCanvas';
 import { CardTilt } from './CardTilt';
-import { InteractiveAudioSpectrum } from './InteractiveAudioSpectrum';
-import { InteractiveCampusPulsePreview } from './InteractiveCampusPulsePreview';
 
 interface HeroSectionProps {
   onNavigate: (id: SectionId) => void;
@@ -14,7 +12,9 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProject }) => {
-  const { personal } = PORTFOLIO_DATA;
+  const { personal, projects } = PORTFOLIO_DATA;
+  const metroflowProject = projects.find((p) => p.id === 'metroflow');
+  const campuspulseProject = projects.find((p) => p.id === 'campuspulse');
   const [imgError, setImgError] = useState(false);
   const [activeHudTab, setActiveHudTab] = useState<'workspace' | 'metroflow' | 'campuspulse'>('workspace');
   const [currentTime, setCurrentTime] = useState('');
@@ -86,9 +86,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
             <div className="space-y-5 sm:space-y-6">
               {/* Unboxed Kicker with Status & Live Clock */}
               <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs md:text-sm">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono-tabular text-xs">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-glass-pill text-blue-400 font-mono-tabular text-xs">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-                  <span>Available for SDE 2026</span>
+                  <span>Open to Internship Opportunities</span>
                 </span>
                 {currentTime && (
                   <span className="text-zinc-500 font-mono-tabular text-xs hidden sm:inline">
@@ -173,9 +173,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
             className="lg:col-span-5 flex flex-col"
           >
             <CardTilt maxTilt={6} className="w-full">
-              <div className="relative w-full rounded-2xl overflow-hidden border border-zinc-800 bg-[#0A0A0C] shadow-2xl flex flex-col justify-between">
+              <div className="relative w-full rounded-2xl overflow-hidden liquid-glass shadow-2xl flex flex-col justify-between">
                 {/* HUD View Switcher Tabs */}
-                <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 border-b border-zinc-800/90 bg-[#0C0C10] z-20">
+                <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 border-b border-white/[0.06] bg-black/40 z-20">
                   <div className="flex items-center gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
                     <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
@@ -185,7 +185,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-1 p-0.5 sm:p-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs">
+                  <div className="flex items-center gap-1 p-0.5 sm:p-1 liquid-glass-pill rounded-lg text-xs">
                     <button
                       type="button"
                       onClick={() => setActiveHudTab('workspace')}
@@ -248,7 +248,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
 
                       {/* Live overlay badges */}
                       <div className="relative z-10 flex items-center justify-between text-[11px] font-mono-tabular">
-                        <span className="px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-zinc-800 text-zinc-300">
+                        <span className="px-2.5 py-1 rounded-md liquid-glass-pill text-zinc-300">
                           Student Developer · 2026
                         </span>
                         <span className="px-2.5 py-1 rounded-md bg-blue-500/20 backdrop-blur-md border border-blue-500/30 text-blue-300">
@@ -271,49 +271,121 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                     </div>
                   )}
 
-                  {/* TAB 2: METROFLOW LIVE WAVEFORM */}
-                  {activeHudTab === 'metroflow' && (
-                    <div className="w-full space-y-3">
+                  {/* TAB 2: METROFLOW REAL SPOTLIGHT */}
+                  {activeHudTab === 'metroflow' && metroflowProject && (
+                    <div className="w-full flex flex-col justify-between space-y-3 min-h-[330px]">
                       <div className="flex items-center justify-between text-xs text-zinc-400">
                         <span className="font-semibold text-white flex items-center gap-1.5">
                           <Disc3 className="w-3.5 h-3.5 text-blue-400 animate-spin" />
-                          MetroFlow Interface Demo
+                          <span>MetroFlow · macOS Player</span>
                         </span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            onNavigate('projects');
-                            onOpenProject?.('metroflow');
-                          }}
-                          className="text-[11px] text-[#60A5FA] hover:underline cursor-pointer"
-                        >
-                          View Project Details →
-                        </button>
+                        <span className="text-[10px] font-mono-tabular px-2 py-0.5 rounded liquid-glass-pill text-blue-300">
+                          Apple Silicon ARM64
+                        </span>
                       </div>
-                      <InteractiveAudioSpectrum compact />
+
+                      {/* Real Project Screenshot */}
+                      <div
+                        onClick={() => {
+                          onNavigate('projects');
+                          onOpenProject?.('metroflow');
+                        }}
+                        className="relative w-full aspect-[16/10] max-h-[220px] rounded-lg overflow-hidden bg-[#050508] border border-white/[0.08] flex items-center justify-center p-1.5 cursor-pointer group/heroimg"
+                        title="Click to explore MetroFlow technical details"
+                      >
+                        <img
+                          src={metroflowProject.image}
+                          alt="MetroFlow native macOS music player interface"
+                          className="w-full h-full object-contain rounded transition-transform duration-500 group-hover/heroimg:scale-[1.02]"
+                        />
+                      </div>
+
+                      <div className="space-y-2 pt-1">
+                        <div className="flex flex-wrap gap-1.5">
+                          {metroflowProject.technologies.slice(0, 4).map((tech) => (
+                            <span
+                              key={tech}
+                              className="text-[10px] font-mono-tabular px-2 py-0.5 rounded bg-white/[0.05] border border-white/[0.08] text-zinc-300"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex items-center justify-between gap-3 pt-1">
+                          <p className="text-xs text-zinc-400 truncate">
+                            Local audio playback, synchronized lyrics & mini-player.
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              onNavigate('projects');
+                              onOpenProject?.('metroflow');
+                            }}
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-400 hover:text-blue-300 transition-colors whitespace-nowrap cursor-pointer shrink-0"
+                          >
+                            <span>Technical Details →</span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   )}
 
-                  {/* TAB 3: CAMPUSPULSE PREVIEW */}
-                  {activeHudTab === 'campuspulse' && (
-                    <div className="w-full space-y-3">
+                  {/* TAB 3: CAMPUSPULSE REAL SPOTLIGHT */}
+                  {activeHudTab === 'campuspulse' && campuspulseProject && (
+                    <div className="w-full flex flex-col justify-between space-y-3 min-h-[330px]">
                       <div className="flex items-center justify-between text-xs text-zinc-400">
                         <span className="font-semibold text-white flex items-center gap-1.5">
                           <Calendar className="w-3.5 h-3.5 text-blue-400" />
-                          CampusPulse Platform Demo
+                          <span>CampusPulse · Club Platform</span>
                         </span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            onNavigate('projects');
-                            onOpenProject?.('campuspulse');
-                          }}
-                          className="text-[11px] text-[#60A5FA] hover:underline cursor-pointer"
-                        >
-                          View Project Details →
-                        </button>
+                        <span className="text-[10px] font-mono-tabular px-2 py-0.5 rounded liquid-glass-pill text-emerald-300">
+                          PostgreSQL Verified
+                        </span>
                       </div>
-                      <InteractiveCampusPulsePreview />
+
+                      {/* Real Project Screenshot */}
+                      <div
+                        onClick={() => {
+                          onNavigate('projects');
+                          onOpenProject?.('campuspulse');
+                        }}
+                        className="relative w-full aspect-[16/10] max-h-[220px] rounded-lg overflow-hidden bg-[#050508] border border-white/[0.08] flex items-center justify-center p-1.5 cursor-pointer group/heroimg"
+                        title="Click to explore CampusPulse technical details"
+                      >
+                        <img
+                          src={campuspulseProject.image}
+                          alt="CampusPulse operations dashboard interface"
+                          className="w-full h-full object-contain rounded transition-transform duration-500 group-hover/heroimg:scale-[1.02]"
+                        />
+                      </div>
+
+                      <div className="space-y-2 pt-1">
+                        <div className="flex flex-wrap gap-1.5">
+                          {campuspulseProject.technologies.slice(0, 4).map((tech) => (
+                            <span
+                              key={tech}
+                              className="text-[10px] font-mono-tabular px-2 py-0.5 rounded bg-white/[0.05] border border-white/[0.08] text-zinc-300"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex items-center justify-between gap-3 pt-1">
+                          <p className="text-xs text-zinc-400 truncate">
+                            Society operations, conflict-aware scheduling & RSVP tracking.
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              onNavigate('projects');
+                              onOpenProject?.('campuspulse');
+                            }}
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-400 hover:text-blue-300 transition-colors whitespace-nowrap cursor-pointer shrink-0"
+                          >
+                            <span>Technical Details →</span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>

@@ -18,13 +18,13 @@ export const AboutSection: React.FC = () => {
       className="py-14 sm:py-20 md:py-28 border-b border-zinc-900 relative"
     >
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-        {/* Editorial Section Header */}
+        {/* Section Header */}
         <div className="max-w-3xl space-y-3 sm:space-y-4 mb-10 sm:mb-14">
           <div className="flex items-center gap-2 text-xs text-zinc-400">
             <span className="font-mono-tabular text-[#2563EB]">01.</span>
-            <span>About Me</span>
+            <span>About</span>
             <span aria-hidden="true">·</span>
-            <span>Background, Education, Interests & Motivation</span>
+            <span>Background & Foundation</span>
           </div>
           <h2
             id="about-heading"

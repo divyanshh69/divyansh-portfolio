@@ -35,9 +35,9 @@ export const SkillsSection: React.FC = () => {
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2 text-xs text-zinc-400">
               <span className="font-mono-tabular text-[#2563EB]">02.</span>
-              <span>Skills & Technologies</span>
+              <span>Skills</span>
               <span aria-hidden="true">·</span>
-              <span>Languages, Frameworks & Development Tools</span>
+              <span>Technologies & Tools</span>
             </div>
             <h2
               id="skills-heading"
@@ -66,7 +66,7 @@ export const SkillsSection: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search skill or project..."
-                className="w-full pl-10 pr-4 py-2.5 text-sm bg-[#0A0A0C] border border-zinc-800 rounded-xl text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-[#2563EB] transition-colors"
+                className="w-full pl-10 pr-4 py-2.5 text-sm liquid-glass-surface rounded-xl text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-[#2563EB] transition-colors"
               />
             </div>
           </div>
@@ -76,7 +76,7 @@ export const SkillsSection: React.FC = () => {
         <div
           role="group"
           aria-label="Filter skills by category"
-          className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 bg-[#0A0A0C] border border-zinc-800/80 rounded-xl w-full sm:w-fit mb-8 sm:mb-10 overflow-x-auto no-scrollbar"
+          className="flex flex-wrap items-center gap-1.5 p-1 sm:p-1.5 liquid-glass-pill rounded-xl w-full sm:w-fit mb-8 sm:mb-10 overflow-x-auto no-scrollbar"
         >
           {SKILL_CATEGORIES.map((category) => {
             const isActive = selectedCategory === category;

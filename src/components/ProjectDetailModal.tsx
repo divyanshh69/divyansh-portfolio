@@ -11,7 +11,7 @@ import {
   Maximize2,
   Minimize2,
   Code2,
-  Play,
+  Terminal,
   FileText,
   ChevronLeft,
   ChevronRight,
@@ -19,12 +19,10 @@ import {
   Image as ImageIcon,
 } from 'lucide-react';
 import { ProjectItem } from '../data/portfolioData';
-import { InteractiveAudioSpectrum } from './InteractiveAudioSpectrum';
-import { InteractiveCampusPulsePreview } from './InteractiveCampusPulsePreview';
 
 interface ProjectDetailModalProps {
   project: ProjectItem | null;
-  initialTab?: 'overview' | 'architecture' | 'interactive' | 'decisions';
+  initialTab?: 'overview' | 'technical' | 'architecture' | 'decisions';
   initialScreenshotIdx?: number;
   onClose: () => void;
 }
@@ -35,7 +33,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
   initialScreenshotIdx = 0,
   onClose,
 }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'architecture' | 'interactive' | 'decisions'>(
+  const [activeTab, setActiveTab] = useState<'overview' | 'technical' | 'architecture' | 'decisions'>(
     initialTab
   );
   const [isZoomed, setIsZoomed] = useState(false);
@@ -48,10 +46,10 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
   if (!project) return null;
 
   const tabs = [
-    { id: 'overview', label: 'Case Study & Overview', icon: FileText },
-    { id: 'interactive', label: 'Interactive Sandbox', icon: Play },
+    { id: 'overview', label: 'Case Study & Gallery', icon: FileText },
+    { id: 'technical', label: 'Technical Overview', icon: Cpu },
     { id: 'architecture', label: 'System Architecture', icon: Layers },
-    { id: 'decisions', label: 'Engineering Trade-Offs', icon: Code2 },
+    { id: 'decisions', label: 'Engineering Decisions', icon: Code2 },
   ] as const;
 
   // Authentic technical decisions and architectural approach
@@ -125,10 +123,10 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         exit={{ opacity: 0, scale: 0.96, y: 16 }}
         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-5xl rounded-2xl border border-zinc-800 bg-[#09090B] text-zinc-100 shadow-2xl overflow-hidden my-2 sm:my-6 flex flex-col max-h-[95vh] sm:max-h-[92vh]"
+        className="w-full max-w-5xl rounded-2xl liquid-glass text-zinc-100 shadow-2xl overflow-hidden my-2 sm:my-6 flex flex-col max-h-[95vh] sm:max-h-[92vh]"
       >
         {/* Header Bar */}
-        <div className="flex items-center justify-between gap-3 sm:gap-4 px-3.5 sm:px-6 py-3 sm:py-4 border-b border-zinc-800 bg-[#0C0C0F] shrink-0">
+        <div className="flex items-center justify-between gap-3 sm:gap-4 px-3.5 sm:px-6 py-3 sm:py-4 border-b border-white/[0.08] bg-black/40 shrink-0">
           <div className="min-w-0">
             <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-zinc-400">
               <span className="font-mono-tabular text-[#2563EB] font-semibold">
@@ -149,7 +147,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 bg-zinc-900 border border-zinc-800 rounded-lg hover:text-white hover:bg-zinc-800 transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 liquid-glass-pill rounded-lg hover:text-white transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Repository</span>
@@ -158,7 +156,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               type="button"
               onClick={onClose}
               aria-label="Close modal dialog"
-              className="p-1.5 sm:p-2 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/80 transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.08] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -166,7 +164,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2 sm:py-2.5 border-b border-zinc-800/80 bg-[#0A0A0C] overflow-x-auto no-scrollbar shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2 sm:py-2.5 border-b border-white/[0.06] bg-black/30 overflow-x-auto no-scrollbar shrink-0">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -196,9 +194,9 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               {/* Elevated Desktop Screenshot Showcase */}
               <div className="space-y-4">
                 {/* Desktop Window Frame */}
-                <div className="rounded-xl overflow-hidden border border-zinc-800 bg-[#0B0B0E] shadow-2xl">
+                <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-[#0B0B0E] shadow-2xl">
                   {/* Window Chrome Titlebar */}
-                  <div className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#101014] border-b border-zinc-800/90 text-xs">
+                  <div className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#101014] border-b border-white/[0.06] text-xs">
                     {/* Traffic Light Dots */}
                     <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
                       <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 border border-red-600/40" />
@@ -265,7 +263,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                           type="button"
                           onClick={handlePrevScreenshot}
                           aria-label="Previous screenshot"
-                          className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/75 hover:bg-black/95 text-zinc-300 hover:text-white border border-zinc-700/80 backdrop-blur-sm transition-all cursor-pointer shadow-lg opacity-80 hover:opacity-100 hover:scale-105"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full liquid-glass-pill hover:bg-black/95 text-zinc-300 hover:text-white transition-all cursor-pointer shadow-lg opacity-85 hover:opacity-100 hover:scale-105"
                         >
                           <ChevronLeft className="w-4 h-4" />
                         </button>
@@ -273,7 +271,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                           type="button"
                           onClick={handleNextScreenshot}
                           aria-label="Next screenshot"
-                          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/75 hover:bg-black/95 text-zinc-300 hover:text-white border border-zinc-700/80 backdrop-blur-sm transition-all cursor-pointer shadow-lg opacity-80 hover:opacity-100 hover:scale-105"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full liquid-glass-pill hover:bg-black/95 text-zinc-300 hover:text-white transition-all cursor-pointer shadow-lg opacity-85 hover:opacity-100 hover:scale-105"
                         >
                           <ChevronRight className="w-4 h-4" />
                         </button>
@@ -282,7 +280,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   </div>
 
                   {/* Caption & Context Drawer */}
-                  <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0C0C0F] border-t border-zinc-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 text-xs">
+                  <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0C0C0F] border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 text-xs">
                     <div className="flex items-center gap-2">
                       <span className="px-2 py-0.5 rounded bg-[#2563EB]/20 text-[#60A5FA] border border-blue-500/30 font-medium shrink-0 text-[11px] sm:text-xs">
                         {activeScreenshot.title}
@@ -410,21 +408,172 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             </div>
           )}
 
-          {/* TAB 2: INTERACTIVE PREVIEW */}
-          {activeTab === 'interactive' && (
-            <div className="space-y-6">
+          {/* TAB 2: TECHNICAL OVERVIEW */}
+          {activeTab === 'technical' && (
+            <div className="space-y-6 sm:space-y-8">
+              {/* Header */}
               <div className="space-y-1">
-                <h4 className="text-base font-bold text-white">Interactive Interface Preview</h4>
-                <p className="text-xs text-zinc-400">
-                  Explore an interactive demonstration of the visual interface and key features of {project.title}.
+                <div className="flex items-center gap-2">
+                  <Cpu className="w-4 h-4 text-[#2563EB]" />
+                  <h4 className="text-base sm:text-lg font-bold text-white">
+                    Technical Specifications & Implementation Overview
+                  </h4>
+                </div>
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                  Detailed technical architecture, runtime environment, and subsystem responsibilities for {project.title}.
                 </p>
               </div>
 
-              {project.id === 'metroflow' ? (
-                <InteractiveAudioSpectrum />
-              ) : (
-                <InteractiveCampusPulsePreview />
-              )}
+              {/* 1. Technical Stack Specifications Grid */}
+              <div className="space-y-3">
+                <h5 className="text-xs font-mono-tabular uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-1.5">
+                  <Terminal className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Engineering Stack & Runtime Environment</span>
+                </h5>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {project.id === 'metroflow' ? (
+                    <>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Target Architecture</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">Apple Silicon ARM64</div>
+                        <div className="text-[11px] text-zinc-500">Native macOS Build</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Core Language</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">Swift</div>
+                        <div className="text-[11px] text-zinc-500">Strict Type Safety & Concurrency</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Audio Pipeline</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">CoreAudio & AVFoundation</div>
+                        <div className="text-[11px] text-zinc-500">Hardware-Accelerated Decoding</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">UI Framework</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">SwiftUI + AppKit</div>
+                        <div className="text-[11px] text-zinc-500">Native macOS Windowing & Shortcuts</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Bridge Interface</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">Local Python Service</div>
+                        <div className="text-[11px] text-zinc-500">Port 8765 Metadata Pipeline</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Playback Modes</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">Full Window & Mini-Player</div>
+                        <div className="text-[11px] text-zinc-500">Dockable Compact Mode</div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Architecture</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">Full-Stack Client-Server</div>
+                        <div className="text-[11px] text-zinc-500">RESTful Service Layer</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Frontend Stack</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">React & TypeScript</div>
+                        <div className="text-[11px] text-zinc-500">Tailwind CSS Responsive UI</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Backend API</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">Node.js & Express</div>
+                        <div className="text-[11px] text-zinc-500">Route Validation & Controllers</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Database Engine</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">PostgreSQL</div>
+                        <div className="text-[11px] text-zinc-500">Relational Schemas & Foreign Keys</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Authentication</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">JWT & Session Claims</div>
+                        <div className="text-[11px] text-zinc-500">Role-Based Access Control</div>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
+                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Scheduling Engine</span>
+                        <div className="text-xs sm:text-sm font-semibold text-white">Conflict Detection</div>
+                        <div className="text-[11px] text-zinc-500">Auditorium & Lab Validation</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* 2. Key Features & Implementation Specifications */}
+              <div className="space-y-3">
+                <h5 className="text-xs font-mono-tabular uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Key Features & Technical Implementation</span>
+                </h5>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {project.highlights.map((highlight, hIdx) => (
+                    <div
+                      key={highlight}
+                      className="p-3.5 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] flex items-start gap-3"
+                    >
+                      <span className="font-mono-tabular text-xs font-semibold text-blue-400 shrink-0 mt-0.5">
+                        0{hIdx + 1}.
+                      </span>
+                      <div className="space-y-1">
+                        <p className="text-xs sm:text-sm text-zinc-200 font-medium leading-relaxed">
+                          {highlight}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3. Subsystem Architecture Overview */}
+              <div className="space-y-3">
+                <h5 className="text-xs font-mono-tabular uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-1.5">
+                  <Layers className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Subsystem Structural Roles</span>
+                </h5>
+                <div className="space-y-2.5">
+                  {project.architecture.map((arch, aIdx) => (
+                    <div
+                      key={arch.layer}
+                      className="p-3.5 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4"
+                    >
+                      <div className="space-y-0.5 min-w-[200px]">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono-tabular text-[#2563EB] font-semibold">
+                            LAYER 0{aIdx + 1}
+                          </span>
+                          <span className="text-xs font-semibold text-white">{arch.layer}</span>
+                        </div>
+                        <div className="text-xs text-zinc-400 font-mono-tabular">{arch.component}</div>
+                      </div>
+                      <p className="text-xs text-zinc-300 leading-relaxed max-w-xl">
+                        {arch.responsibility}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Engineering Challenge & Solution Breakdown */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 sm:p-5 rounded-xl border border-rose-500/20 bg-rose-500/[0.03] space-y-2">
+                  <span className="text-xs font-mono-tabular text-rose-400 uppercase tracking-wider font-semibold">
+                    Engineering Challenge
+                  </span>
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                    {project.problemStatement}
+                  </p>
+                </div>
+                <div className="p-4 sm:p-5 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.03] space-y-2">
+                  <span className="text-xs font-mono-tabular text-emerald-400 uppercase tracking-wider font-semibold">
+                    Technical Solution
+                  </span>
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                    {project.engineeringSolution}
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 
