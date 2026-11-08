@@ -555,7 +555,79 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 </div>
               </div>
 
-              {/* 4. Engineering Challenge & Solution Breakdown */}
+              {/* 4. Development Challenges & Learnings */}
+              {project.challengesAndLearnings && project.challengesAndLearnings.length > 0 && (
+                <div className="space-y-4 pt-2 border-t border-white/[0.06]">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-[#2563EB]" />
+                      <h5 className="text-sm sm:text-base font-bold text-white">
+                        Development Challenges & Key Learnings
+                      </h5>
+                    </div>
+                    <p className="text-xs text-zinc-400 leading-relaxed">
+                      Real engineering problems encountered during development, the technical solutions adopted, and takeaways gained.
+                    </p>
+                  </div>
+
+                  <div className="space-y-3.5">
+                    {project.challengesAndLearnings.map((item, idx) => (
+                      <div
+                        key={item.title}
+                        className="p-4 sm:p-5 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-3.5 shadow-sm hover:border-white/10 transition-colors"
+                      >
+                        {/* Challenge Title Header */}
+                        <div className="flex items-center gap-2.5">
+                          <span className="font-mono-tabular text-xs font-semibold px-2 py-0.5 rounded liquid-glass-pill text-blue-300">
+                            0{idx + 1}
+                          </span>
+                          <h6 className="text-xs sm:text-sm font-semibold text-white">
+                            {item.title}
+                          </h6>
+                        </div>
+
+                        {/* 3-Column Structured Breakdown */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                          {/* 1. Challenge */}
+                          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-950/70 border border-white/[0.04] space-y-1.5 flex flex-col justify-between">
+                            <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-rose-400 font-semibold flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                              <span>Challenge Encountered</span>
+                            </span>
+                            <p className="text-xs text-zinc-300 leading-relaxed">
+                              {item.challenge}
+                            </p>
+                          </div>
+
+                          {/* 2. Solution */}
+                          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-950/70 border border-white/[0.04] space-y-1.5 flex flex-col justify-between">
+                            <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-blue-400 font-semibold flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                              <span>Approach & Solution</span>
+                            </span>
+                            <p className="text-xs text-zinc-300 leading-relaxed">
+                              {item.solution}
+                            </p>
+                          </div>
+
+                          {/* 3. Learning */}
+                          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-950/70 border border-white/[0.04] space-y-1.5 flex flex-col justify-between">
+                            <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-emerald-400 font-semibold flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                              <span>What I Learned</span>
+                            </span>
+                            <p className="text-xs text-zinc-300 leading-relaxed">
+                              {item.learning}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 5. High-Level Engineering Problem & Solution Summary */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 sm:p-5 rounded-xl border border-rose-500/20 bg-rose-500/[0.03] space-y-2">
                   <span className="text-xs font-mono-tabular text-rose-400 uppercase tracking-wider font-semibold">

@@ -119,3 +119,16 @@ test('journey milestones reflect accurate academic timeline and experience', () 
     assert.ok(!item.period.includes('2024'), `Item ${item.id} should not reference 2024`);
   }
 });
+
+test('projects have structured challenges and learnings for development reflection', () => {
+  for (const project of PORTFOLIO_DATA.projects) {
+    assert.ok(project.challengesAndLearnings, `${project.title} should have challengesAndLearnings`);
+    assert.ok(project.challengesAndLearnings.length >= 3, `${project.title} should have at least 3 challenges and learnings`);
+    for (const item of project.challengesAndLearnings) {
+      assert.ok(item.title, 'Each challenge entry must have a title');
+      assert.ok(item.challenge, 'Each challenge entry must have a challenge description');
+      assert.ok(item.solution, 'Each challenge entry must have a solution description');
+      assert.ok(item.learning, 'Each challenge entry must have a learning description');
+    }
+  }
+});

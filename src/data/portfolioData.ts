@@ -28,6 +28,13 @@ export interface ProjectArchitectureNode {
   responsibility: string;
 }
 
+export interface ProjectChallengeLearning {
+  title: string;
+  challenge: string;
+  solution: string;
+  learning: string;
+}
+
 export interface ProjectScreenshot {
   title: string;
   image: string;
@@ -51,6 +58,7 @@ export interface ProjectItem {
   technologies: string[];
   highlights: string[];
   architecture: ProjectArchitectureNode[];
+  challengesAndLearnings?: ProjectChallengeLearning[];
   metrics: { label: string; value: string }[];
   githubUrl: string;
   liveDemoUrl: string;
@@ -366,6 +374,35 @@ export const PORTFOLIO_DATA = {
           responsibility: 'Fetches catalogue discovery, track metadata, album artwork, and synchronized lyrics timestamps.',
         },
       ],
+      challengesAndLearnings: [
+        {
+          title: 'Low-Latency Local Audio Playback on macOS',
+          challenge:
+            'Many desktop music players rely on web wrappers that consume excessive system memory and introduce noticeable audio latency during track transitions and playback state updates.',
+          solution:
+            'Engineered MetroFlow natively using Swift, AVFoundation, and CoreAudio, managing audio buffers directly through macOS system APIs rather than bundling an embedded browser runtime.',
+          learning:
+            'Learned how hardware-accelerated audio pipelines operate on Apple Silicon and discovered the major performance and memory benefits of building native desktop software.',
+        },
+        {
+          title: 'Synchronized Lyrics Parsing & Timestamp Seeking',
+          challenge:
+            'Keeping time-tagged lyrics smoothly highlighted in sync with live audio without triggering frame drops, UI jitter, or state mismatches during rapid manual seeking.',
+          solution:
+            'Implemented an indexed timecode parser that synchronizes with the CoreAudio playback clock and allows one-click timestamp seeking directly from lyric lines.',
+          learning:
+            'Gained hands-on experience handling high-frequency time updates in SwiftUI, separating timecode indexing from rendering, and preventing UI re-render bottlenecks.',
+        },
+        {
+          title: 'Desktop Window Management & Mini-Player Mode',
+          challenge:
+            'Designing an interface that transitions smoothly between a rich discovery experience and an unobtrusive, docked mini-player suitable for focused coding sessions.',
+          solution:
+            'Combined SwiftUI view state with AppKit window management, configuring global keyboard shortcuts and a lightweight compact window mode for study and work sessions.',
+          learning:
+            'Learned how AppKit and SwiftUI work together under macOS, specifically managing window levels, responders, and system keyboard event monitors.',
+        },
+      ],
       metrics: [
         { label: 'Platform', value: 'macOS ARM64' },
         { label: 'Audio Engine', value: 'CoreAudio Native' },
@@ -430,6 +467,35 @@ export const PORTFOLIO_DATA = {
           layer: 'Database Layer',
           component: 'PostgreSQL Relational Database',
           responsibility: 'Stores structured records for student societies, event schedules, venues, and registrations.',
+        },
+      ],
+      challengesAndLearnings: [
+        {
+          title: 'Venue Scheduling Clashes & Relational Data Integrity',
+          challenge:
+            'Student societies frequently suffered from double-booked auditoriums and seminar halls due to uncoordinated event notices across separate group chats and spreadsheets.',
+          solution:
+            'Designed a normalized PostgreSQL schema with relational foreign keys linking clubs, rooms, and time slots, paired with backend conflict-detection logic that validates venue availability before confirming bookings.',
+          learning:
+            'Learned how to write relational SQL queries to detect overlapping time ranges and realized the importance of enforcing data constraints directly at the database layer.',
+        },
+        {
+          title: 'Role-Based Permissions for Campus Societies',
+          challenge:
+            'Safely separating administrative privileges (faculty advisors, club presidents) from student member actions without duplicating route logic or creating security loopholes.',
+          solution:
+            'Built custom Express authentication middleware that verifies JWT claims and evaluates permissions before granting access to sensitive actions like credit distribution or platform settings.',
+          learning:
+            'Deepened my understanding of stateless session management, role verification middleware, and how to protect REST endpoints cleanly.',
+        },
+        {
+          title: 'Full-Stack State Synchronization for Member Roster Updates',
+          challenge:
+            'Keeping student attendance percentages, merit credits, and profile edits immediately consistent across the React frontend and PostgreSQL backend without full-page reloads.',
+          solution:
+            'Structured modular API controllers with input validation and clean React custom hooks that handle optimistic UI updates and gracefully handle API error states.',
+          learning:
+            'Gained practical experience coordinating full-stack data flow, managing asynchronous request states, and structuring clean API endpoints for relational updates.',
         },
       ],
       metrics: [
