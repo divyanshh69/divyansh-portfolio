@@ -10,13 +10,12 @@ import {
   Sparkles,
   Maximize2,
   Minimize2,
-  Code2,
   Terminal,
   FileText,
   ChevronLeft,
   ChevronRight,
   Monitor,
-  Image as ImageIcon,
+  ExternalLink,
 } from 'lucide-react';
 import { ProjectItem } from '../data/portfolioData';
 
@@ -43,30 +42,37 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
     setActiveScreenshotIdx(initialScreenshotIdx);
   }, [initialScreenshotIdx, project?.id]);
 
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   if (!project) return null;
 
   const tabs = [
     { id: 'overview', label: 'Case Study & Gallery', icon: FileText },
     { id: 'technical', label: 'Technical Overview', icon: Cpu },
-    { id: 'architecture', label: 'System Architecture', icon: Layers },
-    { id: 'decisions', label: 'Engineering Decisions', icon: Code2 },
+    { id: 'architecture', label: 'Challenges & Learnings', icon: Sparkles },
+    { id: 'decisions', label: 'Architecture & Decisions', icon: Layers },
   ] as const;
 
-  // Authentic technical decisions and architectural approach
   const technicalDecisions =
     project.id === 'metroflow'
       ? [
           {
-            title: 'Native Swift & SwiftUI vs. Cross-Platform Wrapper',
-            decision: 'Built directly with Swift and SwiftUI/AppKit for macOS rather than a cross-platform web container.',
+            title: 'Native Swift & AppKit/SwiftUI Architecture',
+            decision: 'Engineered natively for macOS with Swift rather than bundling a web container.',
             rationale:
-              'Building natively allows direct integration with macOS window styling, system keyboard shortcuts, and Apple’s AVFoundation for reliable local audio playback with minimal system overhead.',
+              'Building natively allows direct integration with macOS window styling, global media keyboard shortcuts, and Apple’s AVFoundation for reliable local audio playback with minimal system overhead.',
           },
           {
-            title: 'Visual Audio Feedback',
+            title: 'Visual Audio Feedback & Waveform Sync',
             decision: 'Implemented an integrated waveform frequency visualization alongside playback.',
             rationale:
-              'Provides responsive visual feedback while tracks are playing, making the interface feel active and visually engaging while keeping the layout minimal.',
+              'Provides responsive visual feedback while tracks are playing, making the interface feel alive while maintaining minimal CPU impact on Apple Silicon.',
           },
           {
             title: 'Focused Local-First Library Design',
@@ -78,13 +84,13 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
       : [
           {
             title: 'Relational Database Schema (PostgreSQL)',
-            decision: 'Structured data in PostgreSQL with relational integrity across clubs, events, and registrations.',
+            decision: 'Structured data in PostgreSQL with relational foreign keys across clubs, events, and registrations.',
             rationale:
-              'Campus club operations rely on relational links: events belong to clubs, venues are reserved during specific time slots, and students register for specific events. Relational foreign keys keep the data consistent.',
+              'Campus club operations rely on relational links: events belong to clubs, venues are reserved during specific time slots, and students register for specific events. Relational foreign keys keep data consistent.',
           },
           {
             title: 'Role-Based Permissions for Campus Societies',
-            decision: 'Implemented middleware to separate permissions between club leads, faculty, and student members.',
+            decision: 'Implemented custom middleware to separate permissions between club leads, faculty, and student members.',
             rationale:
               'Separates event creation and room booking privileges from standard student attendance, keeping club administrative controls organized.',
           },
@@ -114,7 +120,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-project-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto"
       onClick={onClose}
     >
       <motion.div
@@ -123,40 +129,39 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         exit={{ opacity: 0, scale: 0.96, y: 16 }}
         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-5xl rounded-2xl liquid-glass text-zinc-100 shadow-2xl overflow-hidden my-2 sm:my-6 flex flex-col max-h-[95vh] sm:max-h-[92vh]"
+        className="w-full max-w-5xl rounded-2xl liquid-glass text-zinc-100 shadow-2xl overflow-hidden my-2 sm:my-6 flex flex-col max-h-[94vh]"
       >
         {/* Header Bar */}
-        <div className="flex items-center justify-between gap-3 sm:gap-4 px-3.5 sm:px-6 py-3 sm:py-4 border-b border-white/[0.08] bg-black/40 shrink-0">
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-zinc-400">
-              <span className="font-mono-tabular text-[#2563EB] font-semibold">
-                Project {project.index}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span className="text-zinc-200 font-medium">{project.category}</span>
-              <span aria-hidden="true">·</span>
-              <span className="font-mono-tabular">{project.year}</span>
+        <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.08] bg-[#0c0d14] shrink-0">
+          <div className="min-w-0 space-y-0.5">
+            <div className="flex items-center gap-2 text-[11px] sm:text-xs text-zinc-400 font-mono-tabular">
+              <span className="text-[#2563EB] font-bold">PROJECT {project.index}</span>
+              <span aria-hidden="true" className="text-zinc-600">·</span>
+              <span className="text-zinc-200">{project.category}</span>
+              <span aria-hidden="true" className="text-zinc-600">·</span>
+              <span>{project.year}</span>
             </div>
             <h3 id="modal-project-title" className="text-lg sm:text-2xl font-bold text-white truncate">
               {project.title}
             </h3>
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-zinc-300 liquid-glass-pill rounded-lg hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-300 bg-white/[0.05] border border-white/[0.08] rounded-lg hover:text-white hover:bg-white/[0.1] transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Repository</span>
+              <ExternalLink className="w-3 h-3 text-zinc-500" />
             </a>
             <button
               type="button"
               onClick={onClose}
               aria-label="Close modal dialog"
-              className="p-1.5 sm:p-2 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.08] transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.08] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -164,7 +169,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2 sm:py-2.5 border-b border-white/[0.06] bg-black/30 overflow-x-auto no-scrollbar shrink-0">
+        <div className="flex items-center gap-1.5 px-4 sm:px-6 py-2.5 border-b border-white/[0.06] bg-[#090a0f] overflow-x-auto no-scrollbar shrink-0">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -173,10 +178,10 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
+                className={`inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
                   isActive
-                    ? 'bg-[#2563EB] text-white shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
+                    ? 'bg-[#2563EB] text-white shadow-sm font-semibold'
+                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -186,41 +191,37 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
           })}
         </div>
 
-        {/* Modal Scrollable Content Body */}
-        <div className="flex-1 overflow-y-auto p-3.5 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
-          {/* TAB 1: OVERVIEW & CASE STUDY */}
+        {/* Modal Scrollable Body */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
+          {/* TAB 1: CASE STUDY & GALLERY */}
           {activeTab === 'overview' && (
             <div className="space-y-8">
-              {/* Elevated Desktop Screenshot Showcase */}
+              {/* Window Frame Screenshot Showcase */}
               <div className="space-y-4">
-                {/* Desktop Window Frame */}
-                <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-[#0B0B0E] shadow-2xl">
-                  {/* Window Chrome Titlebar */}
-                  <div className="flex items-center justify-between gap-2 sm:gap-4 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#101014] border-b border-white/[0.06] text-xs">
-                    {/* Traffic Light Dots */}
+                <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-[#07070a] shadow-xl">
+                  {/* Chrome Titlebar */}
+                  <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-[#11121c] border-b border-white/[0.06] text-xs">
                     <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
-                      <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 border border-red-600/40" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 border border-amber-600/40" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 border border-emerald-600/40" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
                     </div>
 
-                    {/* Window Center Title */}
-                    <div className="flex items-center gap-1.5 sm:gap-2 text-zinc-400 font-mono-tabular truncate px-1 sm:px-2">
+                    <div className="flex items-center gap-2 text-zinc-400 font-mono-tabular truncate px-2">
                       <Monitor className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
                       <span className="text-zinc-200 font-medium truncate">{project.title}</span>
                       <span className="text-zinc-600">/</span>
                       <span className="text-zinc-400 truncate">{activeScreenshot.title}</span>
                     </div>
 
-                    {/* Window Right Action Controls */}
-                    <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                      <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-500">
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-[11px] font-mono-tabular text-zinc-500">
                         {activeScreenshotIdx + 1} / {screenshots.length}
                       </span>
                       <button
                         type="button"
                         onClick={() => setIsZoomed((prev) => !prev)}
-                        className="p-1 rounded-md hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+                        className="p-1 rounded hover:bg-white/[0.08] text-zinc-400 hover:text-white transition-colors cursor-pointer"
                         title={isZoomed ? 'Default view' : 'Expand full view'}
                         aria-label={isZoomed ? 'Default view' : 'Expand full view'}
                       >
@@ -229,41 +230,30 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                     </div>
                   </div>
 
-                  {/* Screenshot Viewport Container */}
+                  {/* Uncropped Viewport */}
                   <div
-                    className={`relative overflow-hidden bg-[#070709] flex items-center justify-center transition-all duration-300 ${
+                    className={`relative bg-[#050508] flex items-center justify-center p-3 sm:p-5 transition-all duration-300 ${
                       isZoomed
-                        ? 'min-h-[520px] max-h-[85vh]'
+                        ? 'min-h-[500px] max-h-[80vh]'
                         : project.id === 'metroflow'
-                        ? 'aspect-[1024/665] max-h-[480px]'
-                        : 'aspect-[1024/587] max-h-[480px]'
+                        ? 'aspect-[1024/665] max-h-[460px]'
+                        : 'aspect-[1024/587] max-h-[460px]'
                     }`}
                   >
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={activeScreenshotIdx}
-                        initial={{ opacity: 0, scale: 0.99 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.99 }}
-                        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                        className="w-full h-full flex items-center justify-center"
-                      >
-                        <img
-                          src={activeScreenshot.image}
-                          alt={`${project.title} — ${activeScreenshot.title}`}
-                          className="w-full h-full object-contain object-center"
-                        />
-                      </motion.div>
-                    </AnimatePresence>
+                    <img
+                      src={activeScreenshot.image}
+                      alt={`${project.title} — ${activeScreenshot.title}`}
+                      className="w-full h-full object-contain"
+                    />
 
-                    {/* Left & Right Chevrons */}
+                    {/* Prev / Next Chevrons */}
                     {screenshots.length > 1 && (
                       <>
                         <button
                           type="button"
                           onClick={handlePrevScreenshot}
                           aria-label="Previous screenshot"
-                          className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full liquid-glass-pill hover:bg-black/95 text-zinc-300 hover:text-white transition-all cursor-pointer shadow-lg opacity-85 hover:opacity-100 hover:scale-105"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/80 hover:bg-black text-white border border-white/[0.1] shadow-lg transition-transform hover:scale-105 cursor-pointer"
                         >
                           <ChevronLeft className="w-4 h-4" />
                         </button>
@@ -271,7 +261,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                           type="button"
                           onClick={handleNextScreenshot}
                           aria-label="Next screenshot"
-                          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full liquid-glass-pill hover:bg-black/95 text-zinc-300 hover:text-white transition-all cursor-pointer shadow-lg opacity-85 hover:opacity-100 hover:scale-105"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/80 hover:bg-black text-white border border-white/[0.1] shadow-lg transition-transform hover:scale-105 cursor-pointer"
                         >
                           <ChevronRight className="w-4 h-4" />
                         </button>
@@ -279,15 +269,13 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                     )}
                   </div>
 
-                  {/* Caption & Context Drawer */}
-                  <div className="px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0C0C0F] border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 text-xs">
+                  {/* Caption Drawer (Outside the image) */}
+                  <div className="px-4 py-2.5 bg-[#0e0f17] border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded bg-[#2563EB]/20 text-[#60A5FA] border border-blue-500/30 font-medium shrink-0 text-[11px] sm:text-xs">
+                      <span className="px-2 py-0.5 rounded text-[11px] font-mono-tabular bg-blue-500/20 text-blue-300 border border-blue-500/30 font-medium shrink-0">
                         {activeScreenshot.title}
                       </span>
-                      <p className="text-zinc-300 leading-relaxed text-xs">
-                        {activeScreenshot.caption}
-                      </p>
+                      <p className="text-zinc-300 text-xs">{activeScreenshot.caption}</p>
                     </div>
                     <span className="text-[11px] text-zinc-500 font-mono-tabular shrink-0 hidden md:inline">
                       Desktop Capture Preview
@@ -297,7 +285,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
 
                 {/* Multiple Screenshot Thumbnail Grid Switcher */}
                 {screenshots.length > 1 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 pt-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                     {screenshots.map((s, idx) => {
                       const isActive = idx === activeScreenshotIdx;
                       return (
@@ -305,13 +293,13 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                           key={s.title}
                           type="button"
                           onClick={() => setActiveScreenshotIdx(idx)}
-                          className={`p-2 sm:p-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer flex items-center gap-2.5 sm:gap-3 ${
+                          className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex items-center gap-3 ${
                             isActive
-                              ? 'border-[#2563EB] bg-blue-950/20 shadow-sm'
-                              : 'border-zinc-800/80 bg-zinc-950 hover:border-zinc-700 hover:bg-zinc-900/50'
+                              ? 'border-[#2563EB] bg-blue-950/30 shadow-sm'
+                              : 'border-white/[0.06] bg-[#0c0d14] hover:border-white/[0.15] hover:bg-white/[0.02]'
                           }`}
                         >
-                          <div className="w-10 h-8 rounded overflow-hidden shrink-0 bg-zinc-900 border border-zinc-800">
+                          <div className="w-11 h-8 rounded overflow-hidden shrink-0 bg-black/40 border border-white/[0.08]">
                             <img
                               src={s.image}
                               alt=""
@@ -321,8 +309,8 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center justify-between gap-1">
                               <span
-                                className={`text-xs font-medium truncate ${
-                                  isActive ? 'text-blue-300 font-semibold' : 'text-zinc-300'
+                                className={`text-xs truncate ${
+                                  isActive ? 'text-blue-300 font-semibold' : 'text-zinc-300 font-medium'
                                 }`}
                               >
                                 {s.title}
@@ -331,9 +319,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                                 0{idx + 1}
                               </span>
                             </div>
-                            <p className="text-[11px] text-zinc-400 truncate mt-0.5">
-                              {s.caption}
-                            </p>
+                            <p className="text-[11px] text-zinc-500 truncate mt-0.5">{s.caption}</p>
                           </div>
                         </button>
                       );
@@ -343,46 +329,48 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               </div>
 
               {/* Metrics Strip */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-4 p-3 sm:p-4 rounded-xl border border-zinc-800/80 bg-zinc-950">
+              <div className="grid grid-cols-3 gap-3 p-4 rounded-xl border border-white/[0.08] bg-[#0c0d14]">
                 {project.metrics.map((m) => (
                   <div key={m.label} className="text-center sm:text-left space-y-0.5">
                     <div className="font-mono-tabular text-lg sm:text-2xl font-bold text-white">
                       {m.value}
                     </div>
-                    <div className="text-[10px] sm:text-xs text-zinc-400">{m.label}</div>
+                    <div className="text-[11px] text-zinc-400">{m.label}</div>
                   </div>
                 ))}
               </div>
 
-              {/* Problem vs Solution Split */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-5 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-2.5">
+              {/* Problem vs Engineering Solution */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="p-5 rounded-xl border border-rose-500/20 bg-rose-500/[0.03] space-y-2">
                   <span className="text-xs font-mono-tabular text-rose-400 uppercase tracking-wider font-semibold">
                     The Problem
                   </span>
-                  <p className="text-sm text-zinc-300 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
                     {project.problemStatement}
                   </p>
                 </div>
 
-                <div className="p-5 rounded-xl border border-zinc-800/80 bg-zinc-950/60 space-y-2.5">
+                <div className="p-5 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.03] space-y-2">
                   <span className="text-xs font-mono-tabular text-emerald-400 uppercase tracking-wider font-semibold">
                     Engineering Solution
                   </span>
-                  <p className="text-sm text-zinc-300 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
                     {project.engineeringSolution}
                   </p>
                 </div>
               </div>
 
-              {/* Key Architectural Highlights */}
+              {/* Key Capabilities */}
               <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-zinc-200">Key Engineering Capabilities</h4>
+                <h4 className="text-sm font-semibold text-white font-mono-tabular">
+                  Key Engineering Capabilities:
+                </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {project.highlights.map((item) => (
                     <div
                       key={item}
-                      className="p-3.5 rounded-lg border border-zinc-900 bg-zinc-950 flex items-start gap-3"
+                      className="p-3.5 rounded-xl border border-white/[0.06] bg-[#0c0d14] flex items-start gap-3"
                     >
                       <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
                       <span className="text-xs text-zinc-300 leading-relaxed">{item}</span>
@@ -391,14 +379,14 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 </div>
               </div>
 
-              {/* Stack Pills */}
+              {/* Stack Applied */}
               <div className="space-y-2">
-                <span className="text-xs font-medium text-zinc-400">Core Technologies Applied:</span>
+                <span className="text-xs font-mono-tabular text-zinc-400">Core Technologies Applied:</span>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 text-xs font-medium text-zinc-200 bg-zinc-900 border border-zinc-800 rounded-lg"
+                      className="px-3 py-1 text-xs font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-lg"
                     >
                       {tech}
                     </span>
@@ -410,123 +398,89 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
 
           {/* TAB 2: TECHNICAL OVERVIEW */}
           {activeTab === 'technical' && (
-            <div className="space-y-6 sm:space-y-8">
-              {/* Header */}
+            <div className="space-y-8">
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 text-white">
                   <Cpu className="w-4 h-4 text-[#2563EB]" />
-                  <h4 className="text-base sm:text-lg font-bold text-white">
-                    Technical Specifications & Implementation Overview
-                  </h4>
+                  <h4 className="text-lg font-bold">Technical Specifications & Runtime Environment</h4>
                 </div>
                 <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                   Detailed technical architecture, runtime environment, and subsystem responsibilities for {project.title}.
                 </p>
               </div>
 
-              {/* 1. Technical Stack Specifications Grid */}
-              <div className="space-y-3">
-                <h5 className="text-xs font-mono-tabular uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-1.5">
-                  <Terminal className="w-3.5 h-3.5 text-blue-400" />
-                  <span>Engineering Stack & Runtime Environment</span>
-                </h5>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {project.id === 'metroflow' ? (
-                    <>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Target Architecture</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">Apple Silicon ARM64</div>
-                        <div className="text-[11px] text-zinc-500">Native macOS Build</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Core Language</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">Swift</div>
-                        <div className="text-[11px] text-zinc-500">Strict Type Safety & Concurrency</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Audio Pipeline</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">CoreAudio & AVFoundation</div>
-                        <div className="text-[11px] text-zinc-500">Hardware-Accelerated Decoding</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">UI Framework</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">SwiftUI + AppKit</div>
-                        <div className="text-[11px] text-zinc-500">Native macOS Windowing & Shortcuts</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Bridge Interface</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">Local Python Service</div>
-                        <div className="text-[11px] text-zinc-500">Port 8765 Metadata Pipeline</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Playback Modes</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">Full Window & Mini-Player</div>
-                        <div className="text-[11px] text-zinc-500">Dockable Compact Mode</div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Architecture</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">Full-Stack Client-Server</div>
-                        <div className="text-[11px] text-zinc-500">RESTful Service Layer</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Frontend Stack</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">React & TypeScript</div>
-                        <div className="text-[11px] text-zinc-500">Tailwind CSS Responsive UI</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Backend API</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">Node.js & Express</div>
-                        <div className="text-[11px] text-zinc-500">Route Validation & Controllers</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Database Engine</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">PostgreSQL</div>
-                        <div className="text-[11px] text-zinc-500">Relational Schemas & Foreign Keys</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Authentication</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">JWT & Session Claims</div>
-                        <div className="text-[11px] text-zinc-500">Role-Based Access Control</div>
-                      </div>
-                      <div className="p-3 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-1">
-                        <span className="text-[10px] sm:text-[11px] font-mono-tabular text-zinc-400">Scheduling Engine</span>
-                        <div className="text-xs sm:text-sm font-semibold text-white">Conflict Detection</div>
-                        <div className="text-[11px] text-zinc-500">Auditorium & Lab Validation</div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              {/* 2. Key Features & Implementation Specifications */}
-              <div className="space-y-3">
-                <h5 className="text-xs font-mono-tabular uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Key Features & Technical Implementation</span>
-                </h5>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {project.highlights.map((highlight, hIdx) => (
-                    <div
-                      key={highlight}
-                      className="p-3.5 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] flex items-start gap-3"
-                    >
-                      <span className="font-mono-tabular text-xs font-semibold text-blue-400 shrink-0 mt-0.5">
-                        0{hIdx + 1}.
-                      </span>
-                      <div className="space-y-1">
-                        <p className="text-xs sm:text-sm text-zinc-200 font-medium leading-relaxed">
-                          {highlight}
-                        </p>
-                      </div>
+              {/* Specifications Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {project.id === 'metroflow' ? (
+                  <>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Target Architecture</span>
+                      <div className="text-sm font-semibold text-white">Apple Silicon ARM64</div>
+                      <div className="text-[11px] text-zinc-500">Native macOS Build</div>
                     </div>
-                  ))}
-                </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Core Language</span>
+                      <div className="text-sm font-semibold text-white">Swift</div>
+                      <div className="text-[11px] text-zinc-500">Strict Type Safety & Concurrency</div>
+                    </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Audio Pipeline</span>
+                      <div className="text-sm font-semibold text-white">CoreAudio & AVFoundation</div>
+                      <div className="text-[11px] text-zinc-500">Hardware-Accelerated Decoding</div>
+                    </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">UI Framework</span>
+                      <div className="text-sm font-semibold text-white">SwiftUI + AppKit</div>
+                      <div className="text-[11px] text-zinc-500">Native macOS Windowing & Shortcuts</div>
+                    </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Bridge Interface</span>
+                      <div className="text-sm font-semibold text-white">Local Python Service</div>
+                      <div className="text-[11px] text-zinc-500">Port 8765 Metadata Pipeline</div>
+                    </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Playback Modes</span>
+                      <div className="text-sm font-semibold text-white">Full Window & Mini-Player</div>
+                      <div className="text-[11px] text-zinc-500">Dockable Compact Mode</div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Architecture</span>
+                      <div className="text-sm font-semibold text-white">Full-Stack Client-Server</div>
+                      <div className="text-[11px] text-zinc-500">RESTful Service Layer</div>
+                    </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Frontend Stack</span>
+                      <div className="text-sm font-semibold text-white">React & TypeScript</div>
+                      <div className="text-[11px] text-zinc-500">Tailwind CSS Responsive UI</div>
+                    </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Backend API</span>
+                      <div className="text-sm font-semibold text-white">Node.js & Express</div>
+                      <div className="text-[11px] text-zinc-500">Route Validation & Controllers</div>
+                    </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Database Engine</span>
+                      <div className="text-sm font-semibold text-white">PostgreSQL</div>
+                      <div className="text-[11px] text-zinc-500">Relational Schemas & Foreign Keys</div>
+                    </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Authentication</span>
+                      <div className="text-sm font-semibold text-white">JWT & Session Claims</div>
+                      <div className="text-[11px] text-zinc-500">Role-Based Access Control</div>
+                    </div>
+                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">Scheduling Engine</span>
+                      <div className="text-sm font-semibold text-white">Conflict Detection</div>
+                      <div className="text-[11px] text-zinc-500">Auditorium & Lab Validation</div>
+                    </div>
+                  </>
+                )}
               </div>
 
-              {/* 3. Subsystem Architecture Overview */}
+              {/* Subsystems Breakdown */}
               <div className="space-y-3">
                 <h5 className="text-xs font-mono-tabular uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-1.5">
                   <Layers className="w-3.5 h-3.5 text-blue-400" />
@@ -536,11 +490,11 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   {project.architecture.map((arch, aIdx) => (
                     <div
                       key={arch.layer}
-                      className="p-3.5 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0A0A0E] flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4"
+                      className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                     >
                       <div className="space-y-0.5 min-w-[200px]">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono-tabular text-[#2563EB] font-semibold">
+                          <span className="text-[10px] font-mono-tabular text-[#2563EB] font-bold">
                             LAYER 0{aIdx + 1}
                           </span>
                           <span className="text-xs font-semibold text-white">{arch.layer}</span>
@@ -554,157 +508,93 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   ))}
                 </div>
               </div>
-
-              {/* 4. Development Challenges & Learnings */}
-              {project.challengesAndLearnings && project.challengesAndLearnings.length > 0 && (
-                <div className="space-y-4 pt-2 border-t border-white/[0.06]">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-[#2563EB]" />
-                      <h5 className="text-sm sm:text-base font-bold text-white">
-                        Development Challenges & Key Learnings
-                      </h5>
-                    </div>
-                    <p className="text-xs text-zinc-400 leading-relaxed">
-                      Real engineering problems encountered during development, the technical solutions adopted, and takeaways gained.
-                    </p>
-                  </div>
-
-                  <div className="space-y-3.5">
-                    {project.challengesAndLearnings.map((item, idx) => (
-                      <div
-                        key={item.title}
-                        className="p-4 sm:p-5 rounded-xl border border-white/[0.06] bg-[#0A0A0E] space-y-3.5 shadow-sm hover:border-white/10 transition-colors"
-                      >
-                        {/* Challenge Title Header */}
-                        <div className="flex items-center gap-2.5">
-                          <span className="font-mono-tabular text-xs font-semibold px-2 py-0.5 rounded liquid-glass-pill text-blue-300">
-                            0{idx + 1}
-                          </span>
-                          <h6 className="text-xs sm:text-sm font-semibold text-white">
-                            {item.title}
-                          </h6>
-                        </div>
-
-                        {/* 3-Column Structured Breakdown */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                          {/* 1. Challenge */}
-                          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-950/70 border border-white/[0.04] space-y-1.5 flex flex-col justify-between">
-                            <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-rose-400 font-semibold flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-                              <span>Challenge Encountered</span>
-                            </span>
-                            <p className="text-xs text-zinc-300 leading-relaxed">
-                              {item.challenge}
-                            </p>
-                          </div>
-
-                          {/* 2. Solution */}
-                          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-950/70 border border-white/[0.04] space-y-1.5 flex flex-col justify-between">
-                            <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-blue-400 font-semibold flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                              <span>Approach & Solution</span>
-                            </span>
-                            <p className="text-xs text-zinc-300 leading-relaxed">
-                              {item.solution}
-                            </p>
-                          </div>
-
-                          {/* 3. Learning */}
-                          <div className="p-3 sm:p-3.5 rounded-lg bg-zinc-950/70 border border-white/[0.04] space-y-1.5 flex flex-col justify-between">
-                            <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-emerald-400 font-semibold flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                              <span>What I Learned</span>
-                            </span>
-                            <p className="text-xs text-zinc-300 leading-relaxed">
-                              {item.learning}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* 5. High-Level Engineering Problem & Solution Summary */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 sm:p-5 rounded-xl border border-rose-500/20 bg-rose-500/[0.03] space-y-2">
-                  <span className="text-xs font-mono-tabular text-rose-400 uppercase tracking-wider font-semibold">
-                    Engineering Challenge
-                  </span>
-                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                    {project.problemStatement}
-                  </p>
-                </div>
-                <div className="p-4 sm:p-5 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.03] space-y-2">
-                  <span className="text-xs font-mono-tabular text-emerald-400 uppercase tracking-wider font-semibold">
-                    Technical Solution
-                  </span>
-                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                    {project.engineeringSolution}
-                  </p>
-                </div>
-              </div>
             </div>
           )}
 
-          {/* TAB 3: SYSTEM STRUCTURE */}
+          {/* TAB 3: CHALLENGES & LEARNINGS */}
           {activeTab === 'architecture' && (
             <div className="space-y-6">
               <div className="space-y-1">
-                <h4 className="text-base font-bold text-white">System Structure & Component Roles</h4>
-                <p className="text-xs text-zinc-400">
-                  Overview of the client interface, application logic, and data layer.
+                <div className="flex items-center gap-2 text-white">
+                  <Sparkles className="w-4 h-4 text-[#2563EB]" />
+                  <h4 className="text-lg font-bold">Development Challenges & Key Learnings</h4>
+                </div>
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                  Authentic engineering problems encountered during the development of {project.title}, the technical solutions adopted, and takeaways gained.
                 </p>
               </div>
 
-              <div className="relative pl-4 sm:pl-8 border-l border-zinc-800 space-y-4 sm:space-y-6">
-                {project.architecture.map((node, index) => (
-                  <div key={node.layer} className="relative group">
-                    {/* Node Dot */}
-                    <span className="absolute -left-[23px] sm:-left-[39px] top-4 w-3.5 h-3.5 rounded-full bg-zinc-900 border-2 border-[#2563EB]" />
-
-                    <div className="p-3.5 sm:p-5 rounded-xl border border-zinc-800/80 bg-zinc-950 space-y-1.5 sm:space-y-2">
-                      <div className="flex items-center justify-between text-xs text-zinc-400">
-                        <span className="font-mono-tabular text-[#2563EB] font-semibold">
-                          Layer 0{index + 1}
+              {project.challengesAndLearnings && (
+                <div className="space-y-4">
+                  {project.challengesAndLearnings.map((item, idx) => (
+                    <div
+                      key={item.title}
+                      className="p-5 rounded-xl border border-white/[0.08] bg-[#0c0d14] space-y-4 shadow-sm"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className="font-mono-tabular text-xs font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                          0{idx + 1}
                         </span>
-                        <span className="font-medium text-zinc-300">{node.layer}</span>
+                        <h5 className="text-sm font-bold text-white">{item.title}</h5>
                       </div>
-                      <h5 className="text-sm sm:text-base font-semibold text-white">{node.component}</h5>
-                      <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                        {node.responsibility}
-                      </p>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                        <div className="p-3.5 rounded-lg bg-black/40 border border-white/[0.04] space-y-1.5 flex flex-col justify-between">
+                          <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-rose-400 font-semibold flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                            <span>Challenge Encountered</span>
+                          </span>
+                          <p className="text-xs text-zinc-300 leading-relaxed">{item.challenge}</p>
+                        </div>
+
+                        <div className="p-3.5 rounded-lg bg-black/40 border border-white/[0.04] space-y-1.5 flex flex-col justify-between">
+                          <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-blue-400 font-semibold flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                            <span>Approach & Solution</span>
+                          </span>
+                          <p className="text-xs text-zinc-300 leading-relaxed">{item.solution}</p>
+                        </div>
+
+                        <div className="p-3.5 rounded-lg bg-black/40 border border-white/[0.04] space-y-1.5 flex flex-col justify-between">
+                          <span className="text-[10px] font-mono-tabular uppercase tracking-wider text-emerald-400 font-semibold flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            <span>What I Learned</span>
+                          </span>
+                          <p className="text-xs text-zinc-300 leading-relaxed">{item.learning}</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
-          {/* TAB 4: TECHNICAL APPROACH */}
+          {/* TAB 4: ARCHITECTURE & DECISIONS */}
           {activeTab === 'decisions' && (
             <div className="space-y-6">
               <div className="space-y-1">
-                <h4 className="text-base font-bold text-white">Technical Decisions & Approach</h4>
-                <p className="text-xs text-zinc-400">
-                  Why specific tools and structures were chosen for {project.title}.
+                <div className="flex items-center gap-2 text-white">
+                  <Layers className="w-4 h-4 text-[#2563EB]" />
+                  <h4 className="text-lg font-bold">Engineering Decisions & Architectural Approach</h4>
+                </div>
+                <p className="text-xs sm:text-sm text-zinc-400">
+                  Why specific tools, architectures, and design patterns were chosen for {project.title}.
                 </p>
               </div>
 
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-3.5">
                 {technicalDecisions.map((item, idx) => (
                   <div
                     key={item.title}
-                    className="p-3.5 sm:p-5 rounded-xl border border-zinc-800/80 bg-zinc-950 space-y-2 sm:space-y-3"
+                    className="p-5 rounded-xl border border-white/[0.08] bg-[#0c0d14] space-y-2.5"
                   >
                     <div className="flex items-center gap-2 text-xs font-mono-tabular text-[#2563EB]">
-                      <span>0{idx + 1}.</span>
-                      <span className="text-zinc-200 font-semibold">{item.title}</span>
+                      <span className="font-bold">0{idx + 1}.</span>
+                      <span className="text-white font-semibold">{item.title}</span>
                     </div>
 
-                    <div className="text-xs sm:text-sm text-white font-medium pl-3 sm:pl-4 border-l-2 border-[#2563EB]">
+                    <div className="text-xs sm:text-sm text-zinc-200 font-medium pl-3.5 border-l-2 border-[#2563EB]">
                       {item.decision}
                     </div>
 
@@ -719,9 +609,9 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 px-3.5 sm:px-6 py-3 sm:py-4 border-t border-zinc-800 bg-[#0C0C0F] shrink-0 text-xs">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-t border-white/[0.08] bg-[#0c0d14] shrink-0 text-xs">
           <div className="flex items-center gap-2 text-zinc-400">
-            <span>Status:</span>
+            <span>Development Status:</span>
             <span className="text-emerald-400 font-medium">{project.status}</span>
           </div>
 
@@ -730,7 +620,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors cursor-pointer w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors cursor-pointer w-full sm:w-auto shadow-md shadow-blue-500/20"
             >
               <span>Explore Code on GitHub</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -741,4 +631,3 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
     </div>
   );
 };
-

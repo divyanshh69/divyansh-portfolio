@@ -1,159 +1,220 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Sparkles, ArrowRight, UserCheck, CheckCircle2 } from 'lucide-react';
+import {
+  GraduationCap,
+  Hammer,
+  Compass,
+  CheckCircle2,
+  ChevronDown,
+  Sparkles,
+  BookOpen,
+  ArrowRight,
+} from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { CardTilt } from './CardTilt';
 
 export const AboutSection: React.FC = () => {
-  const { about } = PORTFOLIO_DATA;
-  const [activePillarId, setActivePillarId] = useState<string>(about.pillars[0].id);
-
-  const activePillar =
-    about.pillars.find((p) => p.id === activePillarId) || about.pillars[0];
+  const { about, beyondResume } = PORTFOLIO_DATA;
+  const [showMindsetDetails, setShowMindsetDetails] = useState(false);
 
   return (
     <section
       id="about"
       aria-labelledby="about-heading"
-      className="py-14 sm:py-20 md:py-28 border-b border-zinc-900 relative"
+      className="py-16 sm:py-24 border-b border-white/[0.06] relative"
     >
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16">
         {/* Section Header */}
-        <div className="max-w-3xl space-y-3 sm:space-y-4 mb-10 sm:mb-14">
-          <div className="flex items-center gap-2 text-xs text-zinc-400">
-            <span className="font-mono-tabular text-[#2563EB]">01.</span>
-            <span>About</span>
-            <span aria-hidden="true">·</span>
-            <span>Background & Foundation</span>
+        <div className="max-w-3xl space-y-3 sm:space-y-4">
+          <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
+            <span className="text-[#2563EB] font-bold">01.</span>
+            <span className="uppercase tracking-wider">About Me</span>
+            <span aria-hidden="true" className="text-zinc-600">/</span>
+            <span>Education & Approach</span>
           </div>
+
           <h2
             id="about-heading"
-            className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight [text-wrap:balance]"
+            className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight [text-wrap:balance]"
           >
-            {about.sectionTitle}
+            Building a grounded computer science foundation through practical software.
           </h2>
-          <p className="font-editorial text-base sm:text-lg md:text-xl text-zinc-300 leading-relaxed">
+
+          <p className="font-editorial text-lg sm:text-xl text-zinc-300 leading-relaxed [text-wrap:balance]">
             {about.lead}
           </p>
         </div>
 
-        {/* Interactive Chapter Explorer + Editorial Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-          {/* Left Column: Interactive Pillar Selector */}
-          <div
-            role="tablist"
-            aria-label="About Divyansh perspectives"
-            className="lg:col-span-5 flex flex-col divide-y divide-zinc-900 border border-zinc-800/80 rounded-2xl bg-[#0A0A0C] overflow-hidden shadow-xl"
-          >
-            {about.pillars.map((pillar) => {
-              const isSelected = pillar.id === activePillarId;
-              return (
-                <button
-                  key={pillar.id}
-                  role="tab"
-                  type="button"
-                  aria-selected={isSelected}
-                  onClick={() => setActivePillarId(pillar.id)}
-                  className={`w-full text-left px-4 sm:px-6 py-3.5 sm:py-5 transition-all duration-200 cursor-pointer flex items-start justify-between gap-3 sm:gap-4 ${
-                    isSelected
-                      ? 'bg-zinc-900/95 text-white'
-                      : 'text-zinc-400 hover:bg-zinc-900/50 hover:text-zinc-200'
-                  }`}
-                >
-                  <div className="space-y-1 min-w-0">
-                    <div className="flex items-center gap-2 sm:gap-2.5">
-                      <span
-                        className={`font-mono-tabular text-xs ${
-                          isSelected ? 'text-[#2563EB] font-bold' : 'text-zinc-500'
-                        }`}
-                      >
-                        {pillar.index}.
-                      </span>
-                      <span className="text-sm sm:text-base font-semibold tracking-tight truncate">
-                        {pillar.title}
-                      </span>
-                    </div>
-                    <p className="text-xs text-zinc-400 line-clamp-1 pl-5 sm:pl-6">
-                      {pillar.subtitle}
-                    </p>
-                  </div>
-                  <span
-                    className={`font-mono-tabular text-xs mt-0.5 sm:mt-1 whitespace-nowrap shrink-0 px-2 py-0.5 rounded ${
-                      isSelected
-                        ? 'bg-[#2563EB]/20 text-[#60A5FA] border border-blue-500/30'
-                        : 'text-zinc-600'
-                    }`}
-                  >
-                    {isSelected ? 'Active' : 'Read'}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+        {/* 3 Core Editorial Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Card 1: Academic Foundation */}
+          <div className="p-6 sm:p-7 rounded-2xl border border-white/[0.08] bg-[#0c0d14] flex flex-col justify-between space-y-6 shadow-lg">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                <GraduationCap className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div className="space-y-1">
+                <span className="font-mono-tabular text-xs text-blue-400">Aug 2025 — Present</span>
+                <h3 className="text-lg font-bold text-white">Medi-Caps University</h3>
+                <p className="text-xs text-zinc-400 font-medium">
+                  B.Tech in Computer Science & Engineering (2nd Year)
+                </p>
+              </div>
+              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed pt-1">
+                Enrolled in August 2025. Currently developing core strength across Data Structures,
+                Object-Oriented Programming, Relational Databases, and Computer Architecture while
+                applying coursework directly to functional projects.
+              </p>
+            </div>
 
-          {/* Right Column: Spotlight Reader + Complete Overview Grid */}
-          <div className="lg:col-span-7 space-y-6">
-            <CardTilt maxTilt={3} className="rounded-2xl">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activePillar.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.22 }}
-                  className="p-4.5 sm:p-8 rounded-2xl border border-zinc-800/90 bg-[#0A0A0C] space-y-4 sm:space-y-5 shadow-2xl"
-                >
-                  <div className="flex items-center justify-between gap-3 sm:gap-4 border-b border-zinc-900 pb-3 sm:pb-4">
-                    <div>
-                      <span className="font-mono-tabular text-xs text-[#2563EB] font-semibold">
-                        Perspective {activePillar.index}
-                      </span>
-                      <h3 className="text-xl sm:text-2xl font-bold text-white mt-1">
-                        {activePillar.title}
-                      </h3>
-                    </div>
-                    <span className="text-xs text-zinc-400 hidden sm:inline font-mono-tabular">
-                      {activePillar.subtitle}
-                    </span>
-                  </div>
-
-                  <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
-                    {activePillar.content}
-                  </p>
-
-                  <div className="pt-4 border-t border-zinc-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                    <span className="text-zinc-400">Core Takeaway</span>
-                    <span className="text-zinc-100 font-semibold bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800">
-                      {activePillar.keyTakeaway}
-                    </span>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </CardTilt>
-
-            {/* All-at-a-glance Summary Strip */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {about.pillars.slice(0, 4).map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => setActivePillarId(item.id)}
-                  className={`p-4 sm:p-5 rounded-xl border transition-all duration-200 cursor-pointer space-y-1.5 sm:space-y-2 ${
-                    item.id === activePillarId
-                      ? 'border-[#2563EB]/70 bg-zinc-900/60'
-                      : 'border-zinc-900 bg-[#070709] hover:border-zinc-800'
-                  }`}
-                >
-                  <div className="flex items-center justify-between text-xs text-zinc-400">
-                    <span className="font-semibold text-zinc-200">{item.title}</span>
-                    <span className="font-mono-tabular text-zinc-500">{item.index}</span>
-                  </div>
-                  <p className="text-xs text-zinc-400 leading-relaxed line-clamp-2">
-                    {item.content}
-                  </p>
-                </div>
-              ))}
+            <div className="pt-4 border-t border-white/[0.06] text-xs space-y-1.5">
+              <span className="text-zinc-500 font-mono-tabular">Coursework Applied:</span>
+              <div className="text-zinc-300 font-medium">
+                Data Structures · SQL Schemas · System Design Fundamentals
+              </div>
             </div>
           </div>
+
+          {/* Card 2: Engineering Philosophy */}
+          <div className="p-6 sm:p-7 rounded-2xl border border-white/[0.08] bg-[#0c0d14] flex flex-col justify-between space-y-6 shadow-lg">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                <Hammer className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div className="space-y-1">
+                <span className="font-mono-tabular text-xs text-emerald-400">Core Principle</span>
+                <h3 className="text-lg font-bold text-white">Learn by Building</h3>
+                <p className="text-xs text-zinc-400 font-medium">
+                  Hands-on execution over passive tutorials
+                </p>
+              </div>
+              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed pt-1">
+                Architecture and state management make sense when you build from an empty directory to
+                a working application. I care about user experience—clean dark themes, responsive
+                feedback, keyboard shortcuts, and respectful resource usage.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-white/[0.06] text-xs space-y-1.5">
+              <span className="text-zinc-500 font-mono-tabular">Development Focus:</span>
+              <div className="text-zinc-300 font-medium">
+                Clean Architecture · Type Safety · Fast Feedback Loops
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3: Current Interests & Goals */}
+          <div className="p-6 sm:p-7 rounded-2xl border border-white/[0.08] bg-[#0c0d14] flex flex-col justify-between space-y-6 shadow-lg">
+            <div className="space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                <Compass className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div className="space-y-1">
+                <span className="font-mono-tabular text-xs text-purple-400">Active Direction</span>
+                <h3 className="text-lg font-bold text-white">Interests & Direction</h3>
+                <p className="text-xs text-zinc-400 font-medium">
+                  Native macOS & Full-Stack Systems
+                </p>
+              </div>
+              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed pt-1">
+                I enjoy engineering tools that solve concrete problems: native desktop media apps with
+                Swift and SwiftUI, and web tools for college clubs with Node.js and PostgreSQL. I am actively
+                seeking software engineering internship opportunities.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-white/[0.06] text-xs space-y-1.5">
+              <span className="text-zinc-500 font-mono-tabular">Seeking Opportunities:</span>
+              <div className="text-zinc-300 font-medium">
+                Software Engineering Internships & Mentorship
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mindset & Principles Expandable Section */}
+        <div className="rounded-2xl border border-white/[0.08] bg-[#0c0d14] overflow-hidden">
+          <button
+            type="button"
+            onClick={() => setShowMindsetDetails((prev) => !prev)}
+            aria-expanded={showMindsetDetails}
+            className="w-full px-6 py-4 sm:py-5 flex items-center justify-between gap-4 text-left hover:bg-white/[0.02] transition-colors cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <Sparkles className="w-4 h-4 text-blue-400 shrink-0" />
+              <div>
+                <span className="text-sm font-semibold text-white">
+                  Engineering Principles, Strengths & Honest Growth Areas
+                </span>
+                <span className="hidden sm:inline text-xs text-zinc-400 ml-2">
+                  (How I think, daily habits, and active learning roadmap)
+                </span>
+              </div>
+            </div>
+            <ChevronDown
+              className={`w-4 h-4 text-zinc-400 transition-transform duration-200 ${
+                showMindsetDetails ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
+
+          <AnimatePresence>
+            {showMindsetDetails && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.22 }}
+                className="px-6 pb-6 pt-2 border-t border-white/[0.06] space-y-6"
+              >
+                {/* Strengths & Growth Split */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
+                  {/* Strengths */}
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-mono-tabular uppercase tracking-wider text-emerald-400 font-semibold flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span>Where I Excel as a Student Developer</span>
+                    </h4>
+                    <div className="space-y-2.5">
+                      {beyondResume.strengths.slice(0, 3).map((item) => (
+                        <div
+                          key={item.id}
+                          className="p-3.5 rounded-xl bg-black/40 border border-white/[0.04] space-y-1"
+                        >
+                          <div className="text-xs font-semibold text-white">{item.title}</div>
+                          <p className="text-xs text-zinc-400 leading-relaxed">{item.description}</p>
+                          <div className="text-[11px] text-zinc-500 font-mono-tabular pt-1">
+                            Evidence: {item.evidence}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Growth Areas */}
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-mono-tabular uppercase tracking-wider text-blue-400 font-semibold flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                      <span>Where I Am Actively Working to Improve</span>
+                    </h4>
+                    <div className="space-y-2.5">
+                      {beyondResume.growthAreas.slice(0, 3).map((item) => (
+                        <div
+                          key={item.id}
+                          className="p-3.5 rounded-xl bg-black/40 border border-white/[0.04] space-y-1"
+                        >
+                          <div className="text-xs font-semibold text-white">{item.title}</div>
+                          <p className="text-xs text-zinc-400 leading-relaxed">{item.honestReflection}</p>
+                          <div className="text-[11px] text-blue-300 font-mono-tabular pt-1">
+                            Action Plan: {item.activeActionPlan}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>

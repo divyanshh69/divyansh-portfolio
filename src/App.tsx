@@ -2,11 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Navbar, SectionId, NAV_SECTIONS } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
-import { SkillsSection } from './components/SkillsSection';
 import { ProjectsSection } from './components/ProjectsSection';
+import { SkillsSection } from './components/SkillsSection';
 import { JourneySection } from './components/JourneySection';
-import { BeyondSection } from './components/BeyondSection';
-import { NowSection } from './components/NowSection';
 import { ContactFooter } from './components/ContactFooter';
 import { CommandPalette } from './components/CommandPalette';
 
@@ -44,7 +42,7 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Scrollspy for active section
+  // Scrollspy for active navigation section
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 180;
@@ -63,7 +61,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-100 flex flex-col selection:bg-[#2563EB] selection:text-white relative w-full overflow-x-clip">
+    <div className="min-h-screen bg-[#08090d] text-zinc-100 flex flex-col selection:bg-[#2563EB] selection:text-white relative w-full overflow-x-clip">
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
@@ -76,19 +74,17 @@ export default function App() {
           onOpenProject={handleOpenProject}
         />
         <AboutSection />
-        <SkillsSection />
         <ProjectsSection
           externalSelectedProject={selectedProjectId}
           onClearExternalProject={() => setSelectedProjectId(null)}
         />
+        <SkillsSection />
         <JourneySection />
-        <BeyondSection />
-        <NowSection />
       </main>
 
       <ContactFooter onNavigate={handleNavigate} />
 
-      {/* Interactive Command Palette */}
+      {/* Global Command Palette (⌘K) */}
       <CommandPalette
         isOpen={isCommandPaletteOpen}
         onClose={() => setIsCommandPaletteOpen(false)}

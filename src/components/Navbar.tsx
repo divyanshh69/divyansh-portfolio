@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowUpRight, Search, Command } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Search } from 'lucide-react';
 
 export type SectionId =
   | 'home'
   | 'about'
-  | 'skills'
   | 'projects'
+  | 'skills'
   | 'journey'
-  | 'beyond'
-  | 'now'
   | 'contact';
 
 export const NAV_SECTIONS: { id: SectionId; label: string }[] = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
-  { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
+  { id: 'skills', label: 'Skills' },
   { id: 'journey', label: 'Journey' },
-  { id: 'beyond', label: 'Mindset' },
-  { id: 'now', label: 'Now' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -60,16 +56,14 @@ export const Navbar: React.FC<NavbarProps> = ({
   const centerNavLinks: { id: SectionId; label: string }[] = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
-    { id: 'skills', label: 'Skills' },
     { id: 'projects', label: 'Projects' },
+    { id: 'skills', label: 'Skills' },
     { id: 'journey', label: 'Journey' },
-    { id: 'beyond', label: 'Mindset' },
-    { id: 'now', label: 'Now' },
   ];
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-[#050505]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.03)]">
+      <header className="sticky top-0 z-40 w-full bg-[#08090d]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.03)]">
         {/* Scroll Progress Bar */}
         <div
           aria-hidden="true"
@@ -77,21 +71,24 @@ export const Navbar: React.FC<NavbarProps> = ({
           style={{ width: `${scrollProgress}%` }}
         />
 
-        <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-3 sm:py-3.5">
-          {/* Zone 1: Wordmark */}
+        <div className="max-w-[1240px] mx-auto flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-3.5 sm:py-4">
+          {/* Brand Wordmark */}
           <a
             href="#home"
             onClick={(e) => handleLinkClick(e, 'home')}
-            className="flex items-center gap-2 text-sm sm:text-base font-bold tracking-tight text-zinc-100 hover:text-white transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2563EB]"
+            className="group flex items-center gap-2.5 text-sm sm:text-base font-bold tracking-tight text-white hover:text-blue-400 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2563EB]"
           >
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
             <span>Divyansh Nayak</span>
-            <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-blue-500" />
+            <span className="hidden sm:inline font-mono-tabular text-[11px] font-normal text-zinc-500 group-hover:text-zinc-400 transition-colors">
+              / CSE
+            </span>
           </a>
 
-          {/* Zone 2: Navigation Links */}
+          {/* Primary Center Navigation Links */}
           <nav
             aria-label="Primary Navigation"
-            className="hidden lg:flex items-center gap-6 text-sm font-medium text-zinc-400"
+            className="hidden md:flex items-center gap-1 sm:gap-2 text-xs font-medium text-zinc-400 bg-white/[0.03] border border-white/[0.06] rounded-full px-2 py-1"
           >
             {centerNavLinks.map((item) => {
               const isActive = activeSection === item.id;
@@ -100,25 +97,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={(e) => handleLinkClick(e, item.id)}
-                  className={`relative py-1 transition-colors whitespace-nowrap shrink-0 ${
-                    isActive ? 'text-white font-semibold' : 'text-zinc-400 hover:text-zinc-100'
+                  className={`relative px-3.5 py-1.5 rounded-full transition-colors whitespace-nowrap shrink-0 ${
+                    isActive
+                      ? 'text-white font-semibold bg-white/[0.08]'
+                      : 'text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.04]'
                   }`}
                 >
                   {item.label}
-                  {isActive && (
-                    <motion.span
-                      layoutId="header-active-underline"
-                      className="absolute left-0 right-0 -bottom-1 h-[2px] bg-[#2563EB]"
-                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                    />
-                  )}
                 </a>
               );
             })}
           </nav>
 
-          {/* Zone 3: Command Trigger + Contact + Mobile Menu */}
-          <div className="flex items-center gap-2.5 shrink-0">
+          {/* Right Controls: Command Trigger + Contact Button + Mobile Menu Toggle */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
             {/* Quick Command Trigger Pill */}
             {onOpenCommandPalette && (
               <button
@@ -126,31 +118,33 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onClick={onOpenCommandPalette}
                 aria-label="Open Command Menu (⌘K)"
                 title="Open Command Menu (⌘K)"
-                className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono-tabular text-zinc-400 liquid-glass-pill hover:text-white hover:border-white/20 transition-all cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono-tabular text-zinc-400 liquid-glass-pill rounded-lg hover:text-white hover:border-white/20 transition-all cursor-pointer"
               >
-                <Search className="w-3 h-3 text-zinc-400" />
+                <Search className="w-3.5 h-3.5 text-zinc-400" />
                 <span className="text-[11px]">Search</span>
-                <kbd className="px-1 py-0.5 text-[10px] bg-white/[0.08] rounded text-zinc-300 border border-white/[0.1]">
+                <kbd className="px-1.5 py-0.5 text-[10px] bg-white/[0.08] rounded text-zinc-300 border border-white/[0.1]">
                   ⌘K
                 </kbd>
               </button>
             )}
 
+            {/* Direct Contact Button */}
             <a
               href="#contact"
               onClick={(e) => handleLinkClick(e, 'contact')}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-all hover:shadow-md hover:shadow-blue-500/20 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-all shadow-md shadow-blue-500/20 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               <span>Contact</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
             </a>
 
+            {/* Mobile Hamburger Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg border border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-900 transition-colors"
+              className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg border border-white/[0.1] text-zinc-300 hover:text-white hover:bg-zinc-900 transition-colors cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
@@ -162,11 +156,11 @@ export const Navbar: React.FC<NavbarProps> = ({
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.18 }}
-            className="lg:hidden fixed inset-x-0 top-[53px] sm:top-[57px] z-30 liquid-glass border-b border-white/[0.08] px-4 sm:px-6 py-4 sm:py-5 shadow-2xl"
+            className="md:hidden fixed inset-x-0 top-[57px] z-30 liquid-glass border-b border-white/[0.08] px-4 py-4 shadow-2xl"
           >
             <nav aria-label="Mobile Navigation" className="grid grid-cols-2 gap-2">
               {NAV_SECTIONS.map((sec, index) => {
@@ -176,18 +170,36 @@ export const Navbar: React.FC<NavbarProps> = ({
                     key={sec.id}
                     type="button"
                     onClick={(e) => handleLinkClick(e, sec.id)}
-                    className={`flex items-center justify-between px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-lg text-left text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
+                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-left text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
                       isActive
-                        ? 'bg-[#2563EB] text-white shadow-sm'
-                        : 'bg-zinc-900/60 text-zinc-300 hover:bg-zinc-800 hover:text-white border border-white/[0.04]'
+                        ? 'bg-[#2563EB] text-white shadow-sm font-semibold'
+                        : 'bg-zinc-900/70 text-zinc-300 hover:bg-zinc-800 hover:text-white border border-white/[0.04]'
                     }`}
                   >
                     <span>{sec.label}</span>
-                    <span className="font-mono-tabular text-[11px] sm:text-xs opacity-70">0{index + 1}</span>
+                    <span className="font-mono-tabular text-[11px] opacity-70">0{index + 1}</span>
                   </button>
                 );
               })}
             </nav>
+            {onOpenCommandPalette && (
+              <div className="pt-3 mt-3 border-t border-white/[0.08]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenCommandPalette();
+                  }}
+                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs text-zinc-300 bg-zinc-900/60 border border-white/[0.06] rounded-xl hover:text-white transition-colors"
+                >
+                  <Search className="w-3.5 h-3.5 text-zinc-400" />
+                  <span>Open Quick Command Search</span>
+                  <kbd className="px-1 py-0.5 text-[10px] bg-white/[0.08] rounded text-zinc-300 border border-white/[0.1]">
+                    ⌘K
+                  </kbd>
+                </button>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

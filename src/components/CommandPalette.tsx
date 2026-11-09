@@ -34,8 +34,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'cmd-home',
       category: 'Navigation',
-      label: 'Home & Hero Space',
-      detail: 'Introduction, project highlights & core focus',
+      label: 'Home & Overview',
+      detail: 'Introduction, project spotlight & student role',
       action: () => {
         onNavigate('home');
         onClose();
@@ -45,19 +45,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-about',
       category: 'Navigation',
       label: 'About Divyansh',
-      detail: 'Background, education, interests & motivation',
+      detail: 'Medi-Caps University, B.Tech CSE, 2nd Year & approach',
       action: () => {
         onNavigate('about');
-        onClose();
-      },
-    },
-    {
-      id: 'cmd-skills',
-      category: 'Navigation',
-      label: 'Skills & Tech Stack',
-      detail: 'TypeScript, C++, Swift, React, PostgreSQL & Git',
-      action: () => {
-        onNavigate('skills');
         onClose();
       },
     },
@@ -65,9 +55,19 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-projects',
       category: 'Navigation',
       label: 'Featured Projects',
-      detail: 'Personal and college projects (MetroFlow & CampusPulse)',
+      detail: 'MetroFlow for macOS & CampusPulse Club Platform',
       action: () => {
         onNavigate('projects');
+        onClose();
+      },
+    },
+    {
+      id: 'cmd-skills',
+      category: 'Navigation',
+      label: 'Technical Skills',
+      detail: 'Swift, TypeScript, C++, React, PostgreSQL, Node.js & Git',
+      action: () => {
+        onNavigate('skills');
         onClose();
       },
     },
@@ -75,29 +75,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-journey',
       category: 'Navigation',
       label: 'Journey & Timeline',
-      detail: 'CS degree, hackathons, club roles & roadmap',
+      detail: 'Aug 2025 Medi-Caps enrollment, 2026 hackathons & milestones',
       action: () => {
         onNavigate('journey');
-        onClose();
-      },
-    },
-    {
-      id: 'cmd-beyond',
-      category: 'Navigation',
-      label: 'Mindset & Approach',
-      detail: 'How I think, strengths, growth areas & engineering approach',
-      action: () => {
-        onNavigate('beyond');
-        onClose();
-      },
-    },
-    {
-      id: 'cmd-now',
-      category: 'Navigation',
-      label: 'Now / Active Focus',
-      detail: 'What I am building, learning & exploring right now',
-      action: () => {
-        onNavigate('now');
         onClose();
       },
     },
@@ -105,7 +85,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-contact',
       category: 'Navigation',
       label: 'Contact & Connect',
-      detail: 'Reach out for SDE opportunities & collaborations',
+      detail: 'Email, GitHub, LinkedIn & direct messaging',
       action: () => {
         onNavigate('contact');
         onClose();
@@ -114,8 +94,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'cmd-proj-metroflow',
       category: 'Projects',
-      label: 'MetroFlow — macOS Music Application',
-      detail: 'Native macOS music player built with Swift & SwiftUI',
+      label: 'MetroFlow — macOS Music Player',
+      detail: 'Native desktop application built with Swift & CoreAudio',
       action: () => {
         onNavigate('projects');
         onOpenProject?.('metroflow');
@@ -125,8 +105,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'cmd-proj-campuspulse',
       category: 'Projects',
-      label: 'CampusPulse — Club Management Platform',
-      detail: 'Full-stack college club platform with React, Node.js & PostgreSQL',
+      label: 'CampusPulse — Club Operations Platform',
+      detail: 'Full-stack platform built with React, Node.js & PostgreSQL',
       action: () => {
         onNavigate('projects');
         onOpenProject?.('campuspulse');
@@ -166,8 +146,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   ];
 
   const filteredCommands = commands.filter((cmd) => {
-    if (!search.trim()) return true;
-    const q = search.toLowerCase();
+    const q = search.trim().toLowerCase();
+    if (!q) return true;
     return (
       cmd.label.toLowerCase().includes(q) ||
       cmd.detail.toLowerCase().includes(q) ||
@@ -175,6 +155,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     );
   });
 
+  // Focus input whenever opened
   useEffect(() => {
     if (isOpen) {
       setSearch('');
@@ -183,11 +164,15 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     }
   }, [isOpen]);
 
+  // Keyboard navigation inside palette
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isOpen) return;
+    if (!isOpen) return;
 
-      if (e.key === 'ArrowDown') {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      } else if (e.key === 'ArrowDown') {
         e.preventDefault();
         setSelectedIndex((prev) => (prev + 1) % (filteredCommands.length || 1));
       } else if (e.key === 'ArrowUp') {
@@ -198,124 +183,112 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         if (filteredCommands[selectedIndex]) {
           filteredCommands[selectedIndex].action();
         }
-      } else if (e.key === 'Escape') {
-        onClose();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, filteredCommands, selectedIndex, onClose]);
+  }, [isOpen, selectedIndex, filteredCommands, onClose]);
+
+  if (!isOpen) return null;
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Command Palette"
-          className="fixed inset-0 z-50 flex items-start justify-center pt-12 sm:pt-28 px-3 sm:px-4 bg-black/80 backdrop-blur-md"
-          onClick={onClose}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: -12 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -12 }}
-            transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-xl rounded-2xl liquid-glass shadow-2xl overflow-hidden text-zinc-100 divide-y divide-white/[0.06]"
-          >
-            {/* Search Input Bar */}
-            <div className="flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-3 sm:py-3.5 bg-black/40">
-              <Search className="w-4 h-4 text-zinc-400 shrink-0" />
-              <input
-                ref={inputRef}
-                type="text"
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setSelectedIndex(0);
-                }}
-                placeholder="Type a command or jump to section..."
-                className="w-full bg-transparent text-sm text-white placeholder:text-zinc-500 focus:outline-none"
-              />
-              <button
-                type="button"
-                onClick={onClose}
-                aria-label="Close command palette"
-                className="p-1 rounded-md text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Command search menu"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: -12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: -12 }}
+        transition={{ duration: 0.16 }}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-xl rounded-2xl border border-white/[0.1] bg-[#0c0d14] shadow-2xl overflow-hidden flex flex-col"
+      >
+        {/* Search Input Bar */}
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/[0.08] bg-[#11121c]">
+          <Search className="w-4 h-4 text-zinc-400 shrink-0" />
+          <input
+            ref={inputRef}
+            type="text"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setSelectedIndex(0);
+            }}
+            placeholder="Search sections, projects, or external links..."
+            className="flex-1 bg-transparent text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none"
+          />
+          {search && (
+            <button
+              type="button"
+              onClick={() => setSearch('')}
+              className="text-zinc-500 hover:text-zinc-300 p-1 rounded"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono-tabular bg-white/[0.08] text-zinc-400 border border-white/[0.1] rounded">
+            ESC
+          </kbd>
+        </div>
 
-            {/* Command Results */}
-            <div className="max-h-80 overflow-y-auto p-1.5 sm:p-2 space-y-1">
-              {filteredCommands.length === 0 ? (
-                <div className="py-8 text-center text-xs text-zinc-500">
-                  No matching commands found.
-                </div>
-              ) : (
-                filteredCommands.map((cmd, idx) => {
-                  const isSelected = idx === selectedIndex;
-                  return (
-                    <button
-                      key={cmd.id}
-                      type="button"
-                      onClick={cmd.action}
-                      onMouseEnter={() => setSelectedIndex(idx)}
-                      className={`w-full flex items-center justify-between px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl text-left transition-colors cursor-pointer ${
-                        isSelected
-                          ? 'bg-[#2563EB] text-white'
-                          : 'text-zinc-300 hover:bg-zinc-900/80 hover:text-white'
+        {/* Command Items List */}
+        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-white/[0.04]">
+          {filteredCommands.length === 0 ? (
+            <div className="py-8 text-center text-xs text-zinc-500">
+              No matching commands or destinations found.
+            </div>
+          ) : (
+            filteredCommands.map((cmd, idx) => {
+              const isSelected = idx === selectedIndex;
+              return (
+                <button
+                  key={cmd.id}
+                  type="button"
+                  onClick={cmd.action}
+                  onMouseEnter={() => setSelectedIndex(idx)}
+                  className={`w-full text-left px-3.5 py-2.5 rounded-xl transition-colors flex items-center justify-between gap-3 cursor-pointer ${
+                    isSelected
+                      ? 'bg-[#2563EB] text-white'
+                      : 'text-zinc-300 hover:bg-white/[0.04]'
+                  }`}
+                >
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold truncate">{cmd.label}</span>
+                      <span
+                        className={`text-[10px] font-mono-tabular px-1.5 py-0.2 rounded ${
+                          isSelected ? 'bg-white/20 text-white' : 'bg-white/[0.05] text-zinc-400'
+                        }`}
+                      >
+                        {cmd.category}
+                      </span>
+                    </div>
+                    <p
+                      className={`text-[11px] truncate mt-0.5 ${
+                        isSelected ? 'text-blue-100' : 'text-zinc-500'
                       }`}
                     >
-                      <div className="min-w-0 pr-2 sm:pr-3">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-semibold truncate">{cmd.label}</span>
-                          <span
-                            className={`text-[10px] font-mono-tabular px-1.5 py-0.2 rounded ${
-                              isSelected ? 'bg-white/20 text-white' : 'bg-zinc-800 text-zinc-400'
-                            }`}
-                          >
-                            {cmd.category}
-                          </span>
-                        </div>
-                        <p
-                          className={`text-[11px] truncate mt-0.5 ${
-                            isSelected ? 'text-white/80' : 'text-zinc-500'
-                          }`}
-                        >
-                          {cmd.detail}
-                        </p>
-                      </div>
-
-                      <div className="shrink-0 flex items-center">
-                        <CornerDownLeft
-                          className={`w-3.5 h-3.5 ${
-                            isSelected ? 'text-white' : 'text-zinc-600'
-                          }`}
-                        />
-                      </div>
-                    </button>
-                  );
-                })
-              )}
-            </div>
-
-            {/* Footer Shortcut Tips */}
-            <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 text-[10px] sm:text-[11px] font-mono-tabular text-zinc-500 bg-black/40">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <span>↑↓ Navigate</span>
-                <span>↵ Select</span>
-                <span>ESC Close</span>
-              </div>
-              <span className="text-zinc-400 hidden sm:inline">Divyansh Nayak · Portfolio</span>
-            </div>
-          </motion.div>
+                      {cmd.detail}
+                    </p>
+                  </div>
+                  {isSelected && <CornerDownLeft className="w-3.5 h-3.5 shrink-0 opacity-80" />}
+                </button>
+              );
+            })
+          )}
         </div>
-      )}
-    </AnimatePresence>
+
+        {/* Footer shortcuts hint */}
+        <div className="px-4 py-2 border-t border-white/[0.06] bg-[#090a0f] flex items-center justify-between text-[11px] text-zinc-500 font-mono-tabular">
+          <span>Use ↑ ↓ to navigate</span>
+          <span>Press Enter to select</span>
+        </div>
+      </motion.div>
+    </div>
   );
 };
-
