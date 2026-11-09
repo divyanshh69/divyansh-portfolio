@@ -28,6 +28,18 @@ export interface ProjectArchitectureNode {
   responsibility: string;
 }
 
+export interface ProjectSpecification {
+  label: string;
+  value: string;
+  detail: string;
+}
+
+export interface ProjectTechnicalDecision {
+  title: string;
+  decision: string;
+  rationale: string;
+}
+
 export interface ProjectChallengeLearning {
   title: string;
   challenge: string;
@@ -58,6 +70,8 @@ export interface ProjectItem {
   technologies: string[];
   highlights: string[];
   architecture: ProjectArchitectureNode[];
+  specifications?: ProjectSpecification[];
+  technicalDecisions?: ProjectTechnicalDecision[];
   challengesAndLearnings?: ProjectChallengeLearning[];
   metrics: { label: string; value: string }[];
   githubUrl: string;
@@ -85,7 +99,7 @@ export interface JourneyItem {
 
 export interface AchievementItem {
   id: string;
-  category: 'Certifications' | 'Hackathons' | 'Academic' | 'Leadership & Clubs';
+  category: 'Academic' | 'Projects' | 'Hackathons' | 'Leadership & Clubs' | 'Certifications' | 'Learning';
   title: string;
   issuerOrEvent: string;
   date: string;
@@ -142,7 +156,7 @@ export const PORTFOLIO_DATA = {
     heroImage: heroWorkspaceImg,
     metrics: [
       { value: 'B.Tech CSE', label: 'Undergraduate Program', context: 'Medi-Caps University · 2nd Year' },
-      { value: 'MetroFlow', label: 'macOS Music Player', context: 'Swift, SwiftUI & CoreAudio' },
+      { value: 'MetroFlow', label: 'macOS Music Player', context: 'Electron, React & libmpv' },
       { value: 'CampusPulse', label: 'Club Management Platform', context: 'React, Node.js & PostgreSQL' },
       { value: 'Hackathons', label: '2026 Participant', context: 'Rapid Prototyping & Team Builds' },
     ],
@@ -207,7 +221,7 @@ export const PORTFOLIO_DATA = {
       category: 'Programming',
       context: 'Type-safe application development across frontend React components and backend Node.js services.',
       experienceNote: 'Strict typing, generic helpers, API contract interfaces, and modular component props.',
-      usedIn: ['CampusPulse', 'Portfolio Space', 'MetroFlow Bridge'],
+      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'js',
@@ -215,7 +229,7 @@ export const PORTFOLIO_DATA = {
       category: 'Programming',
       context: 'Asynchronous programming, DOM interactions, Web APIs, and modern ES features.',
       experienceNote: 'Async/await, modern ES syntax, DOM manipulation, and audio API integration.',
-      usedIn: ['CampusPulse', 'Interactive Web Tools'],
+      usedIn: ['CampusPulse'],
     },
     {
       id: 'cpp',
@@ -223,31 +237,31 @@ export const PORTFOLIO_DATA = {
       category: 'Programming',
       context: 'Algorithmic problem solving, core computer science fundamentals, and data structure implementations.',
       experienceNote: 'STL containers, algorithms, recursion, trees, graphs, and complexity analysis.',
-      usedIn: ['Algorithmic Benchmarks', 'CS Coursework'],
+      usedIn: ['CS Coursework', 'Problem Solving Practice'],
     },
     {
       id: 'python',
       name: 'Python',
       category: 'Programming',
-      context: 'Automation scripts, backend prototyping, data handling, and course projects.',
-      experienceNote: 'Writing clean scripts, CLI utilities, and small backend services.',
-      usedIn: ['Automation Scripts', 'Data Parsers'],
+      context: 'Local microservice bridges, backend prototyping, data handling, and course projects.',
+      experienceNote: 'Writing clean scripts, CLI utilities, and local HTTP services with ytmusicapi.',
+      usedIn: ['MetroFlow', 'Coursework Scripts'],
     },
     {
       id: 'swift',
-      name: 'Swift & AppKit / SwiftUI',
+      name: 'Swift & macOS UI Explorations',
       category: 'Programming',
-      context: 'Native macOS application development and local audio playback integration.',
-      experienceNote: 'SwiftUI views, AppKit window integration, and AVFoundation audio playback.',
-      usedIn: ['MetroFlow'],
+      context: 'Studying Swift language fundamentals and SwiftUI for native macOS interface prototyping.',
+      experienceNote: 'Exploring Swift syntax, SwiftUI view hierarchies, and macOS UI patterns.',
+      usedIn: ['macOS UI Prototyping', 'Independent Study'],
     },
     {
       id: 'react',
-      name: 'React & Next.js',
+      name: 'React',
       category: 'Web Development',
-      context: 'Building interactive user interfaces, single-page web applications, and custom hooks.',
+      context: 'Building interactive user interfaces, single-page web applications, and custom hooks with Vite.',
       experienceNote: 'Functional components, hooks, state management, and responsive layouts.',
-      usedIn: ['CampusPulse', 'Personal Portfolio'],
+      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'tailwind',
@@ -255,15 +269,15 @@ export const PORTFOLIO_DATA = {
       category: 'Web Development',
       context: 'Responsive styling, dark mode UI theming, and consistent layout design.',
       experienceNote: 'Utility classes, custom CSS variables, responsive breakpoints, and clean component styling.',
-      usedIn: ['CampusPulse', 'Personal Portfolio'],
+      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'motion',
-      name: 'Framer Motion & GSAP',
+      name: 'Framer Motion & Web Animations',
       category: 'Web Development',
       context: 'Smooth UI animations, scroll-triggered reveals, and micro-interactions.',
       experienceNote: 'Spring animations, staggered reveals, smooth transitions, and respecting prefers-reduced-motion.',
-      usedIn: ['Personal Portfolio', 'CampusPulse UI'],
+      usedIn: ['Personal Portfolio'],
     },
     {
       id: 'nodejs',
@@ -274,11 +288,19 @@ export const PORTFOLIO_DATA = {
       usedIn: ['CampusPulse'],
     },
     {
-      id: 'databases',
-      name: 'PostgreSQL & MongoDB',
+      id: 'electron',
+      name: 'Electron & Desktop Packaging',
       category: 'Tools & Technologies',
-      context: 'Relational data modeling, SQL queries, and NoSQL document storage.',
-      experienceNote: 'Designing normalized schemas for club events, writing queries, and managing relationships.',
+      context: 'Building desktop applications on macOS with custom frameless windowing, IPC channels, and native packaging.',
+      experienceNote: 'Electron main/preload integration, window state management, and macOS packaging (.dmg/.app).',
+      usedIn: ['MetroFlow'],
+    },
+    {
+      id: 'databases',
+      name: 'PostgreSQL & Relational Databases',
+      category: 'Tools & Technologies',
+      context: 'Relational data modeling, SQL queries, schema normalization, and foreign key constraints.',
+      experienceNote: 'Designing normalized schemas for campus events and clubs, writing queries, and enforcing relational integrity.',
       usedIn: ['CampusPulse'],
     },
     {
@@ -287,7 +309,7 @@ export const PORTFOLIO_DATA = {
       category: 'Tools & Technologies',
       context: 'Version control, feature branching, code reviews, and Linux terminal workflow.',
       experienceNote: 'Git commands, branch workflows, pull requests, and command-line tooling.',
-      usedIn: ['MetroFlow', 'CampusPulse'],
+      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'figma',
@@ -295,7 +317,7 @@ export const PORTFOLIO_DATA = {
       category: 'Tools & Technologies',
       context: 'UI wireframing, layout experimentation, and prototyping before writing code.',
       experienceNote: 'Creating mockups, planning component spacing, and testing color schemes.',
-      usedIn: ['MetroFlow', 'CampusPulse'],
+      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'rust',
@@ -303,7 +325,7 @@ export const PORTFOLIO_DATA = {
       category: 'Currently Learning',
       context: 'Learning memory safety, ownership concepts, and systems programming basics.',
       experienceNote: 'Studying Rust fundamentals, compiler checks, and building small command-line utilities.',
-      usedIn: ['Systems Lab Explorations'],
+      usedIn: ['Independent Study', 'Command-Line Tools'],
     },
     {
       id: 'distributed',
@@ -311,7 +333,7 @@ export const PORTFOLIO_DATA = {
       category: 'Currently Learning',
       context: 'Studying caching concepts, WebSockets, and real-time communication patterns.',
       experienceNote: 'Exploring Redis caching patterns, real-time message handling, and system design basics.',
-      usedIn: ['CampusPulse v2 Architecture'],
+      usedIn: ['Independent Study', 'System Architecture Study'],
     },
   ] as SkillItem[],
 
@@ -320,18 +342,18 @@ export const PORTFOLIO_DATA = {
       id: 'metroflow',
       index: '01',
       title: 'MetroFlow',
-      subtitle: 'A modern, distraction-free music application designed for macOS',
+      subtitle: 'A standalone macOS music streaming and studio synth application optimized for Apple Silicon',
       category: 'macOS / Native',
       year: '2026',
       status: 'Active Project',
       shortDescription:
-        'A native music application for macOS that pairs distraction-free listening and local audio playback with a dark, minimal visual interface.',
+        'A macOS desktop music application built with Electron, React, and a local Python bridge, pairing streaming discovery with synchronized lyrics, libmpv CoreAudio playback, and a dockable mini-player.',
       fullOverview:
-        'MetroFlow is a native macOS music player built for focused listening. Built with Swift and SwiftUI/AppKit, it focuses on local audio files, intuitive keyboard controls, and responsive waveform visualization in a clean Mac-native layout.',
+        'MetroFlow is a standalone desktop music application for macOS optimized for Apple Silicon ARM64. Built with an Electron desktop shell, a React/TypeScript interface, and a local Python bridge on port 8765, it pairs compliant streaming playback with a native libmpv CoreAudio engine, interactive synchronized lyrics, and a dockable mini-player.',
       problemStatement:
-        'Many modern desktop music players are heavy web wrappers that consume significant system memory and clutter the listening experience with social feeds and recommendations.',
+        'Many modern desktop music players are cluttered with social feeds and lack seamless support for interactive synchronized lyrics, lightweight mini-player docking, and low-latency audio playback.',
       engineeringSolution:
-        'Built a native macOS application using Swift and AppKit/SwiftUI with local audio playback via AVFoundation, responsive UI layouts, and an integrated mini-player mode.',
+        'Engineered a desktop macOS application combining an Electron native shell with a responsive React frontend, a dual audio playback pipeline (streaming player and native Apple Silicon libmpv CoreAudio output), interactive synchronized lyrics with click-to-seek, and a local Python backend bridge on port 8765 for fast catalogue search.',
       image: metroflowHomeImg,
       screenshots: [
         {
@@ -350,63 +372,115 @@ export const PORTFOLIO_DATA = {
           caption: 'Preferences panel with configurable macOS keyboard shortcuts, Apple Silicon ARM64 target, and dual audio engine configuration.',
         },
       ],
-      technologies: ['Swift', 'SwiftUI / AppKit', 'CoreAudio', 'Python Bridge', 'macOS SDK'],
+      technologies: ['Electron', 'React', 'TypeScript', 'Python Bridge', 'libmpv CoreAudio', 'Tailwind CSS'],
       highlights: [
-        'Built natively for macOS Apple Silicon with custom audio streaming and studio synthesizer',
+        'Built for macOS Apple Silicon with dual audio pipeline (streaming player & native libmpv CoreAudio)',
         'Interactive synchronized lyrics with time-tagging and one-click timestamp seeking',
-        'Configurable macOS keyboard shortcuts for playback, volume, and quick search',
-        'Lightweight docking mini-player mode designed for focused work and study sessions',
+        'Local Python backend service on port 8765 for fast catalogue search, metadata, and lyrics',
+        'Configurable macOS keyboard shortcuts and lightweight dockable mini-player for focused work',
       ],
       architecture: [
         {
-          layer: 'User Interface',
-          component: 'SwiftUI & AppKit macOS Views',
-          responsibility: 'Renders the main window, album artwork, interactive synchronized lyrics, and docked mini-player.',
+          layer: 'Desktop & UI Shell',
+          component: 'Electron & React (TypeScript)',
+          responsibility: 'Renders frameless macOS window, navigation, album artwork, interactive synchronized lyrics, and dockable mini-player.',
         },
         {
           layer: 'Audio Engine',
-          component: 'Native CoreAudio & Stream Pipeline',
-          responsibility: 'Handles local audio decoding, queue state management, and real-time audio playback.',
+          component: 'Dual Engine (Streaming & libmpv CoreAudio)',
+          responsibility: 'Coordinates compliant streaming playback alongside native Apple Silicon ARM64 libmpv CoreAudio output and Web Audio Studio Synth.',
         },
         {
-          layer: 'Discovery & Metadata',
-          component: 'Metadata Service & Local Indexer',
-          responsibility: 'Fetches catalogue discovery, track metadata, album artwork, and synchronized lyrics timestamps.',
+          layer: 'Metadata & Services',
+          component: 'Local Python Bridge (Port 8765)',
+          responsibility: 'Communicates via localhost port 8765 using ytmusicapi and YouTube Data API v3 for catalogue discovery, metadata, and lyrics.',
+        },
+      ],
+      specifications: [
+        {
+          label: 'Target Architecture',
+          value: 'Apple Silicon ARM64',
+          detail: 'Native macOS Build (com.metroflow.mac)',
+        },
+        {
+          label: 'Desktop Shell',
+          value: 'Electron + React',
+          detail: 'Frameless Windowing & Global Shortcuts',
+        },
+        {
+          label: 'Audio Pipeline',
+          value: 'Dual Engine (Stream & libmpv)',
+          detail: 'Apple Silicon CoreAudio Output',
+        },
+        {
+          label: 'Frontend Stack',
+          value: 'React & TypeScript',
+          detail: 'Vite + Tailwind CSS UI',
+        },
+        {
+          label: 'Backend Bridge',
+          value: 'Local Python Service',
+          detail: 'Port 8765 ytmusicapi Pipeline',
+        },
+        {
+          label: 'Playback Modes',
+          value: 'Full Window & Mini-Player',
+          detail: 'Dockable Compact Mode',
+        },
+      ],
+      technicalDecisions: [
+        {
+          title: 'Electron Desktop Shell with Native macOS Integration',
+          decision: 'Packaged the React/TypeScript frontend into an Electron desktop bundle tailored for Apple Silicon ARM64.',
+          rationale:
+            'Provides a dedicated desktop experience with native macOS frameless windowing, global media shortcuts, system About panel, and a compact dockable mini-player mode.',
+        },
+        {
+          title: 'Interactive Synchronized Lyrics & Timestamp Seeking',
+          decision: 'Implemented an interactive time-tagged lyrics parser with click-to-seek playback synchronization.',
+          rationale:
+            'Keeps lyrics smoothly highlighted in sync with current audio playback while enabling instant timestamp navigation directly from individual lyric lines without UI stutter.',
+        },
+        {
+          title: 'Dual Playback Engine & Local Python Microservice',
+          decision: 'Separated audio playback engines and metadata retrieval across a local Python bridge on port 8765.',
+          rationale:
+            'Enables high-fidelity streaming playback alongside Studio Synth and libmpv CoreAudio output while offloading discovery and metadata indexing to a lightweight local background service.',
         },
       ],
       challengesAndLearnings: [
         {
-          title: 'Low-Latency Local Audio Playback on macOS',
+          title: 'Low-Latency Native Audio Pipeline on macOS',
           challenge:
-            'Many desktop music players rely on web wrappers that consume excessive system memory and introduce noticeable audio latency during track transitions and playback state updates.',
+            'Managing desktop audio playback efficiently on Apple Silicon without audio stutter, high memory footprint, or IPC bottlenecks.',
           solution:
-            'Engineered MetroFlow natively using Swift, AVFoundation, and CoreAudio, managing audio buffers directly through macOS system APIs rather than bundling an embedded browser runtime.',
+            'Integrated a dual playback architecture combining an embedded streaming player with an Apple Silicon ARM64 native libmpv dynamic library (libmpv.2.dylib), managing CoreAudio output buffers directly.',
           learning:
-            'Learned how hardware-accelerated audio pipelines operate on Apple Silicon and discovered the major performance and memory benefits of building native desktop software.',
+            'Learned how native audio libraries interface with macOS CoreAudio and discovered the architectural patterns for bridging native C/C++ audio runtimes with desktop UI processes.',
         },
         {
           title: 'Synchronized Lyrics Parsing & Timestamp Seeking',
           challenge:
             'Keeping time-tagged lyrics smoothly highlighted in sync with live audio without triggering frame drops, UI jitter, or state mismatches during rapid manual seeking.',
           solution:
-            'Implemented an indexed timecode parser that synchronizes with the CoreAudio playback clock and allows one-click timestamp seeking directly from lyric lines.',
+            'Implemented an indexed timecode parser that synchronizes with the audio playback clock and allows one-click timestamp seeking directly from lyric lines.',
           learning:
-            'Gained hands-on experience handling high-frequency time updates in SwiftUI, separating timecode indexing from rendering, and preventing UI re-render bottlenecks.',
+            'Gained hands-on experience handling high-frequency time updates in React, separating timecode indexing from rendering, and preventing UI re-render bottlenecks.',
         },
         {
           title: 'Desktop Window Management & Mini-Player Mode',
           challenge:
             'Designing an interface that transitions smoothly between a rich discovery experience and an unobtrusive, docked mini-player suitable for focused coding sessions.',
           solution:
-            'Combined SwiftUI view state with AppKit window management, configuring global keyboard shortcuts and a lightweight compact window mode for study and work sessions.',
+            'Combined React view state with Electron window management, configuring global keyboard shortcuts and a lightweight compact window mode for study and work sessions.',
           learning:
-            'Learned how AppKit and SwiftUI work together under macOS, specifically managing window levels, responders, and system keyboard event monitors.',
+            'Learned how Electron and macOS window APIs work together, specifically managing frameless window bounds, window levels, and system keyboard event listeners.',
         },
       ],
       metrics: [
         { label: 'Platform', value: 'macOS ARM64' },
-        { label: 'Audio Engine', value: 'CoreAudio Native' },
-        { label: 'Language', value: 'Swift' },
+        { label: 'Audio Engine', value: 'libmpv & Stream' },
+        { label: 'Stack', value: 'Electron + React' },
       ],
       githubUrl: 'https://github.com/divyanshh69/MetroFlow-MAC',
       liveDemoUrl: '#projects',
@@ -469,6 +543,58 @@ export const PORTFOLIO_DATA = {
           responsibility: 'Stores structured records for student societies, event schedules, venues, and registrations.',
         },
       ],
+      specifications: [
+        {
+          label: 'Architecture',
+          value: 'Full-Stack Client-Server',
+          detail: 'RESTful Service Layer',
+        },
+        {
+          label: 'Frontend Stack',
+          value: 'React & TypeScript',
+          detail: 'Tailwind CSS Responsive UI',
+        },
+        {
+          label: 'Backend API',
+          value: 'Node.js & Express',
+          detail: 'Routing & JWT Middleware',
+        },
+        {
+          label: 'Database',
+          value: 'PostgreSQL',
+          detail: 'Relational Schema & Constraints',
+        },
+        {
+          label: 'Validation',
+          value: 'Conflict Detection',
+          detail: 'Venue Overlap Logic',
+        },
+        {
+          label: 'Permissions',
+          value: 'Role-Based Access',
+          detail: 'Organizers, Faculty & Students',
+        },
+      ],
+      technicalDecisions: [
+        {
+          title: 'Relational Database Schema (PostgreSQL)',
+          decision: 'Structured data in PostgreSQL with relational foreign keys across clubs, events, and registrations.',
+          rationale:
+            'Campus club operations rely on relational links: events belong to clubs, venues are reserved during specific time slots, and students register for specific events. Relational foreign keys keep data consistent.',
+        },
+        {
+          title: 'Role-Based Permissions for Campus Societies',
+          decision: 'Implemented custom middleware to separate permissions between club leads, faculty, and student members.',
+          rationale:
+            'Separates event creation and room booking privileges from standard student attendance, keeping club administrative controls organized.',
+        },
+        {
+          title: 'Venue Conflict Validation Logic',
+          decision: 'Added checks to verify venue availability before confirming an event date and location.',
+          rationale:
+            'Prevents double-booking auditoriums and seminar halls by querying overlapping time ranges before saving event records to the database.',
+        },
+      ],
       challengesAndLearnings: [
         {
           title: 'Venue Scheduling Clashes & Relational Data Integrity',
@@ -525,11 +651,11 @@ export const PORTFOLIO_DATA = {
     {
       id: 'j-club-1',
       period: 'Aug 2025 — Present',
-      title: 'Student Developer & Club Member',
-      organization: 'Campus Developer Community',
+      title: 'Student Developer & Tech Community Member',
+      organization: 'Medi-Caps Student Developer Community',
       category: 'Club Roles',
       summary:
-        'Active participant in campus student developer groups, engaging in peer learning, exploring modern web technologies, and collaborating with fellow student builders.',
+        'Active participant in the Medi-Caps University student developer community, engaging in peer learning, exploring modern web technologies, and collaborating with fellow student builders.',
       outcomes: [
         'Engaged in collaborative coding sessions and developer discussions with college peers',
         'Observed firsthand the club communication and scheduling challenges that inspired CampusPulse',
@@ -551,8 +677,8 @@ export const PORTFOLIO_DATA = {
     {
       id: 'j-hack-1',
       period: '2026',
-      title: 'Hackathon Participation & Rapid Prototyping',
-      organization: 'Collegiate Hackathons',
+      title: 'Collegiate Hackathon Participation',
+      organization: 'Collegiate Hackathon Sprints',
       category: 'Hackathons',
       summary:
         'Participated in collegiate hackathon sprints, teaming up with peers to design, build, and present functional full-stack prototypes under tight deadlines.',
@@ -565,20 +691,20 @@ export const PORTFOLIO_DATA = {
       id: 'j-proj-metroflow',
       period: '2026',
       title: 'Created MetroFlow for macOS',
-      organization: 'Personal Project',
+      organization: 'Independent Project',
       category: 'Projects',
       summary:
-        'Built a native macOS music application in Swift designed for local audio files, focused listening, and clean dark aesthetics.',
+        'Built a standalone desktop music streaming and studio synth application for macOS Apple Silicon with Electron, React, libmpv CoreAudio, and a local Python bridge.',
       outcomes: [
-        'Built a responsive audio waveform visualizer and clean keyboard navigation',
-        'Engineered a lightweight mini-player layout docking cleanly on macOS desktop',
+        'Integrated compliant streaming playback alongside native Apple Silicon libmpv CoreAudio output',
+        'Engineered interactive time-synced lyrics, dockable mini-player, and local Python metadata bridge',
       ],
     },
     {
       id: 'j-goal-future',
       period: '2026 — Beyond',
       title: 'Next Step: Software Engineering Roles & Practical Growth',
-      organization: 'Development Roadmap',
+      organization: 'Career Roadmap',
       category: 'Future Goals',
       summary:
         'Seeking software engineering internship and entry-level opportunities to contribute to real-world software, learn team workflows, and deepen engineering skills.',
@@ -592,43 +718,43 @@ export const PORTFOLIO_DATA = {
   achievements: [
     {
       id: 'ach-1',
-      category: 'Hackathons',
-      title: 'Collegiate Hackathon Participant',
-      issuerOrEvent: 'Collegiate Software Sprints',
-      date: '2026',
+      category: 'Academic',
+      title: 'B.Tech CSE Undergraduate Enrollment',
+      issuerOrEvent: 'Medi-Caps University',
+      date: 'Aug 2025',
       detail:
-        'Collaborated with student developer teams during intensive hackathon sprints, rapidly turning concepts into working software prototypes.',
-      credentialRef: 'Hackathon Participant',
+        'Commenced 4-year undergraduate degree in Computer Science & Engineering, building a core foundation in Data Structures, Algorithms, and Database Systems.',
+      credentialRef: 'Degree Track',
     },
     {
       id: 'ach-2',
-      category: 'Campus & Clubs',
-      title: 'Student Developer & Club Member',
-      issuerOrEvent: 'Medi-Caps Developer Community',
-      date: 'Aug 2025 — Present',
+      category: 'Projects',
+      title: 'MetroFlow macOS Player Architecture',
+      issuerOrEvent: 'Independent Desktop Build',
+      date: '2026',
       detail:
-        'Active participant in campus tech community sessions, collaborating on web projects and engaging in student developer workshops.',
-      credentialRef: 'Active Member',
+        'Engineered a standalone desktop music application for macOS Apple Silicon with synchronized lyrics, libmpv CoreAudio playback, and local Python bridge.',
+      credentialRef: 'Project Release',
     },
     {
       id: 'ach-3',
-      category: 'Academic',
-      title: 'Academic Track in Computer Science & Engineering',
-      issuerOrEvent: 'Medi-Caps University (CSE)',
-      date: 'Aug 2025 — Present',
+      category: 'Projects',
+      title: 'CampusPulse Web Platform Deployment',
+      issuerOrEvent: 'Collegiate Web Build',
+      date: '2026',
       detail:
-        'Consistently developing practical understanding across Data Structures, Object-Oriented Programming, and database systems.',
-      credentialRef: 'Academic Track',
+        'Developed full-stack club management platform with role-based permissions, venue conflict validation, and normalized PostgreSQL database.',
+      credentialRef: 'Project Release',
     },
     {
       id: 'ach-4',
-      category: 'Learning',
-      title: 'Self-Directed Web & Systems Development',
-      issuerOrEvent: 'Practical Development & Projects',
-      date: '2025 — 2026',
+      category: 'Hackathons',
+      title: 'Collegiate Hackathon Rapid Prototyping',
+      issuerOrEvent: 'Collegiate Hackathon Sprints',
+      date: '2026',
       detail:
-        'Completed practical self-directed study in modern web development, React component architecture, and relational database schema design.',
-      credentialRef: 'Self-Directed Learning',
+        'Teamed up with fellow student developers during hackathon sprints, rapidly turning conceptual designs into functional software prototypes under time pressure.',
+      credentialRef: 'Sprint Participant',
     },
   ] as AchievementItem[],
 

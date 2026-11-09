@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   X,
@@ -10,7 +10,6 @@ import {
   Sparkles,
   Maximize2,
   Minimize2,
-  Terminal,
   FileText,
   ChevronLeft,
   ChevronRight,
@@ -19,9 +18,11 @@ import {
 } from 'lucide-react';
 import { ProjectItem } from '../data/portfolioData';
 
+export type ProjectModalTab = 'overview' | 'architecture' | 'decisions' | 'learnings' | 'technical';
+
 interface ProjectDetailModalProps {
   project: ProjectItem | null;
-  initialTab?: 'overview' | 'technical' | 'architecture' | 'decisions';
+  initialTab?: ProjectModalTab;
   initialScreenshotIdx?: number;
   onClose: () => void;
 }
@@ -32,75 +33,72 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
   initialScreenshotIdx = 0,
   onClose,
 }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'technical' | 'architecture' | 'decisions'>(
-    initialTab
-  );
+  const normalizedInitialTab = initialTab === 'technical' ? 'architecture' : initialTab;
+  const [activeTab, setActiveTab] = useState<ProjectModalTab>(normalizedInitialTab);
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeScreenshotIdx, setActiveScreenshotIdx] = useState(initialScreenshotIdx);
+
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
     setActiveScreenshotIdx(initialScreenshotIdx);
   }, [initialScreenshotIdx, project?.id]);
 
-  // Lock body scroll while modal is open
   useEffect(() => {
+    setActiveTab(initialTab === 'technical' ? 'architecture' : initialTab);
+  }, [initialTab, project?.id]);
+
+  // Lock body scroll while modal is open, restoring previous overflow state on unmount
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = originalOverflow || 'unset';
     };
   }, []);
+
+  // Keyboard accessibility: Escape key closes modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  // Focus close button on mount for immediate keyboard control
+  useEffect(() => {
+    closeButtonRef.current?.focus();
+  }, [project?.id]);
 
   if (!project) return null;
 
   const tabs = [
     { id: 'overview', label: 'Case Study & Gallery', icon: FileText },
-    { id: 'technical', label: 'Technical Overview', icon: Cpu },
-    { id: 'architecture', label: 'Challenges & Learnings', icon: Sparkles },
-    { id: 'decisions', label: 'Architecture & Decisions', icon: Layers },
+    { id: 'architecture', label: 'System Architecture', icon: Layers },
+    { id: 'decisions', label: 'Engineering Decisions', icon: Cpu },
+    { id: 'learnings', label: 'Challenges & Learnings', icon: Sparkles },
   ] as const;
 
-  const technicalDecisions =
-    project.id === 'metroflow'
-      ? [
-          {
-            title: 'Native Swift & AppKit/SwiftUI Architecture',
-            decision: 'Engineered natively for macOS with Swift rather than bundling a web container.',
-            rationale:
-              'Building natively allows direct integration with macOS window styling, global media keyboard shortcuts, and Apple’s AVFoundation for reliable local audio playback with minimal system overhead.',
-          },
-          {
-            title: 'Visual Audio Feedback & Waveform Sync',
-            decision: 'Implemented an integrated waveform frequency visualization alongside playback.',
-            rationale:
-              'Provides responsive visual feedback while tracks are playing, making the interface feel alive while maintaining minimal CPU impact on Apple Silicon.',
-          },
-          {
-            title: 'Focused Local-First Library Design',
-            decision: 'Prioritized offline playback and simple folder-based library organization.',
-            rationale:
-              'Avoids background data syncing, external account requirements, and social feed clutter, focusing purely on playing local music files smoothly.',
-          },
-        ]
-      : [
-          {
-            title: 'Relational Database Schema (PostgreSQL)',
-            decision: 'Structured data in PostgreSQL with relational foreign keys across clubs, events, and registrations.',
-            rationale:
-              'Campus club operations rely on relational links: events belong to clubs, venues are reserved during specific time slots, and students register for specific events. Relational foreign keys keep data consistent.',
-          },
-          {
-            title: 'Role-Based Permissions for Campus Societies',
-            decision: 'Implemented custom middleware to separate permissions between club leads, faculty, and student members.',
-            rationale:
-              'Separates event creation and room booking privileges from standard student attendance, keeping club administrative controls organized.',
-          },
-          {
-            title: 'Venue Conflict Validation Logic',
-            decision: 'Added checks to verify venue availability before confirming an event date and location.',
-            rationale:
-              'Helps student societies avoid double-booking campus halls and computer labs by flagging overlapping schedules ahead of time.',
-          },
-        ];
+  const handleTabKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const nextIndex = (index + 1) % tabs.length;
+      setActiveTab(tabs[nextIndex].id);
+      tabRefs.current[nextIndex]?.focus();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prevIndex = (index - 1 + tabs.length) % tabs.length;
+      setActiveTab(tabs[prevIndex].id);
+      tabRefs.current[prevIndex]?.focus();
+    }
+  };
+
+  const technicalDecisions = project.technicalDecisions || [];
 
   const screenshots = project.screenshots || [
     { title: 'Overview', image: project.image, caption: project.subtitle },
@@ -158,6 +156,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               <ExternalLink className="w-3 h-3 text-zinc-500" />
             </a>
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={onClose}
               aria-label="Close modal dialog"
@@ -168,15 +167,28 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
           </div>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="flex items-center gap-1.5 px-4 sm:px-6 py-2.5 border-b border-white/[0.06] bg-[#090a0f] overflow-x-auto no-scrollbar shrink-0">
-          {tabs.map((tab) => {
+        {/* Accessible Tab Switcher */}
+        <div
+          role="tablist"
+          aria-label={`${project.title} detail tabs`}
+          className="flex items-center gap-1.5 px-4 sm:px-6 py-2.5 border-b border-white/[0.06] bg-[#090a0f] overflow-x-auto no-scrollbar shrink-0"
+        >
+          {tabs.map((tab, idx) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
+                ref={(el) => {
+                  tabRefs.current[idx] = el;
+                }}
                 type="button"
+                role="tab"
+                id={`project-tab-${tab.id}`}
+                aria-selected={isActive}
+                aria-controls={`project-tabpanel-${tab.id}`}
+                tabIndex={isActive ? 0 : -1}
+                onKeyDown={(e) => handleTabKeyDown(e, idx)}
                 onClick={() => setActiveTab(tab.id)}
                 className={`inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
                   isActive
@@ -184,7 +196,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                     : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{tab.label}</span>
               </button>
             );
@@ -192,7 +204,13 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         </div>
 
         {/* Modal Scrollable Body */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
+        <div
+          role="tabpanel"
+          id={`project-tabpanel-${activeTab}`}
+          aria-labelledby={`project-tab-${activeTab}`}
+          tabIndex={0}
+          className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 focus:outline-none"
+        >
           {/* TAB 1: CASE STUDY & GALLERY */}
           {activeTab === 'overview' && (
             <div className="space-y-8">
@@ -396,95 +414,24 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             </div>
           )}
 
-          {/* TAB 2: TECHNICAL OVERVIEW */}
-          {activeTab === 'technical' && (
+          {/* TAB 2: SYSTEM ARCHITECTURE & RUNTIME SPECS */}
+          {(activeTab === 'architecture' || activeTab === 'technical') && (
             <div className="space-y-8">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-white">
-                  <Cpu className="w-4 h-4 text-[#2563EB]" />
-                  <h4 className="text-lg font-bold">Technical Specifications & Runtime Environment</h4>
+                  <Layers className="w-4 h-4 text-[#2563EB]" />
+                  <h4 className="text-lg font-bold">System Architecture & Runtime Specifications</h4>
                 </div>
                 <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                   Detailed technical architecture, runtime environment, and subsystem responsibilities for {project.title}.
                 </p>
               </div>
 
-              {/* Specifications Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {project.id === 'metroflow' ? (
-                  <>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Target Architecture</span>
-                      <div className="text-sm font-semibold text-white">Apple Silicon ARM64</div>
-                      <div className="text-[11px] text-zinc-500">Native macOS Build</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Core Language</span>
-                      <div className="text-sm font-semibold text-white">Swift</div>
-                      <div className="text-[11px] text-zinc-500">Strict Type Safety & Concurrency</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Audio Pipeline</span>
-                      <div className="text-sm font-semibold text-white">CoreAudio & AVFoundation</div>
-                      <div className="text-[11px] text-zinc-500">Hardware-Accelerated Decoding</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">UI Framework</span>
-                      <div className="text-sm font-semibold text-white">SwiftUI + AppKit</div>
-                      <div className="text-[11px] text-zinc-500">Native macOS Windowing & Shortcuts</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Bridge Interface</span>
-                      <div className="text-sm font-semibold text-white">Local Python Service</div>
-                      <div className="text-[11px] text-zinc-500">Port 8765 Metadata Pipeline</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Playback Modes</span>
-                      <div className="text-sm font-semibold text-white">Full Window & Mini-Player</div>
-                      <div className="text-[11px] text-zinc-500">Dockable Compact Mode</div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Architecture</span>
-                      <div className="text-sm font-semibold text-white">Full-Stack Client-Server</div>
-                      <div className="text-[11px] text-zinc-500">RESTful Service Layer</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Frontend Stack</span>
-                      <div className="text-sm font-semibold text-white">React & TypeScript</div>
-                      <div className="text-[11px] text-zinc-500">Tailwind CSS Responsive UI</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Backend API</span>
-                      <div className="text-sm font-semibold text-white">Node.js & Express</div>
-                      <div className="text-[11px] text-zinc-500">Route Validation & Controllers</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Database Engine</span>
-                      <div className="text-sm font-semibold text-white">PostgreSQL</div>
-                      <div className="text-[11px] text-zinc-500">Relational Schemas & Foreign Keys</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Authentication</span>
-                      <div className="text-sm font-semibold text-white">JWT & Session Claims</div>
-                      <div className="text-[11px] text-zinc-500">Role-Based Access Control</div>
-                    </div>
-                    <div className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1">
-                      <span className="text-[11px] font-mono-tabular text-zinc-400">Scheduling Engine</span>
-                      <div className="text-sm font-semibold text-white">Conflict Detection</div>
-                      <div className="text-[11px] text-zinc-500">Auditorium & Lab Validation</div>
-                    </div>
-                  </>
-                )}
-              </div>
-
               {/* Subsystems Breakdown */}
               <div className="space-y-3">
                 <h5 className="text-xs font-mono-tabular uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-1.5">
                   <Layers className="w-3.5 h-3.5 text-blue-400" />
-                  <span>Subsystem Structural Roles</span>
+                  <span>Subsystem Structural Roles (Layers)</span>
                 </h5>
                 <div className="space-y-2.5">
                   {project.architecture.map((arch, aIdx) => (
@@ -508,11 +455,68 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   ))}
                 </div>
               </div>
+
+              {/* Specifications Grid */}
+              <div className="space-y-3 pt-2">
+                <h5 className="text-xs font-mono-tabular uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-1.5">
+                  <Cpu className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Runtime Environment & Specifications</span>
+                </h5>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {project.specifications?.map((spec) => (
+                    <div
+                      key={spec.label}
+                      className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1"
+                    >
+                      <span className="text-[11px] font-mono-tabular text-zinc-400">{spec.label}</span>
+                      <div className="text-sm font-semibold text-white">{spec.value}</div>
+                      <div className="text-[11px] text-zinc-500">{spec.detail}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
-          {/* TAB 3: CHALLENGES & LEARNINGS */}
-          {activeTab === 'architecture' && (
+          {/* TAB 3: ENGINEERING DECISIONS */}
+          {activeTab === 'decisions' && (
+            <div className="space-y-6">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-white">
+                  <Cpu className="w-4 h-4 text-[#2563EB]" />
+                  <h4 className="text-lg font-bold">Engineering Decisions & Technical Rationale</h4>
+                </div>
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                  Why specific tools, architectures, and design patterns were chosen for {project.title}.
+                </p>
+              </div>
+
+              <div className="space-y-3.5">
+                {technicalDecisions.map((item, idx) => (
+                  <div
+                    key={item.title}
+                    className="p-5 rounded-xl border border-white/[0.08] bg-[#0c0d14] space-y-2.5 shadow-sm"
+                  >
+                    <div className="flex items-center gap-2 text-xs font-mono-tabular text-[#2563EB]">
+                      <span className="font-bold">0{idx + 1}.</span>
+                      <span className="text-white font-semibold">{item.title}</span>
+                    </div>
+
+                    <div className="text-xs sm:text-sm text-zinc-200 font-medium pl-3.5 border-l-2 border-[#2563EB]">
+                      {item.decision}
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed pt-1">
+                      {item.rationale}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: CHALLENGES & LEARNINGS */}
+          {activeTab === 'learnings' && (
             <div className="space-y-6">
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-white">
@@ -567,43 +571,6 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   ))}
                 </div>
               )}
-            </div>
-          )}
-
-          {/* TAB 4: ARCHITECTURE & DECISIONS */}
-          {activeTab === 'decisions' && (
-            <div className="space-y-6">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 text-white">
-                  <Layers className="w-4 h-4 text-[#2563EB]" />
-                  <h4 className="text-lg font-bold">Engineering Decisions & Architectural Approach</h4>
-                </div>
-                <p className="text-xs sm:text-sm text-zinc-400">
-                  Why specific tools, architectures, and design patterns were chosen for {project.title}.
-                </p>
-              </div>
-
-              <div className="space-y-3.5">
-                {technicalDecisions.map((item, idx) => (
-                  <div
-                    key={item.title}
-                    className="p-5 rounded-xl border border-white/[0.08] bg-[#0c0d14] space-y-2.5"
-                  >
-                    <div className="flex items-center gap-2 text-xs font-mono-tabular text-[#2563EB]">
-                      <span className="font-bold">0{idx + 1}.</span>
-                      <span className="text-white font-semibold">{item.title}</span>
-                    </div>
-
-                    <div className="text-xs sm:text-sm text-zinc-200 font-medium pl-3.5 border-l-2 border-[#2563EB]">
-                      {item.decision}
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed pt-1">
-                      {item.rationale}
-                    </p>
-                  </div>
-                ))}
-              </div>
             </div>
           )}
         </div>

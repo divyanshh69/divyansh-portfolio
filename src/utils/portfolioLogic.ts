@@ -87,3 +87,27 @@ export function validateContactInput(input: ContactSubmissionInput): ContactVali
     errors,
   };
 }
+
+export interface PreparedMailtoDraft {
+  formattedSubject: string;
+  formattedBody: string;
+  mailtoUrl: string;
+}
+
+export function createMailtoDraft(
+  recipientEmail: string,
+  input: ContactSubmissionInput
+): PreparedMailtoDraft {
+  const formattedSubject = `[Portfolio Contact] ${input.subject.trim()}`;
+  const formattedBody = `Hi Divyansh,\n\n${input.message.trim()}\n\n---\nSender: ${input.name.trim()}\nReply-To: ${input.email.trim()}\nSent via portfolio contact form`;
+  const mailtoUrl = `mailto:${recipientEmail}?subject=${encodeURIComponent(
+    formattedSubject
+  )}&body=${encodeURIComponent(formattedBody)}`;
+
+  return {
+    formattedSubject,
+    formattedBody,
+    mailtoUrl,
+  };
+}
+

@@ -116,8 +116,8 @@ export const AboutSection: React.FC = () => {
                 </p>
               </div>
               <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed pt-1">
-                I enjoy engineering tools that solve concrete problems: native desktop media apps with
-                Swift and SwiftUI, and web tools for college clubs with Node.js and PostgreSQL. I am actively
+                I enjoy engineering tools that solve concrete problems: desktop media apps with
+                Electron and React, and full-stack web platforms for college clubs with Node.js and PostgreSQL. I am actively
                 seeking software engineering internship opportunities.
               </p>
             </div>

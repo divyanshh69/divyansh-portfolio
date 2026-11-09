@@ -103,8 +103,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
             >
               I am a 2nd-year B.Tech Computer Science & Engineering student at{' '}
               <span className="text-zinc-200 font-medium">Medi-Caps University</span> (enrolled August 2025).
-              I learn by building real projects—focusing on clean architecture, low-latency audio pipelines in
-              Swift, and reliable relational web services with React and PostgreSQL.
+              I learn by building real projects—focusing on clean architecture, desktop applications with Electron and React, and reliable relational web services with PostgreSQL.
             </motion.p>
 
             {/* Primary & External CTAs */}
@@ -209,7 +208,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                       {activeSpotlight === 'metroflow' ? (
                         <>
                           <Disc3 className="w-3.5 h-3.5 text-blue-400 animate-spin" />
-                          <span>macOS Native Desktop</span>
+                          <span>macOS Desktop Application</span>
                         </>
                       ) : (
                         <>

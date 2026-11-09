@@ -6,7 +6,9 @@ import {
   filterProjects,
   filterJourneyMilestones,
   validateContactInput,
+  createMailtoDraft,
 } from './portfolioLogic';
+import { copyToClipboard } from './clipboard';
 
 test('filterSkillsByCategory returns all skills when category is All', () => {
   const all = filterSkillsByCategory(PORTFOLIO_DATA.skills, 'All');
@@ -129,6 +131,172 @@ test('projects have structured challenges and learnings for development reflecti
       assert.ok(item.challenge, 'Each challenge entry must have a challenge description');
       assert.ok(item.solution, 'Each challenge entry must have a solution description');
       assert.ok(item.learning, 'Each challenge entry must have a learning description');
+    }
+  }
+});
+
+test('projects have technicalDecisions and specifications configured as single source of truth', () => {
+  for (const project of PORTFOLIO_DATA.projects) {
+    assert.ok(project.specifications && project.specifications.length >= 4, `${project.title} must have specifications`);
+    assert.ok(project.technicalDecisions && project.technicalDecisions.length >= 3, `${project.title} must have technicalDecisions`);
+    for (const spec of project.specifications) {
+      assert.ok(spec.label);
+      assert.ok(spec.value);
+      assert.ok(spec.detail);
+    }
+    for (const dec of project.technicalDecisions) {
+      assert.ok(dec.title);
+      assert.ok(dec.decision);
+      assert.ok(dec.rationale);
+    }
+  }
+});
+
+test('MetroFlow technical claims accurately represent Electron, React, libmpv and Python bridge', () => {
+  const metroflow = PORTFOLIO_DATA.projects.find((p) => p.id === 'metroflow');
+  assert.ok(metroflow);
+  assert.ok(metroflow.technologies.includes('Electron'), 'MetroFlow must include Electron');
+  assert.ok(metroflow.technologies.includes('React'), 'MetroFlow must include React');
+  assert.ok(metroflow.technologies.includes('libmpv CoreAudio'), 'MetroFlow must include libmpv CoreAudio');
+  assert.ok(metroflow.technologies.includes('Python Bridge'), 'MetroFlow must include Python Bridge');
+  assert.ok(metroflow.fullOverview.includes('Electron'));
+  assert.ok(metroflow.fullOverview.includes('React'));
+  assert.ok(metroflow.fullOverview.includes('libmpv'));
+  assert.ok(metroflow.fullOverview.includes('8765'));
+
+  // Ensure Electron skill exists in Tools & Technologies
+  const electronSkill = PORTFOLIO_DATA.skills.find((s) => s.id === 'electron');
+  assert.ok(electronSkill);
+  assert.equal(electronSkill.category, 'Tools & Technologies');
+  assert.ok(electronSkill.usedIn.includes('MetroFlow'));
+
+  // Ensure Swift skill is exploratory and does not misclaim MetroFlow
+  const swiftSkill = PORTFOLIO_DATA.skills.find((s) => s.id === 'swift');
+  assert.ok(swiftSkill);
+  assert.ok(!swiftSkill.usedIn.includes('MetroFlow'));
+});
+
+test('createMailtoDraft generates structured mailto url with formatted subject and body', () => {
+  const draft = createMailtoDraft('divyanshnayak713@gmail.com', {
+    name: 'Sarah Connor',
+    email: 'sarah@example.com',
+    subject: 'Summer Internship Opportunity',
+    message: 'We would love to discuss a software engineering internship role with you.',
+  });
+
+  assert.equal(draft.formattedSubject, '[Portfolio Contact] Summer Internship Opportunity');
+  assert.ok(draft.formattedBody.includes('Sarah Connor'));
+  assert.ok(draft.formattedBody.includes('sarah@example.com'));
+  assert.ok(draft.formattedBody.includes('We would love to discuss a software engineering internship role with you.'));
+  assert.ok(draft.mailtoUrl.startsWith('mailto:divyanshnayak713@gmail.com?'));
+  assert.ok(draft.mailtoUrl.includes('subject=%5BPortfolio%20Contact%5D%20Summer%20Internship%20Opportunity'));
+
+  // Ensure no fake delivery messages are claimed in the draft
+  assert.ok(!draft.formattedBody.includes('Message received'));
+  assert.ok(!draft.formattedBody.includes('Message sent successfully'));
+});
+
+test('copyToClipboard safely returns false in non-browser environment without throwing', async () => {
+  const result = await copyToClipboard('test text');
+  assert.equal(result, false, 'Should return false when clipboard/window is unavailable');
+});
+
+test('validateContactInput rejects whitespace-only and malformed input', () => {
+  const whitespace = validateContactInput({
+    name: '   ',
+    email: '   ',
+    subject: '   ',
+    message: '   ',
+  });
+  assert.equal(whitespace.valid, false);
+  assert.equal(Object.keys(whitespace.errors).length, 4);
+
+  const missingAtInEmail = validateContactInput({
+    name: 'Jane Doe',
+    email: 'janedoe.com',
+    subject: 'Collaboration',
+    message: 'Hello Divyansh, great portfolio projects!',
+  });
+  assert.equal(missingAtInEmail.valid, false);
+  assert.ok(missingAtInEmail.errors.email);
+  assert.equal(missingAtInEmail.errors.name, undefined);
+  assert.equal(missingAtInEmail.errors.subject, undefined);
+  assert.equal(missingAtInEmail.errors.message, undefined);
+});
+
+test('skills do not contain phantom or invented project references', () => {
+  const phantomProjects = [
+    'Portfolio Space',
+    'MetroFlow Bridge',
+    'Interactive Web Tools',
+    'Algorithmic Benchmarks',
+    'Automation Scripts',
+    'Data Parsers',
+    'Systems Lab Explorations',
+    'CampusPulse v2 Architecture',
+  ];
+
+  for (const skill of PORTFOLIO_DATA.skills) {
+    for (const phantom of phantomProjects) {
+      assert.ok(
+        !skill.usedIn.includes(phantom),
+        `Skill "${skill.name}" should not reference phantom project "${phantom}"`
+      );
+    }
+  }
+
+  // Ensure MongoDB is not claimed
+  assert.ok(
+    !PORTFOLIO_DATA.skills.some((s) => s.name.includes('MongoDB')),
+    'Skills should not claim MongoDB'
+  );
+
+  // Ensure Next.js is not claimed
+  assert.ok(
+    !PORTFOLIO_DATA.skills.some((s) => s.name.includes('Next.js')),
+    'Skills should not claim Next.js'
+  );
+
+  // Ensure CampusPulse uses PostgreSQL
+  const campuspulse = PORTFOLIO_DATA.projects.find((p) => p.id === 'campuspulse');
+  assert.ok(campuspulse?.technologies.includes('PostgreSQL'));
+  assert.ok(!campuspulse?.technologies.includes('MongoDB'));
+});
+
+test('journey and milestones have distinct entries and truthful descriptions', () => {
+  // Ensure future goals are distinctly marked
+  const futureGoals = PORTFOLIO_DATA.journey.filter((j) => j.category === 'Future Goals');
+  assert.equal(futureGoals.length, 1);
+  assert.equal(futureGoals[0].id, 'j-goal-future');
+  assert.ok(!futureGoals[0].period.includes('Present'));
+
+  // Ensure achievements do not repeat duplicate awards
+  assert.equal(PORTFOLIO_DATA.achievements.length, 4);
+  const titles = PORTFOLIO_DATA.achievements.map((a) => a.title);
+  assert.equal(new Set(titles).size, titles.length, 'Achievement titles should all be distinct');
+});
+
+test('both MetroFlow and CampusPulse have verified architecture layers, specs, decisions, and learnings', () => {
+  const metroflow = PORTFOLIO_DATA.projects.find((p) => p.id === 'metroflow');
+  assert.ok(metroflow);
+  assert.ok(metroflow.architecture && metroflow.architecture.length >= 3);
+  assert.ok(metroflow.specifications && metroflow.specifications.length >= 6);
+  assert.ok(metroflow.technicalDecisions && metroflow.technicalDecisions.length >= 3);
+  assert.ok(metroflow.challengesAndLearnings && metroflow.challengesAndLearnings.length >= 3);
+
+  const campuspulse = PORTFOLIO_DATA.projects.find((p) => p.id === 'campuspulse');
+  assert.ok(campuspulse);
+  assert.ok(campuspulse.architecture && campuspulse.architecture.length >= 3);
+  assert.ok(campuspulse.specifications && campuspulse.specifications.length >= 6);
+  assert.ok(campuspulse.technicalDecisions && campuspulse.technicalDecisions.length >= 3);
+  assert.ok(campuspulse.challengesAndLearnings && campuspulse.challengesAndLearnings.length >= 3);
+
+  // Verify architecture layers contain component and responsibility
+  for (const project of [metroflow, campuspulse]) {
+    for (const layer of project.architecture) {
+      assert.ok(layer.layer.length > 0);
+      assert.ok(layer.component.length > 0);
+      assert.ok(layer.responsibility.length > 0);
     }
   }
 });

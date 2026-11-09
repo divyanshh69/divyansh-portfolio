@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, ArrowRight, CornerDownLeft, Sparkles, FolderGit2, Mail, ExternalLink, X } from 'lucide-react';
+import { Search, ArrowRight, CornerDownLeft, Sparkles, FolderGit2, Mail, ExternalLink, X, Check, AlertCircle } from 'lucide-react';
 import { SectionId } from './Navbar';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { copyToClipboard } from '../utils/clipboard';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -28,6 +29,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 }) => {
   const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [copyFeedback, setCopyFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const commands: CommandItem[] = [
@@ -65,7 +67,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-skills',
       category: 'Navigation',
       label: 'Technical Skills',
-      detail: 'Swift, TypeScript, C++, React, PostgreSQL, Node.js & Git',
+      detail: 'TypeScript, React, Python, C++, Node.js, PostgreSQL & Git',
       action: () => {
         onNavigate('skills');
         onClose();
@@ -94,8 +96,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     {
       id: 'cmd-proj-metroflow',
       category: 'Projects',
-      label: 'MetroFlow — macOS Music Player',
-      detail: 'Native desktop application built with Swift & CoreAudio',
+      label: 'MetroFlow — macOS Desktop Application',
+      detail: 'macOS desktop music player built with Electron, React, libmpv & Python',
       action: () => {
         onNavigate('projects');
         onOpenProject?.('metroflow');
@@ -138,9 +140,24 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       category: 'Connect',
       label: 'Copy Direct Email Address',
       detail: PORTFOLIO_DATA.personal.email,
-      action: () => {
-        navigator.clipboard?.writeText(PORTFOLIO_DATA.personal.email);
-        onClose();
+      action: async () => {
+        const success = await copyToClipboard(PORTFOLIO_DATA.personal.email);
+        if (success) {
+          setCopyFeedback({
+            type: 'success',
+            message: `Email copied to clipboard (${PORTFOLIO_DATA.personal.email})`,
+          });
+          setTimeout(() => {
+            setCopyFeedback(null);
+            onClose();
+          }, 1200);
+        } else {
+          setCopyFeedback({
+            type: 'error',
+            message: `Could not copy to clipboard. Please copy manually: ${PORTFOLIO_DATA.personal.email}`,
+          });
+          setTimeout(() => setCopyFeedback(null), 3500);
+        }
       },
     },
   ];
@@ -235,6 +252,26 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             ESC
           </kbd>
         </div>
+
+        {/* Copy Feedback Announcement */}
+        {copyFeedback && (
+          <div
+            role="status"
+            aria-live="polite"
+            className={`px-4 py-2 text-xs font-mono-tabular flex items-center gap-2 border-b transition-all ${
+              copyFeedback.type === 'success'
+                ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
+                : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+            }`}
+          >
+            {copyFeedback.type === 'success' ? (
+              <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" aria-hidden="true" />
+            ) : (
+              <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0" aria-hidden="true" />
+            )}
+            <span>{copyFeedback.message}</span>
+          </div>
+        )}
 
         {/* Command Items List */}
         <div className="max-h-80 overflow-y-auto p-2 divide-y divide-white/[0.04]">

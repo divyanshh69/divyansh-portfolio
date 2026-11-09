@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, Code2, Cpu, Wrench, Sparkles } from 'lucide-react';
-import { PORTFOLIO_DATA, SkillCategory } from '../data/portfolioData';
+import { PORTFOLIO_DATA, SkillCategory, SkillItem } from '../data/portfolioData';
 import { filterSkillsByCategory } from '../utils/portfolioLogic';
 
 const SKILL_CATEGORIES: SkillCategory[] = [
@@ -11,6 +11,18 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   'Tools & Technologies',
   'Currently Learning',
 ];
+
+const getSkillBadgeText = (skill: SkillItem): string => {
+  if (skill.category === 'Currently Learning') {
+    return 'Active Study';
+  }
+  const realProjects = ['MetroFlow', 'CampusPulse', 'Personal Portfolio'];
+  const projectCount = skill.usedIn.filter((p) => realProjects.includes(p)).length;
+  if (projectCount > 0) {
+    return `${projectCount} ${projectCount === 1 ? 'Project' : 'Projects'}`;
+  }
+  return 'Coursework & Practice';
+};
 
 export const SkillsSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<SkillCategory>('All');
@@ -134,7 +146,7 @@ export const SkillsSection: React.FC = () => {
                         {skill.category}
                       </span>
                       <span className="text-[10px] font-mono-tabular px-2 py-0.5 rounded bg-white/[0.04] text-zinc-400 border border-white/[0.06]">
-                        {skill.usedIn.length} {skill.usedIn.length === 1 ? 'Project' : 'Projects'}
+                        {getSkillBadgeText(skill)}
                       </span>
                     </div>
 
@@ -153,7 +165,9 @@ export const SkillsSection: React.FC = () => {
 
                   {/* Project application footer */}
                   <div className="pt-3.5 border-t border-white/[0.06] flex flex-wrap items-center gap-1.5 text-xs">
-                    <span className="text-zinc-500 font-mono-tabular text-[11px]">Applied in:</span>
+                    <span className="text-zinc-500 font-mono-tabular text-[11px]">
+                      {skill.category === 'Currently Learning' ? 'Study focus:' : 'Applied in:'}
+                    </span>
                     {skill.usedIn.map((proj, i) => (
                       <React.Fragment key={proj}>
                         <span className="text-zinc-200 font-medium text-xs">{proj}</span>
