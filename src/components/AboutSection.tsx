@@ -134,7 +134,8 @@ export const AboutSection: React.FC = () => {
             type="button"
             onClick={() => setShowMindsetDetails((prev) => !prev)}
             aria-expanded={showMindsetDetails}
-            className="w-full px-6 py-4 sm:py-5 flex items-center justify-between gap-4 text-left hover:bg-white/[0.02] transition-colors cursor-pointer"
+            aria-controls="mindset-details-panel"
+            className="w-full px-6 py-4 sm:py-5 flex items-center justify-between gap-4 text-left hover:bg-white/[0.02] transition-colors cursor-pointer min-h-[48px]"
           >
             <div className="flex items-center gap-3">
               <Sparkles className="w-4 h-4 text-blue-400 shrink-0" />
@@ -157,6 +158,7 @@ export const AboutSection: React.FC = () => {
           <AnimatePresence>
             {showMindsetDetails && (
               <motion.div
+                id="mindset-details-panel"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}

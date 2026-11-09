@@ -176,7 +176,7 @@ export const JourneySection: React.FC = () => {
         <div className="pt-6 sm:pt-10 border-t border-white/[0.06] space-y-8">
           <div className="max-w-2xl space-y-2">
             <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
-              <span className="text-[#2563EB] font-bold">05.</span>
+              <span className="text-[#2563EB] font-bold">04.B</span>
               <span className="uppercase tracking-wider">Milestones</span>
               <span aria-hidden="true" className="text-zinc-600">/</span>
               <span>Key Highlights</span>
