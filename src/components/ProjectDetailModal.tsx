@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import {
   X,
-  Github,
   ArrowUpRight,
   CheckCircle2,
   Layers,
@@ -14,7 +13,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Monitor,
-  ExternalLink,
 } from 'lucide-react';
 import { ProjectItem } from '../data/portfolioData';
 
@@ -118,7 +116,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-project-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto"
       onClick={onClose}
     >
       <motion.div
@@ -145,22 +143,12 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-300 bg-white/[0.05] border border-white/[0.08] rounded-lg hover:text-white hover:bg-white/[0.1] transition-colors"
-            >
-              <Github className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Repository</span>
-              <ExternalLink className="w-3 h-3 text-zinc-500" />
-            </a>
             <button
               ref={closeButtonRef}
               type="button"
               onClick={onClose}
               aria-label="Close modal dialog"
-              className="p-1.5 sm:p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.08] transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.08] transition-colors cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
             >
               <X className="w-5 h-5" />
             </button>
@@ -171,7 +159,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         <div
           role="tablist"
           aria-label={`${project.title} detail tabs`}
-          className="flex items-center gap-1.5 px-4 sm:px-6 py-2.5 border-b border-white/[0.06] bg-[#090a0f] overflow-x-auto no-scrollbar shrink-0"
+          className="flex items-center gap-1.5 px-3 sm:px-6 py-2.5 border-b border-white/[0.06] bg-[#090a0f] overflow-x-auto touch-pan-x no-scrollbar shrink-0"
         >
           {tabs.map((tab, idx) => {
             const Icon = tab.icon;
@@ -190,7 +178,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 tabIndex={isActive ? 0 : -1}
                 onKeyDown={(e) => handleTabKeyDown(e, idx)}
                 onClick={() => setActiveTab(tab.id)}
-                className={`inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
+                className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer min-h-[38px] ${
                   isActive
                     ? 'bg-[#2563EB] text-white shadow-sm font-semibold'
                     : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
@@ -239,7 +227,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                       <button
                         type="button"
                         onClick={() => setIsZoomed((prev) => !prev)}
-                        className="p-1 rounded hover:bg-white/[0.08] text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                        className="p-1 rounded hover:bg-white/[0.08] text-zinc-400 hover:text-white transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center"
                         title={isZoomed ? 'Default view' : 'Expand full view'}
                         aria-label={isZoomed ? 'Default view' : 'Expand full view'}
                       >
@@ -271,7 +259,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                           type="button"
                           onClick={handlePrevScreenshot}
                           aria-label="Previous screenshot"
-                          className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/80 hover:bg-black text-white border border-white/[0.1] shadow-lg transition-transform hover:scale-105 cursor-pointer"
+                          className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/80 hover:bg-black text-white border border-white/[0.1] shadow-lg transition-transform hover:scale-105 cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center"
                         >
                           <ChevronLeft className="w-4 h-4" />
                         </button>
@@ -279,7 +267,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                           type="button"
                           onClick={handleNextScreenshot}
                           aria-label="Next screenshot"
-                          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/80 hover:bg-black text-white border border-white/[0.1] shadow-lg transition-transform hover:scale-105 cursor-pointer"
+                          className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/80 hover:bg-black text-white border border-white/[0.1] shadow-lg transition-transform hover:scale-105 cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center"
                         >
                           <ChevronRight className="w-4 h-4" />
                         </button>
@@ -288,12 +276,12 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   </div>
 
                   {/* Caption Drawer (Outside the image) */}
-                  <div className="px-4 py-2.5 bg-[#0e0f17] border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                    <div className="flex items-center gap-2">
+                  <div className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#0e0f17] border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 text-xs">
+                    <div className="flex items-start sm:items-center gap-2 min-w-0">
                       <span className="px-2 py-0.5 rounded text-[11px] font-mono-tabular bg-blue-500/20 text-blue-300 border border-blue-500/30 font-medium shrink-0">
                         {activeScreenshot.title}
                       </span>
-                      <p className="text-zinc-300 text-xs">{activeScreenshot.caption}</p>
+                      <p className="text-zinc-300 text-xs leading-relaxed">{activeScreenshot.caption}</p>
                     </div>
                     <span className="text-[11px] text-zinc-500 font-mono-tabular shrink-0 hidden md:inline">
                       Desktop Capture Preview
@@ -462,11 +450,11 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   <Cpu className="w-3.5 h-3.5 text-blue-400" />
                   <span>Runtime Environment & Specifications</span>
                 </h5>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-3">
                   {project.specifications?.map((spec) => (
                     <div
                       key={spec.label}
-                      className="p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1"
+                      className="p-3.5 sm:p-4 rounded-xl border border-white/[0.06] bg-[#0c0d14] space-y-1"
                     >
                       <span className="text-[11px] font-mono-tabular text-zinc-400">{spec.label}</span>
                       <div className="text-sm font-semibold text-white">{spec.value}</div>
@@ -587,7 +575,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors cursor-pointer w-full sm:w-auto shadow-md shadow-blue-500/20"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors cursor-pointer w-full sm:w-auto shadow-md shadow-blue-500/20 min-h-[44px]"
             >
               <span>Explore Code on GitHub</span>
               <ArrowUpRight className="w-3.5 h-3.5" />

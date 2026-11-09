@@ -4,11 +4,8 @@ import {
   GraduationCap,
   Hammer,
   Compass,
-  CheckCircle2,
   ChevronDown,
   Sparkles,
-  BookOpen,
-  ArrowRight,
 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 

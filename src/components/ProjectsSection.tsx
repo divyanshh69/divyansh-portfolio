@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { AnimatePresence } from 'motion/react';
 import {
   ArrowUpRight,
   Github,
@@ -10,10 +10,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { PORTFOLIO_DATA, ProjectItem } from '../data/portfolioData';
-import { filterProjects } from '../utils/portfolioLogic';
 import { ProjectDetailModal, ProjectModalTab } from './ProjectDetailModal';
-
-const PROJECT_CATEGORIES = ['All', 'macOS / Native', 'Full-Stack Web'];
 
 interface ProjectsSectionProps {
   externalSelectedProject?: string | null;
@@ -24,14 +21,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   externalSelectedProject,
   onClearExternalProject,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeProject, setActiveProject] = useState<ProjectItem | null>(null);
   const [modalTab, setModalTab] = useState<ProjectModalTab>('overview');
   const [cardScreenshotIdx, setCardScreenshotIdx] = useState<Record<string, number>>({});
   const [modalScreenshotIdx, setModalScreenshotIdx] = useState<number>(0);
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
 
-  const filteredProjects = filterProjects(PORTFOLIO_DATA.projects, selectedCategory);
+  const projects = PORTFOLIO_DATA.projects;
 
   useEffect(() => {
     if (externalSelectedProject) {
@@ -70,7 +66,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       className="py-16 sm:py-24 border-b border-white/[0.06] relative"
     >
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16">
-        {/* Section Header & Category Filter */}
+        {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
@@ -92,35 +88,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             </p>
           </div>
 
-          {/* Category Filter Pills */}
-          <div
-            role="group"
-            aria-label="Filter projects by category"
-            className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full sm:w-fit overflow-x-auto no-scrollbar shrink-0"
-          >
-            {PROJECT_CATEGORIES.map((category) => {
-              const isActive = selectedCategory === category;
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
-                    isActive
-                      ? 'bg-[#2563EB] text-white shadow-sm font-semibold'
-                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
-                  }`}
-                >
-                  {category}
-                </button>
-              );
-            })}
+          {/* Project Count Indicator */}
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono-tabular text-zinc-400 shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+            <span>2 Featured Applications</span>
           </div>
         </div>
 
         {/* Project Cards List */}
         <div className="space-y-12 sm:space-y-16">
-          {filteredProjects.map((project) => {
+          {projects.map((project) => {
             const isMetroFlow = project.id === 'metroflow';
             const activeCardIdx = cardScreenshotIdx[project.id] ?? 0;
             const currentScreenshot =
@@ -150,7 +127,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono-tabular bg-white/[0.05] border border-white/[0.08] text-zinc-300">
                           {isMetroFlow ? (
                             <>
-                              <Disc3 className="w-3 h-3 text-blue-400 animate-spin" />
+                              <Disc3 className="w-3 h-3 text-blue-400 animate-spin motion-reduce:animate-none" />
                               <span>macOS Desktop · Electron & React</span>
                             </>
                           ) : (
@@ -167,7 +144,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         <div
                           role="tablist"
                           aria-label={`${project.title} screenshot views`}
-                          className="flex items-center gap-1 p-0.5 rounded-lg bg-black/40 border border-white/[0.06]"
+                          className="flex items-center gap-1 p-0.5 rounded-lg bg-black/40 border border-white/[0.06] overflow-x-auto touch-pan-x"
                         >
                           <span className="text-[10px] font-mono-tabular text-zinc-500 px-1 hidden sm:inline">
                             Views:
@@ -214,8 +191,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
                     {/* Uncropped Viewport */}
                     <div
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Open detailed case study for ${project.title}`}
                       onClick={() => openProjectModal(project, 'overview', activeCardIdx)}
-                      className="relative flex-1 w-full bg-[#050508] flex items-center justify-center p-3 sm:p-5 cursor-pointer group overflow-hidden"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          openProjectModal(project, 'overview', activeCardIdx);
+                        }
+                      }}
+                      className="relative flex-1 w-full bg-[#050508] flex items-center justify-center p-3 sm:p-5 cursor-pointer group overflow-hidden focus-visible:outline-2 focus-visible:outline-[#2563EB]"
                       title="Click to view full case study & technical specifications"
                     >
                       <img
@@ -230,13 +216,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       </div>
                     </div>
 
-                    {/* Screenshot Caption Drawer (Underneath screenshot, no overlap) */}
-                    <div className="px-4 py-2.5 bg-[#0e0f17] border-t border-white/[0.06] flex items-center justify-between gap-3 text-xs">
-                      <div className="flex items-center gap-2 min-w-0">
+                    {/* Screenshot Caption Drawer (Underneath screenshot, no overlap, wrap on mobile) */}
+                    <div className="px-3.5 sm:px-4 py-2.5 bg-[#0e0f17] border-t border-white/[0.06] flex items-center justify-between gap-2.5 sm:gap-3 text-xs">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 min-w-0">
                         <span className="text-blue-400 font-semibold font-mono-tabular shrink-0 text-[11px]">
                           {currentScreenshot.title}:
                         </span>
-                        <span className="text-zinc-400 truncate text-[11px] sm:text-xs">
+                        <span className="text-zinc-300 text-[11px] sm:text-xs leading-snug line-clamp-2 sm:line-clamp-none">
                           {currentScreenshot.caption}
                         </span>
                       </div>
@@ -330,7 +316,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         <button
                           type="button"
                           onClick={() => openProjectModal(project, 'overview')}
-                          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-500/25 cursor-pointer"
+                          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-500/25 cursor-pointer min-h-[44px]"
                         >
                           <span>Case Study & Details</span>
                           <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -340,7 +326,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         <button
                           type="button"
                           onClick={() => openProjectModal(project, 'architecture')}
-                          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-xs font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-colors cursor-pointer"
+                          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-xs font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-colors cursor-pointer min-h-[44px]"
                         >
                           <Layers className="w-3.5 h-3.5 text-blue-400" aria-hidden="true" />
                           <span>System Architecture</span>
@@ -352,7 +338,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`View ${project.title} repository on GitHub`}
-                          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors ml-auto sm:ml-0"
+                          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors ml-auto sm:ml-0 min-h-[44px]"
                         >
                           <Github className="w-4 h-4" aria-hidden="true" />
                           <span>Code</span>

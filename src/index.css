@@ -30,6 +30,19 @@
       scroll-behavior: auto !important;
     }
   }
+
+  :focus-visible {
+    outline: 2px solid #2563EB;
+    outline-offset: 3px;
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    touch-action: manipulation;
+  }
 }
 
 .font-display {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Search, ArrowRight, CornerDownLeft, Sparkles, FolderGit2, Mail, ExternalLink, X, Check, AlertCircle } from 'lucide-react';
-import { SectionId } from './Navbar';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { motion } from 'motion/react';
+import { Search, CornerDownLeft, X, Check, AlertCircle } from 'lucide-react';
+import { SectionId, NAV_SECTIONS } from './Navbar';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { copyToClipboard } from '../utils/clipboard';
 
@@ -17,9 +17,17 @@ interface CommandItem {
   category: 'Navigation' | 'Projects' | 'Connect';
   label: string;
   detail: string;
-  icon?: React.ReactNode;
   action: () => void;
 }
+
+const SECTION_DETAILS: Record<SectionId, string> = {
+  home: 'Introduction, flagship overview & student background',
+  about: 'Medi-Caps University, B.Tech CSE (2nd Year) & engineering mindset',
+  projects: 'MetroFlow macOS player & CampusPulse club platform',
+  skills: 'TypeScript, React, Python, C++, Node.js & PostgreSQL',
+  journey: 'Academic timeline, hackathons & collegiate milestones',
+  contact: 'Direct email, GitHub, LinkedIn & messaging',
+};
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({
   isOpen,
@@ -32,94 +40,33 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   const [copyFeedback, setCopyFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const commands: CommandItem[] = [
-    {
-      id: 'cmd-home',
-      category: 'Navigation',
-      label: 'Home & Overview',
-      detail: 'Introduction, project spotlight & student role',
+  const commands: CommandItem[] = useMemo(() => [
+    ...NAV_SECTIONS.map((sec) => ({
+      id: `cmd-${sec.id}`,
+      category: 'Navigation' as const,
+      label: sec.label,
+      detail: SECTION_DETAILS[sec.id] || sec.label,
       action: () => {
-        onNavigate('home');
+        onNavigate(sec.id);
         onClose();
       },
-    },
-    {
-      id: 'cmd-about',
-      category: 'Navigation',
-      label: 'About Divyansh',
-      detail: 'Medi-Caps University, B.Tech CSE, 2nd Year & approach',
-      action: () => {
-        onNavigate('about');
-        onClose();
-      },
-    },
-    {
-      id: 'cmd-projects',
-      category: 'Navigation',
-      label: 'Featured Projects',
-      detail: 'MetroFlow for macOS & CampusPulse Club Platform',
+    })),
+    ...PORTFOLIO_DATA.projects.map((project) => ({
+      id: `cmd-proj-${project.id}`,
+      category: 'Projects' as const,
+      label: `${project.title} — ${project.subtitle}`,
+      detail: project.shortDescription,
       action: () => {
         onNavigate('projects');
+        onOpenProject?.(project.id);
         onClose();
       },
-    },
-    {
-      id: 'cmd-skills',
-      category: 'Navigation',
-      label: 'Technical Skills',
-      detail: 'TypeScript, React, Python, C++, Node.js, PostgreSQL & Git',
-      action: () => {
-        onNavigate('skills');
-        onClose();
-      },
-    },
-    {
-      id: 'cmd-journey',
-      category: 'Navigation',
-      label: 'Journey & Timeline',
-      detail: 'Aug 2025 Medi-Caps enrollment, 2026 hackathons & milestones',
-      action: () => {
-        onNavigate('journey');
-        onClose();
-      },
-    },
-    {
-      id: 'cmd-contact',
-      category: 'Navigation',
-      label: 'Contact & Connect',
-      detail: 'Email, GitHub, LinkedIn & direct messaging',
-      action: () => {
-        onNavigate('contact');
-        onClose();
-      },
-    },
-    {
-      id: 'cmd-proj-metroflow',
-      category: 'Projects',
-      label: 'MetroFlow — macOS Desktop Application',
-      detail: 'macOS desktop music player built with Electron, React, libmpv & Python',
-      action: () => {
-        onNavigate('projects');
-        onOpenProject?.('metroflow');
-        onClose();
-      },
-    },
-    {
-      id: 'cmd-proj-campuspulse',
-      category: 'Projects',
-      label: 'CampusPulse — Club Operations Platform',
-      detail: 'Full-stack platform built with React, Node.js & PostgreSQL',
-      action: () => {
-        onNavigate('projects');
-        onOpenProject?.('campuspulse');
-        onClose();
-      },
-    },
+    })),
     {
       id: 'cmd-github',
       category: 'Connect',
       label: 'View GitHub Profile',
-      detail: 'github.com/divyanshh69',
+      detail: PORTFOLIO_DATA.personal.github.replace('https://', ''),
       action: () => {
         window.open(PORTFOLIO_DATA.personal.github, '_blank', 'noopener,noreferrer');
         onClose();
@@ -129,7 +76,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       id: 'cmd-linkedin',
       category: 'Connect',
       label: 'View LinkedIn Profile',
-      detail: 'linkedin.com/in/divyansh-nayak-703390370',
+      detail: PORTFOLIO_DATA.personal.linkedin.replace('https://', ''),
       action: () => {
         window.open(PORTFOLIO_DATA.personal.linkedin, '_blank', 'noopener,noreferrer');
         onClose();
@@ -160,7 +107,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         }
       },
     },
-  ];
+  ], [onNavigate, onOpenProject, onClose]);
 
   const filteredCommands = commands.filter((cmd) => {
     const q = search.trim().toLowerCase();
@@ -171,6 +118,17 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       cmd.category.toLowerCase().includes(q)
     );
   });
+
+  // Lock body scroll while command palette is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow || 'unset';
+      };
+    }
+  }, [isOpen]);
 
   // Focus input whenever opened
   useEffect(() => {
@@ -243,7 +201,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             <button
               type="button"
               onClick={() => setSearch('')}
-              className="text-zinc-500 hover:text-zinc-300 p-1 rounded"
+              aria-label="Clear search text"
+              className="text-zinc-500 hover:text-zinc-300 p-1.5 rounded cursor-pointer min-w-[32px] min-h-[32px] flex items-center justify-center"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -251,6 +210,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono-tabular bg-white/[0.08] text-zinc-400 border border-white/[0.1] rounded">
             ESC
           </kbd>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close command search"
+            className="text-zinc-400 hover:text-white p-1.5 rounded-lg hover:bg-white/[0.08] transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center sm:hidden"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Copy Feedback Announcement */}
@@ -288,7 +255,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   type="button"
                   onClick={cmd.action}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`w-full text-left px-3.5 py-2.5 rounded-xl transition-colors flex items-center justify-between gap-3 cursor-pointer ${
+                  className={`w-full text-left px-3.5 py-2.5 rounded-xl transition-colors flex items-center justify-between gap-3 cursor-pointer min-h-[44px] ${
                     isSelected
                       ? 'bg-[#2563EB] text-white'
                       : 'text-zinc-300 hover:bg-white/[0.04]'
@@ -322,8 +289,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
         {/* Footer shortcuts hint */}
         <div className="px-4 py-2 border-t border-white/[0.06] bg-[#090a0f] flex items-center justify-between text-[11px] text-zinc-500 font-mono-tabular">
-          <span>Use ↑ ↓ to navigate</span>
-          <span>Press Enter to select</span>
+          <span className="hidden sm:inline">Use ↑ ↓ to navigate</span>
+          <span className="hidden sm:inline">Press Enter to select</span>
+          <span className="sm:hidden text-center w-full">Tap any destination to navigate</span>
         </div>
       </motion.div>
     </div>

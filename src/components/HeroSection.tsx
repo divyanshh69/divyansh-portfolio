@@ -71,7 +71,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
             {/* Status & University Kicker */}
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2.5 sm:gap-3">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-tabular bg-emerald-500/10 border border-emerald-500/25 text-emerald-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse motion-reduce:animate-none" />
                 <span>Open to Internship Opportunities</span>
               </span>
               <span className="text-xs text-zinc-400 font-mono-tabular hidden sm:inline">
@@ -114,7 +114,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               <button
                 type="button"
                 onClick={() => onNavigate('projects')}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 text-xs sm:text-sm font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 text-xs sm:text-sm font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 cursor-pointer min-h-[44px]"
               >
                 <span>View Projects</span>
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -124,7 +124,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                 href={personal.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 text-xs sm:text-sm font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3 text-xs sm:text-sm font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-all cursor-pointer min-h-[44px]"
               >
                 <Github className="w-4 h-4" aria-hidden="true" />
                 <span>GitHub</span>
@@ -135,7 +135,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                 href={personal.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 text-xs sm:text-sm font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3 text-xs sm:text-sm font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-all cursor-pointer min-h-[44px]"
               >
                 <Linkedin className="w-4 h-4" aria-hidden="true" />
                 <span>LinkedIn</span>
@@ -145,7 +145,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               <button
                 type="button"
                 onClick={() => onNavigate('about')}
-                className="inline-flex items-center justify-center gap-1.5 px-3 py-3 text-xs sm:text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-3 text-xs sm:text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer min-h-[44px]"
               >
                 <span>About Me</span>
                 <ArrowDownRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -173,11 +173,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                 </div>
 
                 {/* Project Switcher Tabs */}
-                <div className="flex items-center gap-1 p-0.5 rounded-lg bg-black/40 border border-white/[0.06]">
+                <div
+                  role="tablist"
+                  aria-label="Spotlight projects"
+                  className="flex items-center gap-1 p-0.5 rounded-lg bg-black/40 border border-white/[0.06]"
+                >
                   <button
                     type="button"
+                    role="tab"
+                    id="spotlight-tab-metroflow"
+                    aria-selected={activeSpotlight === 'metroflow'}
+                    aria-controls="spotlight-viewport-panel"
                     onClick={() => setActiveSpotlight('metroflow')}
-                    className={`px-2.5 py-1 rounded text-[11px] font-medium font-mono-tabular transition-colors cursor-pointer ${
+                    className={`px-2.5 py-1 rounded text-[11px] font-medium font-mono-tabular transition-colors cursor-pointer min-h-[30px] ${
                       activeSpotlight === 'metroflow'
                         ? 'bg-[#2563EB] text-white shadow-sm'
                         : 'text-zinc-400 hover:text-zinc-200'
@@ -187,8 +195,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                   </button>
                   <button
                     type="button"
+                    role="tab"
+                    id="spotlight-tab-campuspulse"
+                    aria-selected={activeSpotlight === 'campuspulse'}
+                    aria-controls="spotlight-viewport-panel"
                     onClick={() => setActiveSpotlight('campuspulse')}
-                    className={`px-2.5 py-1 rounded text-[11px] font-medium font-mono-tabular transition-colors cursor-pointer ${
+                    className={`px-2.5 py-1 rounded text-[11px] font-medium font-mono-tabular transition-colors cursor-pointer min-h-[30px] ${
                       activeSpotlight === 'campuspulse'
                         ? 'bg-[#2563EB] text-white shadow-sm'
                         : 'text-zinc-400 hover:text-zinc-200'
@@ -201,13 +213,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
 
               {/* Spotlight Viewport */}
               {currentProject && (
-                <div className="p-4 sm:p-5 space-y-4">
+                <div
+                  id="spotlight-viewport-panel"
+                  role="tabpanel"
+                  aria-labelledby={`spotlight-tab-${activeSpotlight}`}
+                  className="p-4 sm:p-5 space-y-4"
+                >
                   {/* Category & Badge */}
                   <div className="flex items-center justify-between text-xs">
                     <span className="inline-flex items-center gap-1.5 text-zinc-300 font-medium">
                       {activeSpotlight === 'metroflow' ? (
                         <>
-                          <Disc3 className="w-3.5 h-3.5 text-blue-400 animate-spin" />
+                          <Disc3 className="w-3.5 h-3.5 text-blue-400 animate-spin motion-reduce:animate-none" />
                           <span>macOS Desktop Application</span>
                         </>
                       ) : (
@@ -224,11 +241,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
 
                   {/* Real Screenshot Preview */}
                   <div
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Explore ${currentProject.title} technical architecture`}
                     onClick={() => {
                       onNavigate('projects');
                       onOpenProject?.(currentProject.id);
                     }}
-                    className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-[#07070a] border border-white/[0.08] flex items-center justify-center p-2 cursor-pointer group"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onNavigate('projects');
+                        onOpenProject?.(currentProject.id);
+                      }
+                    }}
+                    className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-[#07070a] border border-white/[0.08] flex items-center justify-center p-2 cursor-pointer group focus-visible:outline-2 focus-visible:outline-[#2563EB]"
                     title={`Click to explore ${currentProject.title} technical architecture`}
                   >
                     <img
@@ -280,24 +307,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
             </div>
           </motion.div>
         </div>
-
-        {/* Engineering Snapshot Row */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.3 }}
-          className="mt-12 sm:mt-16 pt-8 border-t border-white/[0.08] grid grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {personal.metrics.map((metric) => (
-            <div key={metric.label} className="space-y-1">
-              <div className="font-mono-tabular text-xl sm:text-2xl font-bold text-white tracking-tight">
-                {metric.value}
-              </div>
-              <div className="text-xs sm:text-sm font-medium text-zinc-300">{metric.label}</div>
-              <div className="text-[11px] sm:text-xs text-zinc-500">{metric.context}</div>
-            </div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );

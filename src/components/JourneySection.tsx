@@ -1,17 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, Calendar, Code2, Users, ArrowUpRight } from 'lucide-react';
-import { PORTFOLIO_DATA, JourneyCategory } from '../data/portfolioData';
-import { filterJourneyMilestones } from '../utils/portfolioLogic';
-
-const JOURNEY_CATEGORIES: JourneyCategory[] = [
-  'All',
-  'Education',
-  'Projects',
-  'Hackathons',
-  'Club Roles',
-  'Future Goals',
-];
+import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 const getMilestoneIcon = (category: string) => {
   switch (category) {
@@ -27,8 +17,7 @@ const getMilestoneIcon = (category: string) => {
 };
 
 export const JourneySection: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<JourneyCategory>('All');
-  const milestones = filterJourneyMilestones(PORTFOLIO_DATA.journey, selectedCategory);
+  const milestones = PORTFOLIO_DATA.journey;
 
   return (
     <section
@@ -37,7 +26,7 @@ export const JourneySection: React.FC = () => {
       className="py-16 sm:py-24 border-b border-white/[0.06] relative"
     >
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-14 sm:space-y-20">
-        {/* Timeline Header & Filter */}
+        {/* Timeline Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
@@ -59,29 +48,10 @@ export const JourneySection: React.FC = () => {
             </p>
           </div>
 
-          {/* Timeline Category Filter */}
-          <div
-            role="group"
-            aria-label="Filter journey milestones"
-            className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full sm:w-fit overflow-x-auto no-scrollbar shrink-0"
-          >
-            {JOURNEY_CATEGORIES.map((category) => {
-              const isActive = selectedCategory === category;
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
-                    isActive
-                      ? 'bg-[#2563EB] text-white shadow-sm font-semibold'
-                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
-                  }`}
-                >
-                  {category}
-                </button>
-              );
-            })}
+          {/* Timeline Indicator */}
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono-tabular text-zinc-400 shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span>Chronological Timeline</span>
           </div>
         </div>
 

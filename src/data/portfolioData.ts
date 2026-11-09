@@ -1,4 +1,3 @@
-const heroWorkspaceImg = new URL('../assets/images/hero_developer_workspace_1794058110461.jpg', import.meta.url).href;
 const metroflowHomeImg = new URL('../assets/images/metroflow-home.png', import.meta.url).href;
 const metroflowLyricsImg = new URL('../assets/images/metroflow-synchronized-lyrics.png', import.meta.url).href;
 const metroflowSettingsImg = new URL('../assets/images/metroflow-settings-about.png', import.meta.url).href;
@@ -75,7 +74,6 @@ export interface ProjectItem {
   challengesAndLearnings?: ProjectChallengeLearning[];
   metrics: { label: string; value: string }[];
   githubUrl: string;
-  liveDemoUrl: string;
 }
 
 export type JourneyCategory =
@@ -121,97 +119,18 @@ export interface GrowthAreaItem {
   activeActionPlan: string;
 }
 
-export interface BeyondFacet {
-  id: 'interests' | 'habits' | 'building' | 'principles' | 'improving';
-  label: string;
-  headline: string;
-  items: {
-    title: string;
-    detail: string;
-  }[];
-}
-
-export interface NowItem {
-  id: string;
-  emoji: string;
-  category: 'Currently Building' | 'Currently Learning' | 'Current Goal' | 'Currently Exploring';
-  headline: string;
-  summary: string;
-  recentMilestone: string;
-  nextStep: string;
-  updatedAt: string;
-}
-
 export const PORTFOLIO_DATA = {
   personal: {
     name: 'Divyansh Nayak',
     title: 'Computer Science Engineering Student · Developer · Builder',
     headline: 'Designing and building native macOS and full-stack web applications.',
-    shortIntro:
-      'I am a Computer Science Engineering student focused on building clean native desktop tools and practical full-stack web platforms. I enjoy turning project ideas into responsive, well-structured software that is intuitive and dependable.',
-    location: 'India',
     email: 'divyanshnayak713@gmail.com',
     github: 'https://github.com/divyanshh69',
     linkedin: 'https://www.linkedin.com/in/divyansh-nayak-703390370/',
-    heroImage: heroWorkspaceImg,
-    metrics: [
-      { value: 'B.Tech CSE', label: 'Undergraduate Program', context: 'Medi-Caps University · 2nd Year' },
-      { value: 'MetroFlow', label: 'macOS Music Player', context: 'Electron, React & libmpv' },
-      { value: 'CampusPulse', label: 'Club Management Platform', context: 'React, Node.js & PostgreSQL' },
-      { value: 'Hackathons', label: '2026 Participant', context: 'Rapid Prototyping & Team Builds' },
-    ],
   },
 
   about: {
-    sectionTitle: 'Beyond the Transcript',
     lead: 'Software engineering to me is about learning by building—taking ideas from classroom theory and turning them into practical, functional tools for real people.',
-    pillars: [
-      {
-        id: 'background',
-        index: '01',
-        title: 'My Background',
-        subtitle: 'From curiosity about how software works to building projects',
-        content:
-          'My journey into computer science started with a genuine curiosity about how everyday software is constructed. That interest motivated me to move beyond small scripts and start architecting complete web applications and exploring native macOS app development.',
-        keyTakeaway: 'Hands-on developer who learns best by building real projects.',
-      },
-      {
-        id: 'education',
-        index: '02',
-        title: 'Education',
-        subtitle: '2nd-Year B.Tech CSE at Medi-Caps University',
-        content:
-          'Enrolled at Medi-Caps University in August 2025. Currently a 2nd-year student building a solid foundation in Data Structures, Object-Oriented Programming, and Database Systems, while actively applying these concepts to practical software projects.',
-        keyTakeaway: 'Solid computer science foundation paired with active project development.',
-      },
-      {
-        id: 'interests',
-        index: '03',
-        title: 'Interests',
-        subtitle: 'Desktop software, clean user interfaces, and full-stack web',
-        content:
-          'I enjoy building software that solves practical problems: native desktop media apps with clean interfaces, campus tools that streamline student activities, and responsive web applications built with TypeScript and React.',
-        keyTakeaway: 'Motivated by clean architecture, intuitive UI, and fast feedback loops.',
-      },
-      {
-        id: 'goals',
-        index: '04',
-        title: 'Goals',
-        subtitle: 'Growing as a software engineer and contributing to real products',
-        content:
-          'My goal is to join a supportive engineering team where I can contribute to production software, learn from experienced mentors, and continue developing my skills across the stack.',
-        keyTakeaway: 'Looking for software engineering internship and entry-level opportunities.',
-      },
-      {
-        id: 'motivation',
-        index: '05',
-        title: 'What Motivates Me',
-        subtitle: 'Seeing a project work seamlessly for someone else',
-        content:
-          'Nothing is more rewarding than watching a friend or fellow student use something I built—whether it is managing a club event on CampusPulse or playing music on MetroFlow—and finding it easy and intuitive.',
-        keyTakeaway: 'Driven by curiosity, utility, and continuous improvement.',
-      },
-    ],
   },
 
   skills: [
@@ -483,7 +402,6 @@ export const PORTFOLIO_DATA = {
         { label: 'Stack', value: 'Electron + React' },
       ],
       githubUrl: 'https://github.com/divyanshh69/MetroFlow-MAC',
-      liveDemoUrl: '#projects',
     },
     {
       id: 'campuspulse',
@@ -630,7 +548,6 @@ export const PORTFOLIO_DATA = {
         { label: 'Database', value: 'PostgreSQL' },
       ],
       githubUrl: 'https://github.com/divyanshh69/CampusPulse',
-      liveDemoUrl: '#projects',
     },
   ] as ProjectItem[],
 
@@ -818,154 +735,5 @@ export const PORTFOLIO_DATA = {
           'Actively practicing C++ data structures and exploring operating system concepts through university coursework and problem sets.',
       },
     ] as GrowthAreaItem[],
-
-    facets: [
-      {
-        id: 'principles',
-        label: 'How I Approach Software',
-        headline: 'Principles I follow when writing code and building projects',
-        items: [
-          {
-            title: 'Learn by building real projects',
-            detail: 'You understand architecture far better when you write code from an empty directory to a working application.',
-          },
-          {
-            title: 'Clarity and readability first',
-            detail: 'Readable code and straightforward component structures are always easier to debug, maintain, and share with others.',
-          },
-          {
-            title: 'Responsive, respectful interfaces',
-            detail: 'Software should feel quick and respectful of user time—clear layouts, keyboard shortcuts, and no unnecessary bloat.',
-          },
-        ],
-      },
-      {
-        id: 'building',
-        label: 'Things I Enjoy Building',
-        headline: 'The kinds of projects that make me lose track of time',
-        items: [
-          {
-            title: 'Native desktop apps with Swift',
-            detail: 'Tools like MetroFlow that feel at home on macOS, respect keyboard controls, and provide focused utility.',
-          },
-          {
-            title: 'Full-stack campus & community tools',
-            detail: 'Platforms like CampusPulse that replace disorganized group chats with structured, collaborative event calendars.',
-          },
-          {
-            title: 'Interactive web components',
-            detail: 'Clean UI primitives, dashboards, and interactive visualizers that make interfaces engaging and intuitive.',
-          },
-        ],
-      },
-      {
-        id: 'habits',
-        label: 'Daily Development Habits',
-        headline: 'Routines that help me improve my coding skills',
-        items: [
-          {
-            title: 'Dedicated deep work sessions',
-            detail: 'Setting aside uninterrupted blocks for writing code, debugging complex issues, and studying CS theory.',
-          },
-          {
-            title: 'Studying well-crafted software',
-            detail: 'Inspecting how apps like Raycast, Linear, and macOS utilities design their keyboard navigation and layout hierarchy.',
-          },
-          {
-            title: 'Planning schema and components first',
-            detail: 'Sketching database relations and UI component breakdowns in notes before writing code.',
-          },
-        ],
-      },
-      {
-        id: 'interests',
-        label: 'Interests Beyond Code',
-        headline: 'What keeps me energized outside the terminal',
-        items: [
-          {
-            title: 'Music & Audio Listening',
-            detail: 'Listening to electronic and ambient music while coding, which directly motivated me to build the MetroFlow music player.',
-          },
-          {
-            title: 'Software UI & Ergonomics',
-            detail: 'Appreciating minimal dark interfaces, clean typography, keyboard navigation, and thoughtful micro-interactions.',
-          },
-          {
-            title: 'Campus Hackathons & Learning',
-            detail: 'Collaborating with college peers on weekend projects, brainstorming ideas, and participating in hackathons.',
-          },
-        ],
-      },
-      {
-        id: 'improving',
-        label: 'Current Improvement Focus',
-        headline: 'Deliberate practice areas for the current semester',
-        items: [
-          {
-            title: 'Automated testing discipline',
-            detail: 'Writing unit and integration tests alongside application logic rather than treating tests as an afterthought.',
-          },
-          {
-            title: 'Technical documentation',
-            detail: 'Writing clear READMEs, architecture notes, and setup guides for projects.',
-          },
-          {
-            title: 'Open-source exploration',
-            detail: 'Studying open-source repositories and learning how maintainers structure large codebases.',
-          },
-        ],
-      },
-    ] as BeyondFacet[],
-  },
-
-  now: {
-    lastUpdated: 'November 2026',
-    locationStatus: 'On Campus & Active in Projects',
-    items: [
-      {
-        id: 'now-building',
-        emoji: '🔨',
-        category: 'Currently Building',
-        headline: 'MetroFlow Player Polish & CampusPulse Event Flow',
-        summary:
-          'Refining the audio visualizer UI and keyboard shortcuts in MetroFlow for macOS, while improving event registration and room scheduling in CampusPulse.',
-        recentMilestone: 'Added responsive waveform visualizer and dark mini-player layout in MetroFlow.',
-        nextStep: 'Testing venue scheduling validation and attendee lists in CampusPulse.',
-        updatedAt: 'Active Project',
-      },
-      {
-        id: 'now-learning',
-        emoji: '📚',
-        category: 'Currently Learning',
-        headline: 'Algorithms, Data Structures & Backend Practices',
-        summary:
-          'Practicing algorithmic problem solving in C++ while studying relational database design and REST API security fundamentals.',
-        recentMilestone: 'Completed core problem sets on graphs, trees, and relational normalization.',
-        nextStep: 'Building full-stack projects with automated test suites.',
-        updatedAt: 'Daily Study',
-      },
-      {
-        id: 'now-goal',
-        emoji: '🎯',
-        category: 'Current Goal',
-        headline: 'Software Engineering Internships & Early Career Roles',
-        summary:
-          'Seeking software engineering internship and entry-level opportunities where I can learn from experienced engineers and contribute to production software.',
-        recentMilestone: 'Documented core projects with clear case studies and responsive demos.',
-        nextStep: 'Connecting with engineering teams and contributing to developer projects.',
-        updatedAt: '2026 Focus',
-      },
-      {
-        id: 'now-exploring',
-        emoji: '💡',
-        category: 'Currently Exploring',
-        headline: 'SwiftUI Native Development & Modern Web Interfaces',
-        summary:
-          'Exploring native macOS app development with SwiftUI and learning how clean micro-interactions and keyboard navigation make everyday software more enjoyable to use.',
-        recentMilestone: 'Experimented with Framer Motion and canvas animations for interactive portfolio previews.',
-        nextStep: 'Exploring macOS menu bar utility concepts.',
-        updatedAt: 'Exploration',
-      },
-    ] as NowItem[],
   },
 };

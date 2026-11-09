@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, Code2, Cpu, Wrench, Sparkles } from 'lucide-react';
 import { PORTFOLIO_DATA, SkillCategory, SkillItem } from '../data/portfolioData';
 import { filterSkillsByCategory } from '../utils/portfolioLogic';
 
@@ -26,12 +25,10 @@ const getSkillBadgeText = (skill: SkillItem): string => {
 
 export const SkillsSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<SkillCategory>('All');
-  const [searchQuery, setSearchQuery] = useState('');
 
   const filteredSkills = filterSkillsByCategory(
     PORTFOLIO_DATA.skills,
-    selectedCategory,
-    searchQuery
+    selectedCategory
   );
 
   return (
@@ -41,7 +38,7 @@ export const SkillsSection: React.FC = () => {
       className="py-16 sm:py-24 border-b border-white/[0.06] relative"
     >
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12">
-        {/* Header & Search */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
@@ -63,74 +60,37 @@ export const SkillsSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Search Input */}
-          <div className="w-full md:w-72">
-            <label htmlFor="skill-search" className="sr-only">
-              Search skills or projects
-            </label>
-            <div className="relative">
-              <Search
-                className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
-                aria-hidden="true"
-              />
-              <input
-                id="skill-search"
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search skill or project..."
-                className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white/[0.04] border border-white/[0.08] rounded-xl text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:border-[#2563EB] transition-colors"
-              />
-            </div>
+          {/* Category Filter Pills */}
+          <div
+            role="group"
+            aria-label="Filter skills by category"
+            className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full sm:w-fit overflow-x-auto touch-pan-x no-scrollbar shrink-0"
+          >
+            {SKILL_CATEGORIES.map((category) => {
+              const isActive = selectedCategory === category;
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer min-h-[36px] sm:min-h-[38px] ${
+                    isActive
+                      ? 'bg-[#2563EB] text-white shadow-sm font-semibold'
+                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
+                  }`}
+                >
+                  {category}
+                </button>
+              );
+            })}
           </div>
-        </div>
-
-        {/* Category Filter Pills */}
-        <div
-          role="group"
-          aria-label="Filter skills by category"
-          className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full sm:w-fit overflow-x-auto no-scrollbar shrink-0"
-        >
-          {SKILL_CATEGORIES.map((category) => {
-            const isActive = selectedCategory === category;
-            return (
-              <button
-                key={category}
-                type="button"
-                onClick={() => setSelectedCategory(category)}
-                className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
-                  isActive
-                    ? 'bg-[#2563EB] text-white shadow-sm font-semibold'
-                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]'
-                }`}
-              >
-                {category}
-              </button>
-            );
-          })}
         </div>
 
         {/* Skills Grid */}
-        {filteredSkills.length === 0 ? (
-          <div className="p-8 sm:p-12 rounded-2xl border border-white/[0.08] bg-[#0c0d14] text-center space-y-3">
-            <p className="text-sm font-medium text-zinc-300">
-              No matching skills found for "{searchQuery}"
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedCategory('All');
-                setSearchQuery('');
-              }}
-              className="px-4 py-2 text-xs font-medium text-white bg-zinc-800 rounded-lg hover:bg-zinc-700 transition-colors cursor-pointer"
-            >
-              Reset Filters
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            <AnimatePresence mode="popLayout">
-              {filteredSkills.map((skill) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <AnimatePresence mode="popLayout">
+            {filteredSkills.map((skill) => (
                 <motion.article
                   layout
                   key={skill.id}
@@ -183,7 +143,6 @@ export const SkillsSection: React.FC = () => {
               ))}
             </AnimatePresence>
           </div>
-        )}
       </div>
     </section>
   );

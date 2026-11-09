@@ -179,7 +179,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                   type="button"
                   onClick={handleCopyEmail}
                   aria-label="Copy direct email address to clipboard"
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-zinc-200 bg-white/[0.05] border border-white/[0.08] rounded-xl hover:text-white hover:bg-white/[0.1] transition-colors whitespace-nowrap cursor-pointer shrink-0"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-zinc-200 bg-white/[0.05] border border-white/[0.08] rounded-xl hover:text-white hover:bg-white/[0.1] transition-colors whitespace-nowrap cursor-pointer shrink-0 min-h-[44px]"
                 >
                   {copyStatus === 'success' ? (
                     <>
@@ -402,7 +402,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
                   <button
                     type="submit"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-500/20 cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs sm:text-sm font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-500/20 cursor-pointer min-h-[44px]"
                   >
                     <Send className="w-3.5 h-3.5" aria-hidden="true" />
                     <span>Send via Email Client</span>
@@ -412,7 +412,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                     href={`mailto:${personal.email}?subject=${encodeURIComponent(
                       formState.subject || 'Portfolio Inquiry'
                     )}&body=${encodeURIComponent(formState.message || '')}`}
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-3 text-xs font-medium text-zinc-400 hover:text-white transition-colors"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-3 text-xs font-medium text-zinc-400 hover:text-white transition-colors min-h-[44px]"
                   >
                     <span>Direct email link</span>
                     <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -443,11 +443,11 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                       <span className="text-zinc-500">Subject:</span> {preparedDraft.formattedSubject}
                     </div>
                   </div>
-                  <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 pt-1">
                     <a
                       href={preparedDraft.mailtoUrl}
                       aria-label="Open pre-formatted message in your email client"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors shadow-sm cursor-pointer"
+                      className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors shadow-sm cursor-pointer min-h-[40px]"
                     >
                       <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                       <span>Open in Email App</span>
@@ -456,7 +456,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                       type="button"
                       onClick={handleCopyDraft}
                       aria-label="Copy draft message text to clipboard"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-zinc-200 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] rounded-lg transition-colors cursor-pointer"
+                      className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-xs font-medium text-zinc-200 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] rounded-lg transition-colors cursor-pointer min-h-[40px]"
                     >
                       {draftCopyStatus === 'success' ? (
                         <>
@@ -482,7 +482,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                         setFormState({ name: '', email: '', subject: '', message: '' });
                         nameInputRef.current?.focus();
                       }}
-                      className="inline-flex items-center gap-1 px-3 py-2 text-xs text-zinc-400 hover:text-white transition-colors cursor-pointer ml-auto"
+                      className="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs text-zinc-400 hover:text-white transition-colors cursor-pointer sm:ml-auto min-h-[36px]"
                     >
                       <RotateCcw className="w-3 h-3" aria-hidden="true" />
                       <span>Compose Another Message</span>
@@ -505,13 +505,13 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          <nav aria-label="Footer Navigation" className="flex flex-wrap items-center gap-4 text-xs text-zinc-400">
+          <nav aria-label="Footer Navigation" className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs text-zinc-400">
             {NAV_SECTIONS.map((sec) => (
               <button
                 key={sec.id}
                 type="button"
                 onClick={() => onNavigate(sec.id)}
-                className="hover:text-white transition-colors cursor-pointer"
+                className="hover:text-white transition-colors cursor-pointer py-1.5 px-1 min-h-[36px] inline-flex items-center"
               >
                 {sec.label}
               </button>
