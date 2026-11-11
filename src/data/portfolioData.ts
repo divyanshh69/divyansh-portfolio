@@ -737,3 +737,4 @@ export const PORTFOLIO_DATA = {
     ] as GrowthAreaItem[],
   },
 };
+
