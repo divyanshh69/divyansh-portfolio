@@ -122,15 +122,15 @@ export interface GrowthAreaItem {
 export const PORTFOLIO_DATA = {
   personal: {
     name: 'Divyansh Nayak',
-    title: 'Computer Science Engineering Student · Developer · Builder',
-    headline: 'Designing and building native macOS and full-stack web applications.',
+    title: 'Computer Science Student & Developer',
+    headline: 'Building native macOS desktop tools and full-stack web platforms.',
     email: 'divyanshnayak713@gmail.com',
     github: 'https://github.com/divyanshh69',
     linkedin: 'https://www.linkedin.com/in/divyansh-nayak-703390370/',
   },
 
   about: {
-    lead: 'Software engineering to me is about learning by building—taking ideas from classroom theory and turning them into practical, functional tools for real people.',
+    lead: 'I am a 2nd-year Computer Science student at Medi-Caps University. I learn by building software—translating concepts from coursework in data structures, systems, and databases into working applications.',
   },
 
   skills: [
@@ -677,35 +677,35 @@ export const PORTFOLIO_DATA = {
 
   beyondResume: {
     intro:
-      'A resume shows what I have built, but how I think, learn, and grow matters just as much. Here is an honest look at where I feel confident and where I am actively working to improve.',
+      'A candid overview of my engineering practices, what I focus on when building software, and where I am actively working to grow.',
     strengths: [
       {
         id: 'str-1',
-        title: 'Full-Stack Mindset',
+        title: 'End-to-End Data Flow',
         description:
-          'I like understanding how both ends of a system connect. When designing a database table in PostgreSQL, I am already thinking about how the client interface will consume and render the data cleanly.',
+          'I focus on how backend schemas connect to frontend state. When designing tables in PostgreSQL, I plan how client components will fetch, cache, and render the records cleanly.',
         evidence: 'Applied in CampusPulse’s event schedules and MetroFlow’s local playback state.',
       },
       {
         id: 'str-2',
-        title: 'Care for User Interface Details',
+        title: 'Interface Ergonomics & Performance',
         description:
-          'I pay attention to the details that make software pleasant to use—consistent spacing, readable typography, dark mode contrast, keyboard shortcuts, and smooth feedback.',
-        evidence: 'Demonstrated in MetroFlow’s Mac-native interface and custom interactive portfolio components.',
+          'I care about interface responsiveness, consistent spacing, readable typography, keyboard navigation, and avoiding unnecessary component re-renders.',
+        evidence: 'Demonstrated in MetroFlow’s Mac mini-player and interactive synced lyrics.',
       },
       {
         id: 'str-3',
-        title: 'Self-Driven Project Execution',
+        title: 'Independent Project Development',
         description:
-          'Give me an interesting problem statement and I enjoy breaking it down into a data model, building the API, and implementing the interface through independent problem solving.',
-        evidence: 'Built both MetroFlow and CampusPulse from initial idea to working functional code.',
+          'I enjoy breaking requirements down into schemas, REST endpoints, and modular UI components—taking a project from an empty folder to a functioning build.',
+        evidence: 'Built both MetroFlow and CampusPulse end-to-end.',
       },
       {
         id: 'str-4',
-        title: 'Modular, Readable Code Structure',
+        title: 'Type Safety & Modular Structure',
         description:
-          'I write clean, typed TypeScript and modular components with clear separation between data, business logic, and presentation.',
-        evidence: 'Strict type safety and decoupled component structures across all repositories.',
+          'I write typed TypeScript with clear separation between data models, API controllers, and presentation components.',
+        evidence: 'Strict type safety across both application codebases.',
       },
     ] as StrengthItem[],
 

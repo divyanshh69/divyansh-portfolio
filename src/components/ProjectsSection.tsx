@@ -71,20 +71,20 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
               <span className="text-[#2563EB] font-bold">02.</span>
-              <span className="uppercase tracking-wider">Featured Projects</span>
+              <span className="uppercase tracking-wider">Projects</span>
               <span aria-hidden="true" className="text-zinc-600">/</span>
-              <span>Selected Work</span>
+              <span>Featured Work</span>
             </div>
 
             <h2
               id="projects-heading"
-              className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight [text-wrap:balance]"
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight"
             >
-              Real software built from concept to production.
+              Featured Applications
             </h2>
 
-            <p className="font-editorial text-lg sm:text-xl text-zinc-300 leading-relaxed [text-wrap:balance]">
-              Featured projects highlighting native desktop engineering on macOS and full-stack web platforms with PostgreSQL.
+            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+              Two active software projects—a native macOS audio desktop application and a full-stack club management platform backed by PostgreSQL.
             </p>
           </div>
 
@@ -110,34 +110,26 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             return (
               <article
                 key={project.id}
-                className="rounded-2xl border border-white/[0.1] bg-[#0c0d14] overflow-hidden shadow-2xl transition-all duration-300 hover:border-white/20"
+                className="rounded-2xl border border-white/[0.1] bg-[#0c0d14] overflow-hidden shadow-xl transition-all duration-300 hover:border-white/20"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
-                  {/* Left Column: Uncropped High-Resolution Screenshot Showcase */}
+                  {/* Left Column: High-Resolution Screenshot Showcase */}
                   <div className="lg:col-span-7 flex flex-col bg-[#07070a] border-b lg:border-b-0 lg:border-r border-white/[0.08]">
-                    {/* Window Chrome Header with View Switcher */}
+                    {/* Header with View Switcher */}
                     <div className="px-4 py-3 bg-[#11121c] border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-2.5">
-                      {/* Window Dots & Category Badge */}
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1.5" aria-hidden="true">
-                          <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
-                        </div>
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono-tabular bg-white/[0.05] border border-white/[0.08] text-zinc-300">
-                          {isMetroFlow ? (
-                            <>
-                              <Disc3 className="w-3 h-3 text-blue-400 animate-spin motion-reduce:animate-none" />
-                              <span>macOS Desktop · Electron & React</span>
-                            </>
-                          ) : (
-                            <>
-                              <Calendar className="w-3 h-3 text-blue-400" />
-                              <span>Full-Stack · React + PostgreSQL</span>
-                            </>
-                          )}
-                        </span>
-                      </div>
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono-tabular bg-white/[0.05] border border-white/[0.08] text-zinc-300">
+                        {isMetroFlow ? (
+                          <>
+                            <Disc3 className="w-3 h-3 text-blue-400" />
+                            <span>macOS Desktop · Electron & React</span>
+                          </>
+                        ) : (
+                          <>
+                            <Calendar className="w-3 h-3 text-blue-400" />
+                            <span>Full-Stack · React + PostgreSQL</span>
+                          </>
+                        )}
+                      </span>
 
                       {/* View Switcher Pills */}
                       {project.screenshots && project.screenshots.length > 1 && (
@@ -207,13 +199,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       <img
                         src={currentScreenshot.image}
                         alt={`${project.title} — ${currentScreenshot.title}`}
-                        className="w-full max-h-[380px] sm:max-h-[460px] object-contain rounded-lg border border-white/[0.06] shadow-lg transition-transform duration-300 group-hover:scale-[1.01]"
+                        className="w-full max-h-[380px] sm:max-h-[460px] object-contain rounded-lg border border-white/[0.06] transition-transform duration-200 group-hover:scale-[1.01]"
                       />
-                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                        <span className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600/95 shadow-xl">
-                          Click to Open Detailed Case Study →
-                        </span>
-                      </div>
                     </div>
 
                     {/* Screenshot Caption Drawer (Underneath screenshot, no overlap, wrap on mobile) */}
@@ -316,7 +303,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                         <button
                           type="button"
                           onClick={() => openProjectModal(project, 'overview')}
-                          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-500/25 cursor-pointer min-h-[44px]"
+                          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-colors cursor-pointer min-h-[44px]"
                         >
                           <span>Case Study & Details</span>
                           <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />

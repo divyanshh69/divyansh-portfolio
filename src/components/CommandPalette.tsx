@@ -22,7 +22,7 @@ interface CommandItem {
 
 const SECTION_DETAILS: Record<SectionId, string> = {
   home: 'Introduction, flagship overview & student background',
-  about: 'Medi-Caps University, B.Tech CSE (2nd Year) & engineering mindset',
+  about: 'Medi-Caps University, B.Tech CSE (2nd Year) & technical approach',
   projects: 'MetroFlow macOS player & CampusPulse club platform',
   skills: 'TypeScript, React, Python, C++, Node.js & PostgreSQL',
   journey: 'Academic timeline, hackathons & collegiate milestones',

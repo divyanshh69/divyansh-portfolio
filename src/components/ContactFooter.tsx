@@ -142,28 +142,28 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           {/* Left Column: Direct Links & Intro */}
           <div className="lg:col-span-6 space-y-8">
-            <div className="space-y-3 sm:space-y-4">
+            <div className="space-y-3">
               <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
                 <span className="text-[#2563EB] font-bold">05.</span>
-                <span className="uppercase tracking-wider">Contact & Connect</span>
+                <span className="uppercase tracking-wider">Contact</span>
                 <span aria-hidden="true" className="text-zinc-600">/</span>
                 <span>Get in Touch</span>
               </div>
 
               <h2
                 id="contact-heading"
-                className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight [text-wrap:balance]"
+                className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight"
               >
-                Let’s connect and build something meaningful.
+                Get in Touch
               </h2>
 
-              <p className="font-editorial text-lg text-zinc-300 leading-relaxed [text-wrap:balance]">
-                I am actively open to Software Engineering internship opportunities, technical collaborations, and conversations about systems and native application craft.
+              <p className="text-sm sm:text-base text-zinc-300 leading-relaxed max-w-xl">
+                I am actively seeking software engineering internship opportunities for 2026. Whether you have an open role, want to discuss my projects, or have feedback, feel free to reach out.
               </p>
             </div>
 
             {/* Direct Email Card */}
-            <div className="p-5 sm:p-6 rounded-2xl border border-white/[0.08] bg-[#0c0d14] flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-lg">
+            <div className="p-5 sm:p-6 rounded-2xl border border-white/[0.08] bg-[#0c0d14] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1 min-w-0">
                 <div className="text-xs text-zinc-500 font-mono-tabular">Direct Email Address</div>
                 <a
@@ -402,7 +402,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
                   <button
                     type="submit"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs sm:text-sm font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-500/20 cursor-pointer min-h-[44px]"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs sm:text-sm font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-colors cursor-pointer min-h-[44px]"
                   >
                     <Send className="w-3.5 h-3.5" aria-hidden="true" />
                     <span>Send via Email Client</span>

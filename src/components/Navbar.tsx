@@ -96,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="group flex items-center gap-2.5 text-sm sm:text-base font-bold tracking-tight text-white hover:text-blue-400 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2563EB]"
           >
             <span
-              className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse motion-reduce:animate-none"
+              className="w-2 h-2 rounded-full bg-emerald-400"
               aria-hidden="true"
             />
             <span>Divyansh Nayak</span>
@@ -163,7 +163,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <a
               href="#contact"
               onClick={(e) => handleLinkClick(e, 'contact')}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-all shadow-md shadow-blue-500/20 whitespace-nowrap shrink-0 min-h-[36px] sm:min-h-[38px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors whitespace-nowrap shrink-0 min-h-[36px] sm:min-h-[38px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               <span>Contact</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />

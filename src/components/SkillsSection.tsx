@@ -43,20 +43,20 @@ export const SkillsSection: React.FC = () => {
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
               <span className="text-[#2563EB] font-bold">03.</span>
-              <span className="uppercase tracking-wider">Technical Skills</span>
+              <span className="uppercase tracking-wider">Skills</span>
               <span aria-hidden="true" className="text-zinc-600">/</span>
-              <span>Tools & Stack</span>
+              <span>Stack & Tools</span>
             </div>
 
             <h2
               id="skills-heading"
-              className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight [text-wrap:balance]"
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight"
             >
-              Technologies I use to build software.
+              Technical Stack & Tools
             </h2>
 
-            <p className="font-editorial text-lg sm:text-xl text-zinc-300 leading-relaxed [text-wrap:balance]">
-              Organized into clear areas of practice—every tool represents direct application in real projects or coursework.
+            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+              Technologies applied across native desktop development, relational web services, and computer science coursework.
             </p>
           </div>
 
@@ -98,7 +98,7 @@ export const SkillsSection: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.18 }}
-                  className="p-5 sm:p-6 rounded-2xl border border-white/[0.08] bg-[#0c0d14] hover:border-white/20 transition-all flex flex-col justify-between space-y-4 shadow-md"
+                  className="p-5 sm:p-6 rounded-2xl border border-white/[0.08] bg-[#0c0d14] hover:border-white/20 transition-all flex flex-col justify-between space-y-4"
                 >
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between text-xs">

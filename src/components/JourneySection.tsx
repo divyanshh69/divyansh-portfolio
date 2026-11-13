@@ -31,27 +31,27 @@ export const JourneySection: React.FC = () => {
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
               <span className="text-[#2563EB] font-bold">04.</span>
-              <span className="uppercase tracking-wider">Experience & Timeline</span>
+              <span className="uppercase tracking-wider">Journey</span>
               <span aria-hidden="true" className="text-zinc-600">/</span>
               <span>Academic & Projects</span>
             </div>
 
             <h2
               id="journey-heading"
-              className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight [text-wrap:balance]"
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight"
             >
-              Academic timeline and engineering milestones.
+              Academic & Project Timeline
             </h2>
 
-            <p className="font-editorial text-lg sm:text-xl text-zinc-300 leading-relaxed [text-wrap:balance]">
-              A chronological overview of university enrollment at Medi-Caps, collegiate hackathons, and software projects.
+            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+              A chronological overview of computer science studies at Medi-Caps University, collegiate hackathons, and software projects.
             </p>
           </div>
 
           {/* Timeline Indicator */}
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono-tabular text-zinc-400 shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            <span>Chronological Timeline</span>
+            <span>Chronological Order</span>
           </div>
         </div>
 
@@ -173,17 +173,20 @@ export const JourneySection: React.FC = () => {
         </div>
 
         {/* Milestones & Recognitions Sub-Block */}
-        <div className="pt-6 sm:pt-10 border-t border-white/[0.06] space-y-8">
-          <div className="max-w-2xl space-y-2">
+        <div className="pt-6 sm:pt-10 border-t border-white/[0.06] space-y-6">
+          <div className="max-w-2xl space-y-1.5">
             <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
               <span className="text-[#2563EB] font-bold">04.B</span>
               <span className="uppercase tracking-wider">Milestones</span>
               <span aria-hidden="true" className="text-zinc-600">/</span>
               <span>Key Highlights</span>
             </div>
-            <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Collegiate milestones and engineering highlights.
+            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+              Collegiate Milestones & Recognitions
             </h3>
+            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              Summary markers across degree progression, application releases, and hackathon sprints.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

@@ -70,8 +70,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
           >
             {/* Status & University Kicker */}
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-tabular bg-emerald-500/10 border border-emerald-500/25 text-emerald-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse motion-reduce:animate-none" />
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-tabular bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" aria-hidden="true" />
                 <span>Open to Internship Opportunities</span>
               </span>
               <span className="text-xs text-zinc-400 font-mono-tabular hidden sm:inline">
@@ -90,9 +90,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
 
               <motion.p
                 variants={itemVariants}
-                className="font-editorial text-xl sm:text-2xl text-zinc-200 font-normal leading-snug [text-wrap:balance]"
+                className="text-xl sm:text-2xl text-zinc-200 font-medium leading-snug [text-wrap:balance]"
               >
-                Engineering native macOS applications and practical full-stack web platforms.
+                Building native macOS desktop tools and full-stack web platforms.
               </motion.p>
             </div>
 
@@ -101,9 +101,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               variants={itemVariants}
               className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-[62ch]"
             >
-              I am a 2nd-year B.Tech Computer Science & Engineering student at{' '}
-              <span className="text-zinc-200 font-medium">Medi-Caps University</span> (enrolled August 2025).
-              I learn by building real projects—focusing on clean architecture, desktop applications with Electron and React, and reliable relational web services with PostgreSQL.
+              I am a 2nd-year Computer Science student at{' '}
+              <span className="text-zinc-200 font-medium">Medi-Caps University</span>.
+              I build desktop applications with Electron and React, and full-stack web applications backed by PostgreSQL.
             </motion.p>
 
             {/* Primary & External CTAs */}
@@ -114,7 +114,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               <button
                 type="button"
                 onClick={() => onNavigate('projects')}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 text-xs sm:text-sm font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 cursor-pointer min-h-[44px]"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-[#2563EB] rounded-xl hover:bg-blue-500 transition-colors cursor-pointer min-h-[44px]"
               >
                 <span>View Projects</span>
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -124,7 +124,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                 href={personal.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 text-xs sm:text-sm font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-all cursor-pointer min-h-[44px]"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-colors cursor-pointer min-h-[44px]"
               >
                 <Github className="w-4 h-4" aria-hidden="true" />
                 <span>GitHub</span>
@@ -135,7 +135,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                 href={personal.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 text-xs sm:text-sm font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-all cursor-pointer min-h-[44px]"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.08] rounded-xl hover:bg-white/[0.08] hover:text-white transition-colors cursor-pointer min-h-[44px]"
               >
                 <Linkedin className="w-4 h-4" aria-hidden="true" />
                 <span>LinkedIn</span>
@@ -145,7 +145,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               <button
                 type="button"
                 onClick={() => onNavigate('about')}
-                className="inline-flex items-center justify-center gap-1.5 px-3 py-3 text-xs sm:text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer min-h-[44px]"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs sm:text-sm font-medium text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer min-h-[44px]"
               >
                 <span>About Me</span>
                 <ArrowDownRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -160,17 +160,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
             transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5"
           >
-            <div className="rounded-2xl border border-white/[0.1] bg-[#0c0d14] overflow-hidden shadow-2xl">
-              {/* Window Chrome Titlebar */}
+            <div className="rounded-2xl border border-white/[0.1] bg-[#0c0d14] overflow-hidden shadow-xl">
+              {/* Clean Spotlight Header */}
               <div className="px-4 py-3 bg-[#11121c] border-b border-white/[0.08] flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
-                  <span className="ml-1.5 font-mono-tabular text-[11px] text-zinc-400">
-                    project-spotlight.view
-                  </span>
-                </div>
+                <span className="font-mono-tabular text-xs font-medium text-zinc-300">
+                  Featured Application
+                </span>
 
                 {/* Project Switcher Tabs */}
                 <div
@@ -224,7 +219,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                     <span className="inline-flex items-center gap-1.5 text-zinc-300 font-medium">
                       {activeSpotlight === 'metroflow' ? (
                         <>
-                          <Disc3 className="w-3.5 h-3.5 text-blue-400 animate-spin motion-reduce:animate-none" />
+                          <Disc3 className="w-3.5 h-3.5 text-blue-400" />
                           <span>macOS Desktop Application</span>
                         </>
                       ) : (
@@ -261,13 +256,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                     <img
                       src={currentProject.image}
                       alt={`${currentProject.title} interface preview`}
-                      className="w-full h-full object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+                      className="w-full h-full object-contain rounded-lg transition-transform duration-200 group-hover:scale-[1.01]"
                     />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-blue-600/90 shadow-lg">
-                        Explore Technical Architecture →
-                      </span>
-                    </div>
                   </div>
 
                   {/* Summary & Tags */}

@@ -207,14 +207,8 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-[#07070a] shadow-xl">
                   {/* Chrome Titlebar */}
                   <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-[#11121c] border-b border-white/[0.06] text-xs">
-                    <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
-                      <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
-                    </div>
-
-                    <div className="flex items-center gap-2 text-zinc-400 font-mono-tabular truncate px-2">
-                      <Monitor className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+                    <div className="flex items-center gap-2 text-zinc-400 font-mono-tabular truncate min-w-0">
+                      <Monitor className="w-3.5 h-3.5 text-blue-400 shrink-0" />
                       <span className="text-zinc-200 font-medium truncate">{project.title}</span>
                       <span className="text-zinc-600">/</span>
                       <span className="text-zinc-400 truncate">{activeScreenshot.title}</span>
@@ -575,7 +569,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors cursor-pointer w-full sm:w-auto shadow-md shadow-blue-500/20 min-h-[44px]"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] rounded-lg hover:bg-blue-500 transition-colors cursor-pointer w-full sm:w-auto min-h-[44px]"
             >
               <span>Explore Code on GitHub</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
