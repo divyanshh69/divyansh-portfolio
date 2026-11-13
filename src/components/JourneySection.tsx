@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Calendar, Code2, Users, Award } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { easeEditorial } from '../utils/motionVariants';
@@ -20,6 +20,7 @@ const getMilestoneIcon = (category: string) => {
 
 export const JourneySection: React.FC = () => {
   const milestones = PORTFOLIO_DATA.journey;
+  const sectionRef = useRef<HTMLElement | null>(null);
   const timelineRef = useRef<HTMLDivElement | null>(null);
   const [journeyProgressPct, setJourneyProgressPct] = useState<number>(0);
   const [prefersReduced, setPrefersReduced] = useState(false);
@@ -33,6 +34,17 @@ export const JourneySection: React.FC = () => {
       return () => media.removeEventListener('change', listener);
     }
   }, []);
+
+  const { scrollYProgress: sectionScroll } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const watermarkX = useTransform(
+    sectionScroll,
+    [0, 1],
+    prefersReduced ? ['0%', '0%'] : ['-4%', '6%']
+  );
 
   const { scrollYProgress } = useScroll({
     target: timelineRef,
@@ -48,10 +60,25 @@ export const JourneySection: React.FC = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="journey"
       aria-labelledby="journey-heading"
       className="py-16 sm:py-24 lg:py-32 border-b border-[#262A36] relative overflow-hidden"
     >
+      {/* Background Architectural Grid Pattern */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 arch-grid-pattern opacity-20 [mask-image:radial-gradient(ellipse_at_center,white_10%,transparent_75%)]"
+      />
+
+      {/* Monumental Architectural Watermark (Parallax) */}
+      <motion.div
+        aria-hidden="true"
+        style={{ x: watermarkX }}
+        className="pointer-events-none absolute top-10 left-0 select-none whitespace-nowrap font-display font-black text-[12vw] text-white/[0.022] tracking-tighter will-change-transform z-0"
+      >
+        <span>CHRONOLOGICAL PROGRESSION &bull; CS CURRICULUM &bull; INDORE 2024 &rarr; 2026</span>
+      </motion.div>
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-20">
         {/* Timeline Header with Kinetic Typography */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#262A36]">
@@ -98,6 +125,8 @@ export const JourneySection: React.FC = () => {
             {milestones.map((item, idx) => {
               const isFutureGoal = item.category === 'Future Goals';
               const isOngoing = item.period.includes('Present');
+              const milestoneRatio = idx / Math.max(milestones.length - 1, 1);
+              const isLaserActive = journeyProgressPct / 100 >= milestoneRatio - 0.05;
 
               return (
                 <motion.div
@@ -113,29 +142,53 @@ export const JourneySection: React.FC = () => {
                   {isFutureGoal ? (
                     <span
                       aria-hidden="true"
-                      className="absolute -left-[27px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-[#090A0E] border-2 border-dashed border-[#FF4D26]/80 group-hover:scale-125 transition-transform z-20 shadow-lg"
+                      className={`absolute -left-[27px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-[#090A0E] border-2 border-dashed border-[#FF4D26] group-hover:scale-125 transition-all z-20 shadow-lg ${
+                        isLaserActive
+                          ? 'ring-4 ring-[#FF4D26]/35 shadow-[0_0_12px_rgba(255,77,38,0.5)]'
+                          : 'opacity-70'
+                      }`}
                     />
                   ) : isOngoing ? (
                     <span
                       aria-hidden="true"
-                      className="absolute -left-[27px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-[#090A0E] border-2 border-[#10B981] ring-4 ring-[#10B981]/25 group-hover:scale-125 transition-transform z-20 shadow-lg"
+                      className={`absolute -left-[27px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-[#090A0E] border-2 border-[#10B981] group-hover:scale-125 transition-all z-20 shadow-lg ${
+                        isLaserActive
+                          ? 'ring-6 ring-[#10B981]/40 shadow-[0_0_16px_rgba(16,185,129,0.7)] scale-110'
+                          : 'ring-2 ring-[#10B981]/25'
+                      }`}
                     />
                   ) : (
                     <span
                       aria-hidden="true"
-                      className="absolute -left-[27px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-[#FF4D26] border-2 border-[#090A0E] ring-2 ring-[#FF4D26]/40 group-hover:scale-125 transition-transform z-20 shadow-lg"
+                      className={`absolute -left-[27px] sm:-left-[41px] top-6 w-4 h-4 rounded-full border-2 border-[#090A0E] group-hover:scale-125 transition-all z-20 shadow-lg ${
+                        isLaserActive
+                          ? 'bg-[#FF4D26] ring-4 ring-[#FF4D26]/50 shadow-[0_0_14px_rgba(255,77,38,0.7)] scale-110'
+                          : 'bg-[#FF4D26]/75 ring-1 ring-[#FF4D26]/30'
+                      }`}
                     />
                   )}
 
                   <div
-                    className={`p-6 sm:p-8 rounded-2xl arch-surface transition-all duration-300 space-y-4 border ${
-                      isFutureGoal
+                    className={`relative overflow-hidden p-6 sm:p-8 rounded-2xl arch-surface transition-all duration-300 space-y-4 border ${
+                      isLaserActive
+                        ? isFutureGoal
+                          ? 'border-[#FF4D26]/50 bg-[#0E0F16] shadow-lg'
+                          : isOngoing
+                          ? 'border-[#10B981]/60 bg-[#0A0D12] shadow-xl'
+                          : 'border-[#FF4D26]/50 bg-[#0F1118] shadow-lg'
+                        : isFutureGoal
                         ? 'border-[#FF4D26]/30 bg-[#0E0F16]'
                         : isOngoing
                         ? 'border-[#10B981]/30 bg-[#0A0D12]'
                         : 'border-[#262A36] hover:border-[#FF4D26]/40 hover:shadow-xl'
                     }`}
                   >
+                    {/* Active Top Laser Runner Line */}
+                    <div
+                      className={`absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF4D26] to-transparent transition-opacity duration-300 ${
+                        isLaserActive ? 'opacity-80' : 'opacity-0'
+                      }`}
+                    />
                     {/* Meta Bar */}
                     <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono-tabular">
                       <div className="flex flex-wrap items-center gap-2">

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import {
   ArrowDown,
   ArrowUpRight,
@@ -40,6 +40,29 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
   const [prefersReduced, setPrefersReduced] = useState(false);
   const [nameRevealed, setNameRevealed] = useState(false);
 
+  const heroRef = useRef<HTMLElement | null>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const yHeroLeft = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReduced ? [0, 0] : [0, -55]
+  );
+  const yHeroRight = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReduced ? [0, 0] : [0, -28]
+  );
+  const opacityHero = useTransform(
+    scrollYProgress,
+    [0, 0.8],
+    prefersReduced ? [1, 1] : [1, 0.4]
+  );
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const media = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -69,6 +92,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
 
   return (
     <section
+      ref={heroRef}
       id="home"
       aria-label="Introduction and Overview"
       onMouseMove={handleMouseMove}
@@ -107,7 +131,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
         {/* Main Typographic & Canvas Composition */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Monumental Kinetic Typography Choreography */}
-          <div className="lg:col-span-7 space-y-8">
+          <motion.div
+            style={{ y: yHeroLeft, opacity: opacityHero }}
+            className="lg:col-span-7 space-y-8 will-change-transform"
+          >
             <div className="space-y-3">
               {/* Step 0: Category identifier */}
               <motion.div
@@ -238,7 +265,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                 </button>
               </Magnetic>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Step 6: Right Column enters in coordination with the main content */}
           <motion.div
@@ -246,10 +273,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1.05, delay: 0.65, ease: easeEditorial }}
             style={{
-              transform: `translate3d(${pointerOffset.x * 0.4}px, ${pointerOffset.y * 0.4}px, 0)`,
-              transition: 'transform 0.15s ease-out',
+              y: yHeroRight,
+              opacity: opacityHero,
             }}
-            className="lg:col-span-5 space-y-5"
+            className="lg:col-span-5 space-y-5 will-change-transform"
           >
             {/* Interactive Resonator Canvas */}
             <div className="h-64 sm:h-72 w-full shadow-2xl">

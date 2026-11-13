@@ -88,6 +88,11 @@ export const AboutSection: React.FC = () => {
     [0, 1],
     prefersReduced || isMobile ? [0, 0] : [-20, 25]
   );
+  const watermarkX = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReduced || isMobile ? ['0%', '0%'] : ['8%', '-10%']
+  );
 
   return (
     <section
@@ -102,6 +107,15 @@ export const AboutSection: React.FC = () => {
         style={{ y: bgParallax }}
         className="pointer-events-none absolute inset-0 arch-grid-pattern opacity-25 [mask-image:radial-gradient(ellipse_at_center,white_10%,transparent_75%)]"
       />
+
+      {/* Monumental Architectural Watermark (Deep Parallax) */}
+      <motion.div
+        aria-hidden="true"
+        style={{ x: watermarkX }}
+        className="pointer-events-none absolute -bottom-6 left-0 select-none whitespace-nowrap font-display font-black text-[12vw] text-white/[0.025] tracking-tighter will-change-transform z-0"
+      >
+        <span>ACADEMIC FOUNDATION &bull; ENGINEERING METHOD &bull; INDORE INDIA</span>
+      </motion.div>
 
       <div className="relative max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-14 sm:space-y-16">
         {/* Section Header with Kinetic Typography */}
@@ -278,15 +292,18 @@ export const AboutSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.65, delay: sIdx * 0.08, ease: easeEditorial }}
-                className="p-4 rounded-xl bg-[#090A0E] border border-[#262A36] space-y-2 flex flex-col justify-between transition-colors hover:border-[#FF4D26]/30"
+                whileHover={prefersReduced ? undefined : { y: -3, transition: { duration: 0.2 } }}
+                className="group p-4 rounded-xl bg-[#090A0E] border border-[#262A36] space-y-2 flex flex-col justify-between transition-all duration-300 hover:border-[#FF4D26]/50 hover:bg-[#12141c] hover:shadow-xl relative overflow-hidden"
               >
+                {/* Micro top accent glow */}
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF4D26] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="space-y-1.5">
                   <span className="font-mono-tabular text-xs font-bold text-[#FF4D26]">
                     {step.step} //
                   </span>
-                  <h4 className="text-xs font-bold text-[#F4EFEA]">{step.title}</h4>
+                  <h4 className="text-xs font-bold text-[#F4EFEA] group-hover:text-white transition-colors">{step.title}</h4>
                 </div>
-                <p className="text-[11px] text-[#8E8B85] leading-relaxed pt-1 border-t border-[#262A36]/50">
+                <p className="text-[11px] text-[#8E8B85] leading-relaxed pt-1 border-t border-[#262A36]/50 group-hover:text-[#D6CFC7] transition-colors">
                   {step.detail}
                 </p>
               </motion.div>

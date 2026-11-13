@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { PORTFOLIO_DATA, SkillCategory, SkillItem } from '../data/portfolioData';
 import { filterSkillsByCategory } from '../utils/portfolioLogic';
 import { SkillConstellationCanvas } from './SkillConstellationCanvas';
@@ -30,6 +30,30 @@ const getSkillBadgeText = (skill: SkillItem): string => {
 export const SkillsSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<SkillCategory>('All');
   const [activeHoveredSkill, setActiveHoveredSkill] = useState<string | null>(null);
+  const [prefersReduced, setPrefersReduced] = useState(false);
+
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+      setPrefersReduced(media.matches);
+      const listener = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+      media.addEventListener('change', listener);
+      return () => media.removeEventListener('change', listener);
+    }
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const watermarkX = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReduced ? ['0%', '0%'] : ['6%', '-8%']
+  );
 
   const filteredSkills = filterSkillsByCategory(
     PORTFOLIO_DATA.skills,
@@ -51,10 +75,25 @@ export const SkillsSection: React.FC = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="skills"
       aria-labelledby="skills-heading"
-      className="py-16 sm:py-24 lg:py-32 border-b border-[#262A36] relative"
+      className="py-16 sm:py-24 lg:py-32 border-b border-[#262A36] relative overflow-hidden"
     >
+      {/* Background Architectural Grid Pattern */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 arch-grid-pattern opacity-20 [mask-image:radial-gradient(ellipse_at_center,white_10%,transparent_75%)]"
+      />
+
+      {/* Monumental Architectural Watermark (Parallax) */}
+      <motion.div
+        aria-hidden="true"
+        style={{ x: watermarkX }}
+        className="pointer-events-none absolute top-8 left-0 select-none whitespace-nowrap font-display font-black text-[12vw] text-white/[0.022] tracking-tighter will-change-transform z-0"
+      >
+        <span>TOPOLOGICAL CAPABILITIES &bull; DISTRIBUTED &bull; NATIVE MACOS &bull; POSTGRESQL</span>
+      </motion.div>
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Section Header with Kinetic Typography */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#262A36]">
@@ -144,12 +183,18 @@ export const SkillsSection: React.FC = () => {
                   transition={{ duration: 0.45, ease: easeEditorial }}
                   onMouseEnter={() => setActiveHoveredSkill(skill.id)}
                   onMouseLeave={() => setActiveHoveredSkill(null)}
-                  className={`p-6 rounded-2xl arch-surface flex flex-col justify-between space-y-5 transition-all duration-300 ${
+                  className={`group relative overflow-hidden p-6 rounded-2xl arch-surface flex flex-col justify-between space-y-5 transition-all duration-300 ${
                     isHovered
                       ? 'border-[#FF4D26] ring-1 ring-[#FF4D26]/40 bg-[#121520] shadow-xl scale-[1.01]'
-                      : 'border-[#262A36]'
+                      : 'border-[#262A36] hover:border-[#FF4D26]/40'
                   }`}
                 >
+                  {/* Subtle top edge laser line */}
+                  <div
+                    className={`absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF4D26] to-transparent transition-opacity duration-300 ${
+                      isHovered ? 'opacity-100' : 'opacity-0 group-hover:opacity-60'
+                    }`}
+                  />
                   <div className="space-y-3">
                     {/* Header line: category & badge */}
                     <div className="flex items-center justify-between text-xs font-mono-tabular">

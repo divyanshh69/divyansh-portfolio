@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import {
   Github,
   Linkedin,
@@ -38,6 +38,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
   const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [draftCopyStatus, setDraftCopyStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [screenReaderAnnouncement, setScreenReaderAnnouncement] = useState('');
+  const [currentTimeStr, setCurrentTimeStr] = useState('');
 
   const [formState, setFormState] = useState<ContactSubmissionInput>({
     name: '',
@@ -49,6 +50,8 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
   const [preparedDraft, setPreparedDraft] = useState<ActiveDraft | null>(null);
   const [prefersReduced, setPrefersReduced] = useState(false);
 
+  const footerRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const media = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -58,6 +61,38 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
       return () => media.removeEventListener('change', listener);
     }
   }, []);
+
+  useEffect(() => {
+    const updateTime = () => {
+      try {
+        const now = new Date();
+        const formatted = new Intl.DateTimeFormat('en-IN', {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+        }).format(now);
+        setCurrentTimeStr(`${formatted} IST`);
+      } catch {
+        setCurrentTimeStr('UTC+05:30');
+      }
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: footerRef,
+    offset: ['start end', 'end end'],
+  });
+
+  const watermarkX = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReduced ? ['0%', '0%'] : ['4%', '-6%']
+  );
 
   const nameInputRef = useRef<HTMLInputElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
@@ -146,6 +181,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
 
   return (
     <footer
+      ref={footerRef}
       id="contact"
       aria-labelledby="contact-heading"
       className="pt-16 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 bg-[#07080C] border-t border-white/[0.08] relative overflow-hidden"
@@ -155,13 +191,23 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 arch-grid-pattern opacity-20 [mask-image:radial-gradient(ellipse_at_bottom,white_10%,transparent_75%)]"
       />
+
+      {/* Monumental Architectural Watermark (Parallax) */}
+      <motion.div
+        aria-hidden="true"
+        style={{ x: watermarkX }}
+        className="pointer-events-none absolute bottom-8 left-0 select-none whitespace-nowrap font-display font-black text-[14vw] text-white/[0.022] tracking-tighter will-change-transform z-0"
+      >
+        <span>ENGAGE &bull; INDORE 2026 &bull; OPEN TO INTERNSHIPS &bull; GET IN TOUCH</span>
+      </motion.div>
+
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-6 right-6 lg:right-10 hidden md:flex items-center gap-3 text-[10px] font-mono-tabular text-[#7C7872] opacity-70 select-none"
+        className="pointer-events-none absolute top-6 right-6 lg:right-10 hidden md:flex items-center gap-3 text-[10px] font-mono-tabular text-[#8E8B85] opacity-80 select-none z-10"
       >
         <span>SYS // 22°43&apos;N 75°52&apos;E [INDORE, IN]</span>
         <span>&bull;</span>
-        <span>UTC+05:30</span>
+        <span className="text-[#F4EFEA] font-semibold">{currentTimeStr || 'UTC+05:30'}</span>
         <span>&bull;</span>
         <span className="text-[#10B981] flex items-center gap-1.5 font-semibold">
           <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] inline-block animate-pulse" />

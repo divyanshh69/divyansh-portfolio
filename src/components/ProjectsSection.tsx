@@ -126,6 +126,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   // 3 projects: translation from 0% to -66.666%
   const horizontalX = useTransform(scrollYProgress, [0, 1], ['0%', '-66.666%']);
   const progressScaleX = useTransform(scrollYProgress, [0, 1], [0.333, 1]);
+  const watermarkHorizontalX = useTransform(scrollYProgress, [0, 1], ['0%', '-28%']);
 
   const [activeProjectNumber, setActiveProjectNumber] = useState<number>(1);
 
@@ -216,9 +217,18 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
             {/* Horizontal Projects Glide Track */}
             <div className="relative flex-1 flex items-center overflow-hidden my-auto py-2">
+              {/* Monumental Architectural Glide Watermark (Differential Parallax) */}
+              <motion.div
+                aria-hidden="true"
+                style={{ x: watermarkHorizontalX }}
+                className="pointer-events-none absolute inset-y-0 left-0 flex items-center whitespace-nowrap font-display font-black text-[16vw] text-white/[0.022] tracking-tighter select-none z-0 will-change-transform"
+              >
+                <span>ENGINEERED SYSTEMS &bull; AUDIO RUNTIMES &bull; RELATIONAL ORM &bull; PRODUCTION CODE</span>
+              </motion.div>
+
               <motion.div
                 style={{ x: horizontalX }}
-                className="flex items-stretch gap-14 w-[300%] h-full max-h-[72vh] flex-nowrap will-change-transform"
+                className="relative flex items-stretch gap-14 w-[300%] h-full max-h-[72vh] flex-nowrap will-change-transform z-10"
               >
                 {projects.map((project, pIdx) => {
                   const activeCardIdx = cardScreenshotIdx[project.id] ?? 0;
@@ -233,13 +243,20 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   return (
                     <div
                       key={project.id}
-                      className="w-[calc(100vw-5rem)] max-w-[1260px] shrink-0 h-full flex flex-col"
+                      className="w-[calc(100vw-5rem)] max-w-[1260px] shrink-0 h-full flex flex-col relative"
                     >
                       <Project3DCard maxTilt={5} borderAccent={theme.accentColor}>
                         <article
                           style={{ transformStyle: 'preserve-3d' }}
-                          className={`rounded-3xl arch-surface overflow-hidden flex-1 flex flex-col border border-[#262A36] shadow-2xl transition-colors duration-300 ${theme.borderHover} h-full`}
+                          className={`rounded-3xl arch-surface overflow-hidden flex-1 flex flex-col border border-[#262A36] shadow-2xl transition-colors duration-300 ${theme.borderHover} h-full relative`}
                         >
+                        {/* Background Numeral Watermark */}
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute -bottom-8 -right-4 font-display font-black text-[180px] leading-none text-white/[0.02] select-none z-0"
+                        >
+                          0{pIdx + 1}
+                        </span>
                         {/* Showcase Header Strip */}
                         <div className="px-6 py-3.5 bg-[#0E1017] border-b border-[#262A36] flex items-center justify-between gap-4 shrink-0">
                           <div className="flex items-center gap-3">
