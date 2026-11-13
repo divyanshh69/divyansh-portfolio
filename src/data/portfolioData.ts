@@ -1,6 +1,11 @@
 const metroflowHomeImg = new URL('../assets/images/metroflow-home.png', import.meta.url).href;
 const metroflowLyricsImg = new URL('../assets/images/metroflow-synchronized-lyrics.png', import.meta.url).href;
 const metroflowSettingsImg = new URL('../assets/images/metroflow-settings-about.png', import.meta.url).href;
+
+const skillsyncHomeImg = new URL('../assets/images/skillsync-home.png', import.meta.url).href;
+const skillsyncRoadmapImg = new URL('../assets/images/skillsync-roadmap.png', import.meta.url).href;
+const skillsyncProjectsImg = new URL('../assets/images/skillsync-projects.png', import.meta.url).href;
+
 const campuspulseDashboardImg = new URL('../assets/images/campuspulse-dashboard.png', import.meta.url).href;
 const campuspulseMemberManagementImg = new URL('../assets/images/campuspulse-member-management.png', import.meta.url).href;
 const campuspulsePlatformSettingsImg = new URL('../assets/images/campuspulse-platform-settings.png', import.meta.url).href;
@@ -130,7 +135,7 @@ export const PORTFOLIO_DATA = {
   },
 
   about: {
-    lead: 'I am a 2nd-year Computer Science student at Medi-Caps University. I learn by building software—translating concepts from coursework in data structures, systems, and databases into working applications.',
+    lead: 'I am a 2nd-year Computer Science student at Medi-Caps University. I learn by building software—translating concepts from coursework in data structures, systems, and relational databases into working applications.',
   },
 
   skills: [
@@ -140,7 +145,7 @@ export const PORTFOLIO_DATA = {
       category: 'Programming',
       context: 'Type-safe application development across frontend React components and backend Node.js services.',
       experienceNote: 'Strict typing, generic helpers, API contract interfaces, and modular component props.',
-      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
+      usedIn: ['MetroFlow', 'SkillSync', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'js',
@@ -180,7 +185,7 @@ export const PORTFOLIO_DATA = {
       category: 'Web Development',
       context: 'Building interactive user interfaces, single-page web applications, and custom hooks with Vite.',
       experienceNote: 'Functional components, hooks, state management, and responsive layouts.',
-      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
+      usedIn: ['MetroFlow', 'SkillSync', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'tailwind',
@@ -188,7 +193,7 @@ export const PORTFOLIO_DATA = {
       category: 'Web Development',
       context: 'Responsive styling, dark mode UI theming, and consistent layout design.',
       experienceNote: 'Utility classes, custom CSS variables, responsive breakpoints, and clean component styling.',
-      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
+      usedIn: ['MetroFlow', 'SkillSync', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'motion',
@@ -204,7 +209,7 @@ export const PORTFOLIO_DATA = {
       category: 'Web Development',
       context: 'REST API development, routing, authentication middleware, and server logic.',
       experienceNote: 'Express routes, JWT/session authentication, input validation, and database queries.',
-      usedIn: ['CampusPulse'],
+      usedIn: ['SkillSync', 'CampusPulse'],
     },
     {
       id: 'electron',
@@ -219,8 +224,16 @@ export const PORTFOLIO_DATA = {
       name: 'PostgreSQL & Relational Databases',
       category: 'Tools & Technologies',
       context: 'Relational data modeling, SQL queries, schema normalization, and foreign key constraints.',
-      experienceNote: 'Designing normalized schemas for campus events and clubs, writing queries, and enforcing relational integrity.',
-      usedIn: ['CampusPulse'],
+      experienceNote: 'Designing normalized schemas for campus events, career roadmaps, writing queries, and enforcing relational integrity.',
+      usedIn: ['SkillSync', 'CampusPulse'],
+    },
+    {
+      id: 'prisma',
+      name: 'Prisma ORM & Relational Modeling',
+      category: 'Tools & Technologies',
+      context: 'Type-safe database modeling, schema migrations, composite keys, and relational queries with PostgreSQL 16.',
+      experienceNote: 'Structuring relational schemas, explicit join models, cascade deletion rules, and aggregation queries.',
+      usedIn: ['SkillSync'],
     },
     {
       id: 'git',
@@ -228,7 +241,7 @@ export const PORTFOLIO_DATA = {
       category: 'Tools & Technologies',
       context: 'Version control, feature branching, code reviews, and Linux terminal workflow.',
       experienceNote: 'Git commands, branch workflows, pull requests, and command-line tooling.',
-      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
+      usedIn: ['MetroFlow', 'SkillSync', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'figma',
@@ -236,7 +249,7 @@ export const PORTFOLIO_DATA = {
       category: 'Tools & Technologies',
       context: 'UI wireframing, layout experimentation, and prototyping before writing code.',
       experienceNote: 'Creating mockups, planning component spacing, and testing color schemes.',
-      usedIn: ['MetroFlow', 'CampusPulse', 'Personal Portfolio'],
+      usedIn: ['MetroFlow', 'SkillSync', 'CampusPulse', 'Personal Portfolio'],
     },
     {
       id: 'rust',
@@ -404,8 +417,163 @@ export const PORTFOLIO_DATA = {
       githubUrl: 'https://github.com/divyanshh69/MetroFlow-MAC',
     },
     {
-      id: 'campuspulse',
+      id: 'skillsync',
       index: '02',
+      title: 'SkillSync',
+      subtitle: 'An AI-powered career companion and structured milestone roadmap platform for student developers',
+      category: 'Full-Stack Web',
+      year: '2026',
+      status: 'Active Project',
+      shortDescription:
+        'A full-stack career preparation and skill progression platform that connects student career goals with structured milestone roadmaps, verified project evidence, and readiness analytics.',
+      fullOverview:
+        'SkillSync is an engineering career companion designed to help computer science students and early-career builders track skills, manage project evidence, and navigate structured learning roadmaps. Built with a React/TypeScript client, a Node.js/Express REST API, PostgreSQL 16, and Prisma ORM, it replaces disconnected spreadsheets with a normalized relational model that links individual skills to completed projects, milestone roadmap phases, and career readiness percentages.',
+      problemStatement:
+        'Students and early-career developers frequently track their learning across scattered bookmarks, arbitrary to-do lists, and disconnected repositories without a structured way to assess real career readiness or demonstrate concrete project evidence for specific competencies.',
+      engineeringSolution:
+        'Engineered a full-stack platform featuring a normalized relational schema with Prisma ORM and PostgreSQL 16. Implemented a five-phase career roadmap engine, project portfolio manager with skill tagging, and an aggregated readiness calculator that evaluates completed skills alongside verified repository deliverables.',
+      image: skillsyncHomeImg,
+      screenshots: [
+        {
+          title: 'Dashboard',
+          image: skillsyncHomeImg,
+          caption:
+            'Student home overview displaying active career goals, recommended next-step actions (e.g. Component Testing with Vitest), priority checklists, and progress metrics (45% readiness, 4 of 23 skills, 3 linked portfolio projects).',
+        },
+        {
+          title: 'Career Roadmap',
+          image: skillsyncRoadmapImg,
+          caption:
+            'Five-phase milestone roadmap view detailing curriculum progress from Core Web Foundations through Reactive Web Architecture, Backend APIs, Scalability, and Cloud Delivery, with real-time phase completion status.',
+        },
+        {
+          title: 'My Projects',
+          image: skillsyncProjectsImg,
+          caption:
+            'Project evidence directory (TaskForge CLI, ShopNest Storefront, DevPulse Analytics) linking concrete codebase deliverables directly to demonstrated skill proficiencies and GitHub repositories.',
+        },
+      ],
+      technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL', 'Prisma ORM'],
+      highlights: [
+        'Five-phase structured career roadmap mapping foundational web concepts through production systems',
+        'Normalized 7-model PostgreSQL schema with Prisma ORM linking users, skills, projects, and roadmaps',
+        'Deterministic readiness calculation in utils/readiness.ts weighting project-evidenced skills (1.5x) over theory',
+        'GitHub repository analyzer inspecting package.json & manifests to suggest verifiable skill evidence',
+      ],
+      architecture: [
+        {
+          layer: 'Frontend Application',
+          component: 'React 18 + TypeScript Client (Vite)',
+          responsibility:
+            'Renders interactive roadmap milestone trees, project evidence cards, progress bars, and priority task checklists.',
+        },
+        {
+          layer: 'Backend API Service',
+          component: 'Node.js & Express REST Service',
+          responsibility:
+            'Exposes endpoints for student profiles, roadmap progress, GitHub repository analysis, and milestone phase transitions.',
+        },
+        {
+          layer: 'Data & ORM Layer',
+          component: 'PostgreSQL 16 & Prisma ORM',
+          responsibility:
+            'Enforces relational integrity across 7 models (User, Skill, UserSkill, Project, ProjectSkill, RoadmapPhase, PhaseSkill).',
+        },
+      ],
+      specifications: [
+        {
+          label: 'Platform Architecture',
+          value: 'Full-Stack Client-Server',
+          detail: 'RESTful API + Single Page App',
+        },
+        {
+          label: 'Frontend Stack',
+          value: 'React 18 & TypeScript',
+          detail: 'Vite + Tailwind CSS UI',
+        },
+        {
+          label: 'Backend Runtime',
+          value: 'Node.js & Express',
+          detail: 'Type-Safe REST Controllers',
+        },
+        {
+          label: 'Database',
+          value: 'PostgreSQL 16',
+          detail: 'Prisma ORM Managed Schema',
+        },
+        {
+          label: 'Readiness Formula',
+          value: 'Weighted Multiplier',
+          detail: '1.5x Evidenced + 0.8x Theory + 0.3x In-Progress',
+        },
+        {
+          label: 'Roadmap Structure',
+          value: '5 Milestone Phases',
+          detail: 'Phase 1 Foundations to Phase 5 Cloud',
+        },
+      ],
+      technicalDecisions: [
+        {
+          title: 'Prisma ORM with PostgreSQL 16 & Parameterized Queries',
+          decision:
+            'Selected PostgreSQL 16 with Prisma ORM to define a type-safe relational schema with explicit join tables and parameterized query generation.',
+          rationale:
+            'SkillSync requires complex many-to-many relationships: a skill can be required by multiple roadmap phases and evidenced by multiple user projects. Prisma provides auto-generated TypeScript types, schema migrations, and parameterized query generation for relational operations, reducing manual join boilerplate while keeping queries type-checked against the database schema.',
+        },
+        {
+          title: 'Relational Model for Skill-to-Project Evidence',
+          decision:
+            'Structured explicit relation tables (UserSkill, ProjectSkill, PhaseSkill) linking student progress directly to tangible project deliverables.',
+          rationale:
+            'Rather than allowing self-reported checkboxes without proof, the schema models projects as proof of competence. Completing a skill requires associating it with an actual project deliverable, grounding career progress in real engineering work.',
+        },
+        {
+          title: 'Deterministic Weighted Readiness Calculation (utils/readiness.ts)',
+          decision:
+            'Implemented a deterministic backend readiness algorithm in server/src/utils/readiness.ts weighting verified project evidence over passive completion.',
+          rationale:
+            'Calculates points = (evidencedSkills * 1.5) + (theoryOnlySkills * 0.8) + (inProgressSkills * 0.3) against maxPossible = (totalSkills * 1.5). By rewarding project-evidenced skills with a 1.5x multiplier compared to 0.8x for unevidenced completion and 0.3x for in-progress work, the platform grounds student progress in tangible repository deliverables rather than passive checkboxes.',
+        },
+      ],
+      challengesAndLearnings: [
+        {
+          title: 'Relational Modeling of Many-to-Many Skill Evidence',
+          challenge:
+            'Modeling the intricate relationships between users, skills, roadmap phases, and projects without redundant tables, circular dependencies, or orphan records.',
+          solution:
+            'Designed a normalized Prisma schema with explicit join models (UserSkill, ProjectSkill, PhaseSkill) with composite unique constraints (@@unique([projectId, skillId])) and cascade deletion rules.',
+          learning:
+            'Deepened my mastery of relational database design, composite indexing, and Prisma schema modeling for complex domain problems.',
+        },
+        {
+          title: 'Preventing N+1 Query Bottlenecks in Dashboard Aggregations',
+          challenge:
+            'Fetching dashboard overview data required querying user goals, milestone phase statuses, skill counts, and linked project records, which initially triggered multiple nested database lookups.',
+          solution:
+            'Leveraged Prisma’s fluent query API with selective include clauses and database-level aggregate counts (_count: { select: { skills: true } }), reducing multiple round-trips to a single optimized relational query.',
+          learning:
+            'Learned how ORM abstraction affects query performance and how to inspect generated SQL queries to keep API latency under 50ms.',
+        },
+        {
+          title: 'Hierarchical State Management for Milestone Roadmap Progression',
+          challenge:
+            'Managing interactive phase accordions, task checkoffs, and real-time progress updates across the UI without desynchronizing the client state from the database.',
+          solution:
+            'Implemented optimistic UI updates in React backed by resilient API error boundaries, paired with clean modular hooks that coordinate phase transition mutations.',
+          learning:
+            'Gained practical experience managing complex hierarchical UI state in React, handling asynchronous mutations smoothly, and designing clear, intuitive user feedback loops.',
+        },
+      ],
+      metrics: [
+        { label: 'Architecture', value: 'Full-Stack' },
+        { label: 'Database', value: 'PostgreSQL 16' },
+        { label: 'ORM', value: 'Prisma ORM' },
+      ],
+      githubUrl: 'https://github.com/divyanshh69/SkillSync',
+    },
+    {
+      id: 'campuspulse',
+      index: '03',
       title: 'CampusPulse',
       subtitle: 'A college club management and campus event operations platform',
       category: 'Full-Stack Web',
@@ -562,7 +730,7 @@ export const PORTFOLIO_DATA = {
         'Enrolled in August 2025 and currently in 2nd year, building a strong academic foundation in core computer science fundamentals while actively developing practical software projects.',
       outcomes: [
         'Studying core CS subjects including Data Structures, Object-Oriented Programming, and Database Systems',
-        'Directly applying classroom theory to practical software builds like CampusPulse and MetroFlow',
+        'Directly applying classroom theory to practical software builds like MetroFlow, SkillSync, and CampusPulse',
       ],
     },
     {
@@ -602,6 +770,19 @@ export const PORTFOLIO_DATA = {
       outcomes: [
         'Collaborated on full-stack application prototypes under sprint constraints',
         'Gained practical experience in team coordination, rapid debugging, and project presentation',
+      ],
+    },
+    {
+      id: 'j-proj-skillsync',
+      period: '2026',
+      title: 'Engineered SkillSync Career Platform',
+      organization: 'Independent Project',
+      category: 'Projects',
+      summary:
+        'Built an AI-assisted career companion and skill tracking platform with React, TypeScript, Node.js, PostgreSQL 16, and Prisma ORM.',
+      outcomes: [
+        'Modeled normalized relational schema with explicit join tables linking skills, projects, and roadmaps',
+        'Built 5-phase career milestone roadmap with deterministic readiness analytics and project evidence mapping',
       ],
     },
     {
@@ -683,8 +864,8 @@ export const PORTFOLIO_DATA = {
         id: 'str-1',
         title: 'End-to-End Data Flow',
         description:
-          'I focus on how backend schemas connect to frontend state. When designing tables in PostgreSQL, I plan how client components will fetch, cache, and render the records cleanly.',
-        evidence: 'Applied in CampusPulse’s event schedules and MetroFlow’s local playback state.',
+          'I focus on how backend schemas connect to frontend state. When designing tables in PostgreSQL or models in Prisma, I plan how client components will fetch, cache, and render the records cleanly.',
+        evidence: 'Applied in SkillSync’s Prisma schema, CampusPulse’s event schedules, and MetroFlow’s local playback state.',
       },
       {
         id: 'str-2',
@@ -698,14 +879,14 @@ export const PORTFOLIO_DATA = {
         title: 'Independent Project Development',
         description:
           'I enjoy breaking requirements down into schemas, REST endpoints, and modular UI components—taking a project from an empty folder to a functioning build.',
-        evidence: 'Built both MetroFlow and CampusPulse end-to-end.',
+        evidence: 'Built MetroFlow, SkillSync, and CampusPulse end-to-end.',
       },
       {
         id: 'str-4',
         title: 'Type Safety & Modular Structure',
         description:
           'I write typed TypeScript with clear separation between data models, API controllers, and presentation components.',
-        evidence: 'Strict type safety across both application codebases.',
+        evidence: 'Strict type safety across MetroFlow, SkillSync, and CampusPulse codebases.',
       },
     ] as StrengthItem[],
 
@@ -716,7 +897,7 @@ export const PORTFOLIO_DATA = {
         honestReflection:
           'As an undergraduate, most of my backend projects have run in local development or simple server environments. I am eager to gain more experience with containerization, CI/CD pipelines, and cloud services.',
         activeActionPlan:
-          'Currently learning Docker basics and practicing automated testing and deployment for CampusPulse.',
+          'Currently learning Docker basics and practicing automated testing and deployment for CampusPulse and SkillSync.',
       },
       {
         id: 'grw-2',
@@ -737,4 +918,3 @@ export const PORTFOLIO_DATA = {
     ] as GrowthAreaItem[],
   },
 };
-

@@ -1,62 +1,99 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, Calendar, Code2, Users, ArrowUpRight } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence, useScroll } from 'motion/react';
+import { Calendar, Code2, Users, Award } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { easeEditorial } from '../utils/motionVariants';
+import { KineticHeading } from './KineticHeading';
 
 const getMilestoneIcon = (category: string) => {
   switch (category) {
     case 'Academic':
-      return <Calendar className="w-3.5 h-3.5 text-blue-400" aria-hidden="true" />;
+      return <Calendar className="w-3.5 h-3.5 text-[#38BDF8]" aria-hidden="true" />;
     case 'Projects':
-      return <Code2 className="w-3.5 h-3.5 text-blue-400" aria-hidden="true" />;
+      return <Code2 className="w-3.5 h-3.5 text-[#FF4D26]" aria-hidden="true" />;
     case 'Hackathons':
-      return <Users className="w-3.5 h-3.5 text-blue-400" aria-hidden="true" />;
+      return <Users className="w-3.5 h-3.5 text-[#10B981]" aria-hidden="true" />;
     default:
-      return <Users className="w-3.5 h-3.5 text-blue-400" aria-hidden="true" />;
+      return <Award className="w-3.5 h-3.5 text-[#A8A39D]" aria-hidden="true" />;
   }
 };
 
 export const JourneySection: React.FC = () => {
   const milestones = PORTFOLIO_DATA.journey;
+  const timelineRef = useRef<HTMLDivElement | null>(null);
+  const [journeyProgressPct, setJourneyProgressPct] = useState<number>(0);
+  const [prefersReduced, setPrefersReduced] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+      setPrefersReduced(media.matches);
+      const listener = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+      media.addEventListener('change', listener);
+      return () => media.removeEventListener('change', listener);
+    }
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start 75%', 'end 70%'],
+  });
+
+  useEffect(() => {
+    const unsub = scrollYProgress.on('change', (latest) => {
+      setJourneyProgressPct(Math.round(latest * 100));
+    });
+    return () => unsub();
+  }, [scrollYProgress]);
 
   return (
     <section
       id="journey"
       aria-labelledby="journey-heading"
-      className="py-16 sm:py-24 border-b border-white/[0.06] relative"
+      className="py-16 sm:py-24 lg:py-32 border-b border-[#262A36] relative overflow-hidden"
     >
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-14 sm:space-y-20">
-        {/* Timeline Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-3 max-w-2xl">
-            <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
-              <span className="text-[#2563EB] font-bold">04.</span>
-              <span className="uppercase tracking-wider">Journey</span>
-              <span aria-hidden="true" className="text-zinc-600">/</span>
-              <span>Academic & Projects</span>
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-20">
+        {/* Timeline Header with Kinetic Typography */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#262A36]">
+          <KineticHeading
+            id="journey-heading"
+            tag="[ 04 // CHRONOLOGY & MILESTONES ]"
+            firstLine="Academic & Engineering"
+            secondLine="Timeline"
+            className="max-w-3xl"
+          />
+
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0E1017] border border-[#262A36] text-xs font-mono-tabular text-[#A8A39D] shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+              <span>AUG 2025 &mdash; PRESENT &bull; ROADMAP</span>
             </div>
-
-            <h2
-              id="journey-heading"
-              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight"
-            >
-              Academic & Project Timeline
-            </h2>
-
-            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
-              A chronological overview of computer science studies at Medi-Caps University, collegiate hackathons, and software projects.
-            </p>
-          </div>
-
-          {/* Timeline Indicator */}
-          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono-tabular text-zinc-400 shrink-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            <span>Chronological Order</span>
+            <div className="px-3 py-1.5 rounded-full bg-[#FF4D26]/10 border border-[#FF4D26]/20 text-xs font-mono-tabular text-[#FF4D26] font-semibold">
+              SCROLL // {journeyProgressPct}%
+            </div>
           </div>
         </div>
 
-        {/* Vertical Timeline */}
-        <div className="relative pl-5 sm:pl-8 border-l border-white/[0.1] space-y-8 sm:space-y-10">
+        {/* Vertical Timeline with Scroll-Driven Laser Progress Beam */}
+        <div
+          ref={timelineRef}
+          className="relative pl-7 sm:pl-12 space-y-12 sm:space-y-16"
+        >
+          {/* Static Background Guide Track */}
+          <div
+            aria-hidden="true"
+            className="absolute left-2 sm:left-4 top-2 bottom-6 w-[2px] bg-[#262A36]"
+          />
+
+          {/* Dynamic Laser Beam Progressive Draw */}
+          {!prefersReduced && (
+            <motion.div
+              aria-hidden="true"
+              style={{ scaleY: scrollYProgress }}
+              className="absolute left-2 sm:left-4 top-2 bottom-6 w-[2px] bg-gradient-to-b from-[#FF4D26] via-[#FF4D26] to-[#10B981] origin-top shadow-[0_0_10px_rgba(255,77,38,0.6)] z-10"
+            />
+          )}
+
           <AnimatePresence mode="popLayout">
             {milestones.map((item, idx) => {
               const isFutureGoal = item.category === 'Future Goals';
@@ -66,101 +103,86 @@ export const JourneySection: React.FC = () => {
                 <motion.div
                   layout
                   key={item.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
+                  initial={prefersReduced ? false : { opacity: 0, x: 24, scale: 0.98 }}
+                  whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.85, delay: idx * 0.06, ease: easeEditorial }}
                   className="relative group"
                 >
-                  {/* Node Dot */}
+                  {/* Node Dot with Laser Intersection */}
                   {isFutureGoal ? (
                     <span
                       aria-hidden="true"
-                      className="absolute -left-[27px] sm:-left-[39px] top-4 w-3.5 h-3.5 rounded-full bg-[#08090d] border-2 border-dashed border-indigo-400/80 group-hover:scale-125 transition-transform"
+                      className="absolute -left-[27px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-[#090A0E] border-2 border-dashed border-[#FF4D26]/80 group-hover:scale-125 transition-transform z-20 shadow-lg"
                     />
                   ) : isOngoing ? (
                     <span
                       aria-hidden="true"
-                      className="absolute -left-[27px] sm:-left-[39px] top-4 w-3.5 h-3.5 rounded-full bg-[#08090d] border-2 border-[#2563EB] ring-2 ring-[#2563EB]/25 group-hover:scale-125 transition-transform"
+                      className="absolute -left-[27px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-[#090A0E] border-2 border-[#10B981] ring-4 ring-[#10B981]/25 group-hover:scale-125 transition-transform z-20 shadow-lg"
                     />
                   ) : (
                     <span
                       aria-hidden="true"
-                      className="absolute -left-[27px] sm:-left-[39px] top-4 w-3.5 h-3.5 rounded-full bg-[#2563EB]/20 border-2 border-[#2563EB] group-hover:scale-125 transition-transform"
+                      className="absolute -left-[27px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-[#FF4D26] border-2 border-[#090A0E] ring-2 ring-[#FF4D26]/40 group-hover:scale-125 transition-transform z-20 shadow-lg"
                     />
                   )}
 
                   <div
-                    className={`p-5 sm:p-7 rounded-2xl border transition-all space-y-3.5 shadow-md ${
+                    className={`p-6 sm:p-8 rounded-2xl arch-surface transition-all duration-300 space-y-4 border ${
                       isFutureGoal
-                        ? 'border-indigo-500/25 bg-[#0c0d16]/90 hover:border-indigo-500/40'
-                        : 'border-white/[0.08] bg-[#0c0d14] hover:border-white/20'
+                        ? 'border-[#FF4D26]/30 bg-[#0E0F16]'
+                        : isOngoing
+                        ? 'border-[#10B981]/30 bg-[#0A0D12]'
+                        : 'border-[#262A36] hover:border-[#FF4D26]/40 hover:shadow-xl'
                     }`}
                   >
                     {/* Meta Bar */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono-tabular">
-                      <div className="flex items-center gap-2">
-                        <span className={isFutureGoal ? 'text-indigo-400 font-bold' : 'text-[#2563EB] font-bold'}>
-                          0{idx + 1}
+                    <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono-tabular">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-[#FF4D26] font-bold">
+                          0{idx + 1} //
                         </span>
-                        <span aria-hidden="true" className="text-zinc-600">·</span>
-                        <span className="text-white font-medium">{item.period}</span>
-                        <span aria-hidden="true" className="text-zinc-600">·</span>
-                        <span className={isFutureGoal ? 'text-indigo-300 font-medium' : 'text-zinc-400'}>
-                          {item.category}
+                        <span className="text-[#F4EFEA] font-semibold">{item.period}</span>
+                        <span aria-hidden="true" className="text-[#8E8B85]">&bull;</span>
+                        <span className="text-[#A8A39D] flex items-center gap-1.5">
+                          {getMilestoneIcon(item.category)}
+                          <span>{item.category}</span>
                         </span>
                         {isOngoing && (
-                          <>
-                            <span aria-hidden="true" className="text-zinc-600">·</span>
-                            <span className="px-1.5 py-0.2 rounded text-[10px] bg-blue-500/10 text-blue-300 border border-blue-500/20">
-                              Active
-                            </span>
-                          </>
+                          <span className="px-2 py-0.5 rounded text-[10px] bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 font-semibold">
+                            ACTIVE
+                          </span>
                         )}
                         {isFutureGoal && (
-                          <>
-                            <span aria-hidden="true" className="text-zinc-600">·</span>
-                            <span className="px-1.5 py-0.2 rounded text-[10px] bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                              Roadmap
-                            </span>
-                          </>
+                          <span className="px-2 py-0.5 rounded text-[10px] bg-[#FF4D26]/15 text-[#FF4D26] border border-[#FF4D26]/30 font-semibold">
+                            TARGET
+                          </span>
                         )}
                       </div>
-                      <span className={isFutureGoal ? 'text-indigo-400 font-medium' : 'text-blue-400 font-medium'}>
+
+                      <span className="text-[#8E8B85] font-medium text-xs">
                         {item.organization}
                       </span>
                     </div>
 
                     {/* Title & Summary */}
-                    <div className="space-y-1">
-                      <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                    <div className="space-y-1.5">
+                      <h3 className="font-display text-xl sm:text-2xl font-bold text-[#F4EFEA] tracking-tight">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-3xl">
+                      <p className="text-xs sm:text-sm text-[#D6CFC7] leading-relaxed max-w-3xl">
                         {item.summary}
                       </p>
                     </div>
 
                     {/* Outcomes / Objectives */}
-                    <ul className="pt-2 space-y-1.5 border-t border-white/[0.06]">
+                    <ul className="pt-3 space-y-2 border-t border-[#262A36]">
                       {item.outcomes.map((outcome) => (
                         <li
                           key={outcome}
-                          className={`flex items-start gap-2.5 text-xs leading-relaxed ${
-                            isFutureGoal ? 'text-zinc-300' : 'text-zinc-400'
-                          }`}
+                          className="flex items-start gap-2.5 text-xs text-[#A8A39D] leading-relaxed"
                         >
-                          {isFutureGoal ? (
-                            <ArrowUpRight
-                              className="w-3.5 h-3.5 text-indigo-400 shrink-0 mt-0.5"
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            <CheckCircle2
-                              className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5"
-                              aria-hidden="true"
-                            />
-                          )}
+                          <span className="text-[#FF4D26] mt-0.5 font-bold">&rarr;</span>
                           <span>{outcome}</span>
                         </li>
                       ))}
@@ -170,50 +192,6 @@ export const JourneySection: React.FC = () => {
               );
             })}
           </AnimatePresence>
-        </div>
-
-        {/* Milestones & Recognitions Sub-Block */}
-        <div className="pt-6 sm:pt-10 border-t border-white/[0.06] space-y-6">
-          <div className="max-w-2xl space-y-1.5">
-            <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono-tabular">
-              <span className="text-[#2563EB] font-bold">04.B</span>
-              <span className="uppercase tracking-wider">Milestones</span>
-              <span aria-hidden="true" className="text-zinc-600">/</span>
-              <span>Key Highlights</span>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              Collegiate Milestones & Recognitions
-            </h3>
-            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-              Summary markers across degree progression, application releases, and hackathon sprints.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {PORTFOLIO_DATA.achievements.map((ach) => (
-              <div
-                key={ach.id}
-                className="p-5 sm:p-6 rounded-2xl border border-white/[0.08] bg-[#0c0d14] flex flex-col justify-between space-y-4 shadow-sm"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs font-mono-tabular">
-                    <span className="text-blue-400 font-medium">{ach.category}</span>
-                    <span className="text-zinc-500">{ach.date}</span>
-                  </div>
-                  <h4 className="text-base font-bold text-white">{ach.title}</h4>
-                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">{ach.detail}</p>
-                </div>
-
-                <div className="pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-xs text-zinc-400">
-                  <span>{ach.issuerOrEvent}</span>
-                  <span className="inline-flex items-center gap-1.5 text-zinc-200 font-medium">
-                    {getMilestoneIcon(ach.category)}
-                    <span>{ach.credentialRef}</span>
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

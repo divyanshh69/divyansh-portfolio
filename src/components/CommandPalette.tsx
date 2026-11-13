@@ -21,12 +21,12 @@ interface CommandItem {
 }
 
 const SECTION_DETAILS: Record<SectionId, string> = {
-  home: 'Introduction, flagship overview & student background',
-  about: 'Medi-Caps University, B.Tech CSE (2nd Year) & technical approach',
-  projects: 'MetroFlow macOS player & CampusPulse club platform',
-  skills: 'TypeScript, React, Python, C++, Node.js & PostgreSQL',
+  home: 'Introduction, live resonator canvas & student background',
+  about: 'Medi-Caps University, B.Tech CSE (2nd Year) & engineering method',
+  projects: 'MetroFlow macOS player, SkillSync career platform & CampusPulse',
+  skills: 'TypeScript, React, Node.js, Prisma ORM, PostgreSQL & Python',
   journey: 'Academic timeline, hackathons & collegiate milestones',
-  contact: 'Direct email, GitHub, LinkedIn & messaging',
+  contact: 'Direct email, GitHub, LinkedIn & honest messaging dispatch',
 };
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({
@@ -168,24 +168,28 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div
+    <motion.div
       role="dialog"
       aria-modal="true"
       aria-label="Command search menu"
-      className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/80 backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.38, ease: 'easeOut' }}
+      className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/85 backdrop-blur-sm"
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: -12 }}
+        initial={{ opacity: 0, scale: 0.95, y: -18 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: -12 }}
-        transition={{ duration: 0.16 }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-xl rounded-2xl border border-white/[0.1] bg-[#0c0d14] shadow-2xl overflow-hidden flex flex-col"
+        className="w-full max-w-xl rounded-2xl border border-[#262A36] bg-[#090A0E] shadow-2xl overflow-hidden flex flex-col"
       >
         {/* Search Input Bar */}
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/[0.08] bg-[#11121c]">
-          <Search className="w-4 h-4 text-zinc-400 shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[#262A36] bg-[#0E1017]">
+          <Search className="w-4 h-4 text-[#FF4D26] shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -194,27 +198,27 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               setSearch(e.target.value);
               setSelectedIndex(0);
             }}
-            placeholder="Search sections, projects, or external links..."
-            className="flex-1 bg-transparent text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none"
+            placeholder="Search sections, projects, or command actions..."
+            className="flex-1 bg-transparent text-sm text-[#F4EFEA] placeholder:text-[#8E8B85] focus:outline-none"
           />
           {search && (
             <button
               type="button"
               onClick={() => setSearch('')}
               aria-label="Clear search text"
-              className="text-zinc-500 hover:text-zinc-300 p-1.5 rounded cursor-pointer min-w-[32px] min-h-[32px] flex items-center justify-center"
+              className="text-[#8E8B85] hover:text-[#F4EFEA] p-1.5 rounded cursor-pointer min-w-[32px] min-h-[32px] flex items-center justify-center"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           )}
-          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono-tabular bg-white/[0.08] text-zinc-400 border border-white/[0.1] rounded">
+          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono-tabular bg-[#141721] text-[#8E8B85] border border-[#262A36] rounded">
             ESC
           </kbd>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close command search"
-            className="text-zinc-400 hover:text-white p-1.5 rounded-lg hover:bg-white/[0.08] transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center sm:hidden"
+            className="text-[#8E8B85] hover:text-white p-1.5 rounded-lg hover:bg-white/[0.08] transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center sm:hidden"
           >
             <X className="w-4 h-4" />
           </button>
@@ -228,22 +232,22 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             className={`px-4 py-2 text-xs font-mono-tabular flex items-center gap-2 border-b transition-all ${
               copyFeedback.type === 'success'
                 ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
-                : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+                : 'bg-[#FF4D26]/15 border-[#FF4D26]/30 text-[#FF4D26]'
             }`}
           >
             {copyFeedback.type === 'success' ? (
               <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" aria-hidden="true" />
             ) : (
-              <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0" aria-hidden="true" />
+              <AlertCircle className="w-3.5 h-3.5 text-[#FF4D26] shrink-0" aria-hidden="true" />
             )}
             <span>{copyFeedback.message}</span>
           </div>
         )}
 
         {/* Command Items List */}
-        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-white/[0.04]">
+        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-[#262A36]/40">
           {filteredCommands.length === 0 ? (
-            <div className="py-8 text-center text-xs text-zinc-500">
+            <div className="py-8 text-center text-xs font-mono-tabular text-[#8E8B85]">
               No matching commands or destinations found.
             </div>
           ) : (
@@ -257,8 +261,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   onMouseEnter={() => setSelectedIndex(idx)}
                   className={`w-full text-left px-3.5 py-2.5 rounded-xl transition-colors flex items-center justify-between gap-3 cursor-pointer min-h-[44px] ${
                     isSelected
-                      ? 'bg-[#2563EB] text-white'
-                      : 'text-zinc-300 hover:bg-white/[0.04]'
+                      ? 'bg-[#FF4D26] text-white shadow-xs'
+                      : 'text-[#D6CFC7] hover:bg-[#0E1017]'
                   }`}
                 >
                   <div className="min-w-0">
@@ -266,7 +270,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                       <span className="text-xs font-semibold truncate">{cmd.label}</span>
                       <span
                         className={`text-[10px] font-mono-tabular px-1.5 py-0.2 rounded ${
-                          isSelected ? 'bg-white/20 text-white' : 'bg-white/[0.05] text-zinc-400'
+                          isSelected
+                            ? 'bg-white/20 text-white'
+                            : 'bg-[#141721] text-[#8E8B85] border border-[#262A36]'
                         }`}
                       >
                         {cmd.category}
@@ -274,13 +280,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     </div>
                     <p
                       className={`text-[11px] truncate mt-0.5 ${
-                        isSelected ? 'text-blue-100' : 'text-zinc-500'
+                        isSelected ? 'text-white/90' : 'text-[#8E8B85]'
                       }`}
                     >
                       {cmd.detail}
                     </p>
                   </div>
-                  {isSelected && <CornerDownLeft className="w-3.5 h-3.5 shrink-0 opacity-80" />}
+                  {isSelected && <CornerDownLeft className="w-3.5 h-3.5 shrink-0 opacity-90" />}
                 </button>
               );
             })
@@ -288,12 +294,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         </div>
 
         {/* Footer shortcuts hint */}
-        <div className="px-4 py-2 border-t border-white/[0.06] bg-[#090a0f] flex items-center justify-between text-[11px] text-zinc-500 font-mono-tabular">
-          <span className="hidden sm:inline">Use ↑ ↓ to navigate</span>
-          <span className="hidden sm:inline">Press Enter to select</span>
+        <div className="px-4 py-2 border-t border-[#262A36] bg-[#0E1017] flex items-center justify-between text-[11px] text-[#8E8B85] font-mono-tabular">
+          <span className="hidden sm:inline">&uarr; &darr; to navigate</span>
+          <span className="hidden sm:inline">&crarr; to select</span>
           <span className="sm:hidden text-center w-full">Tap any destination to navigate</span>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { AnimatePresence } from 'motion/react';
 import { Navbar, SectionId, NAV_SECTIONS } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
@@ -7,6 +8,8 @@ import { SkillsSection } from './components/SkillsSection';
 import { JourneySection } from './components/JourneySection';
 import { ContactFooter } from './components/ContactFooter';
 import { CommandPalette } from './components/CommandPalette';
+import { ParticleTrailCanvas } from './components/ParticleTrailCanvas';
+import { SectionDivider } from './components/SectionDivider';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<SectionId>('home');
@@ -73,7 +76,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#08090d] text-zinc-100 flex flex-col selection:bg-[#2563EB] selection:text-white relative w-full overflow-x-clip">
+    <div className="min-h-screen bg-[#090A0E] text-[#F4EFEA] flex flex-col selection:bg-[#FF4D26] selection:text-white relative w-full overflow-x-clip font-sans antialiased">
+      {/* Global Pointer & Touch Reactive Particle Canvas */}
+      <ParticleTrailCanvas />
+
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
@@ -85,24 +91,33 @@ export default function App() {
           onNavigate={handleNavigate}
           onOpenProject={handleOpenProject}
         />
+        <SectionDivider variant="hero-about" />
         <AboutSection />
+        <SectionDivider variant="about-projects" />
         <ProjectsSection
           externalSelectedProject={selectedProjectId}
           onClearExternalProject={() => setSelectedProjectId(null)}
         />
+        <SectionDivider variant="projects-skills" />
         <SkillsSection />
+        <SectionDivider variant="skills-journey" />
         <JourneySection />
+        <SectionDivider variant="journey-contact" />
       </main>
 
       <ContactFooter onNavigate={handleNavigate} />
 
       {/* Global Command Palette (⌘K) */}
-      <CommandPalette
-        isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
-        onNavigate={handleNavigate}
-        onOpenProject={handleOpenProject}
-      />
+      <AnimatePresence>
+        {isCommandPaletteOpen && (
+          <CommandPalette
+            isOpen={isCommandPaletteOpen}
+            onClose={() => setIsCommandPaletteOpen(false)}
+            onNavigate={handleNavigate}
+            onOpenProject={handleOpenProject}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

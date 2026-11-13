@@ -25,19 +25,25 @@ test('filterSkillsByCategory filters accurately by category and search query', (
   assert.equal(swiftOnly[0].id, 'swift');
 });
 
-test('filterProjects includes MetroFlow and CampusPulse and filters by category', () => {
+test('filterProjects includes MetroFlow, SkillSync, and CampusPulse and filters by category', () => {
   const allProjects = filterProjects(PORTFOLIO_DATA.projects, 'All');
   assert.ok(allProjects.some((p) => p.title === 'MetroFlow'));
+  assert.ok(allProjects.some((p) => p.title === 'SkillSync'));
   assert.ok(allProjects.some((p) => p.title === 'CampusPulse'));
 
   const macosOnly = filterProjects(PORTFOLIO_DATA.projects, 'macOS / Native');
   assert.equal(macosOnly.length, 1);
   assert.equal(macosOnly[0].id, 'metroflow');
+
+  const webOnly = filterProjects(PORTFOLIO_DATA.projects, 'Full-Stack Web');
+  assert.equal(webOnly.length, 2);
+  assert.ok(webOnly.some((p) => p.id === 'skillsync'));
+  assert.ok(webOnly.some((p) => p.id === 'campuspulse'));
 });
 
 test('filterJourneyMilestones filters timeline entries by category', () => {
   const projects = filterJourneyMilestones(PORTFOLIO_DATA.journey, 'Projects');
-  assert.equal(projects.length, 2);
+  assert.equal(projects.length, 3);
   assert.ok(projects.every((j) => j.category === 'Projects'));
 });
 
@@ -57,8 +63,8 @@ test('validateContactInput enforces required fields and email format', () => {
   const valid = validateContactInput({
     name: 'Arjun Mehta',
     email: 'arjun@university.edu',
-    subject: 'Collaboration on MetroFlow',
-    message: 'Hi Divyansh, loved exploring the architecture of MetroFlow and CampusPulse!',
+    subject: 'Collaboration on MetroFlow and SkillSync',
+    message: 'Hi Divyansh, loved exploring the architecture of MetroFlow, SkillSync, and CampusPulse!',
   });
   assert.equal(valid.valid, true);
   assert.equal(Object.keys(valid.errors).length, 0);
@@ -82,6 +88,13 @@ test('projects have properly structured screenshots for desktop showcase', () =>
   assert.equal(metroflow.screenshots[1].title, 'Synchronized Lyrics');
   assert.equal(metroflow.screenshots[2].title, 'Settings / About');
 
+  // Verify SkillSync screenshots order and titles
+  const skillsync = PORTFOLIO_DATA.projects.find((p) => p.id === 'skillsync');
+  assert.ok(skillsync?.screenshots);
+  assert.equal(skillsync.screenshots[0].title, 'Dashboard');
+  assert.equal(skillsync.screenshots[1].title, 'Career Roadmap');
+  assert.equal(skillsync.screenshots[2].title, 'My Projects');
+
   // Verify CampusPulse screenshots order and titles
   const campuspulse = PORTFOLIO_DATA.projects.find((p) => p.id === 'campuspulse');
   assert.ok(campuspulse?.screenshots);
@@ -100,6 +113,9 @@ test('external URLs match the verified personal and project links', () => {
 
   const metroflow = PORTFOLIO_DATA.projects.find((p) => p.id === 'metroflow');
   assert.equal(metroflow?.githubUrl, 'https://github.com/divyanshh69/MetroFlow-MAC');
+
+  const skillsync = PORTFOLIO_DATA.projects.find((p) => p.id === 'skillsync');
+  assert.equal(skillsync?.githubUrl, 'https://github.com/divyanshh69/SkillSync');
 
   const campuspulse = PORTFOLIO_DATA.projects.find((p) => p.id === 'campuspulse');
   assert.equal(campuspulse?.githubUrl, 'https://github.com/divyanshh69/CampusPulse');
@@ -174,6 +190,34 @@ test('MetroFlow technical claims accurately represent Electron, React, libmpv an
   const swiftSkill = PORTFOLIO_DATA.skills.find((s) => s.id === 'swift');
   assert.ok(swiftSkill);
   assert.ok(!swiftSkill.usedIn.includes('MetroFlow'));
+});
+
+test('SkillSync technical claims accurately represent React, TypeScript, Node.js, Express, PostgreSQL 16, and Prisma ORM', () => {
+  const skillsync = PORTFOLIO_DATA.projects.find((p) => p.id === 'skillsync');
+  assert.ok(skillsync);
+  assert.ok(skillsync.technologies.includes('Prisma ORM'), 'SkillSync must include Prisma ORM');
+  assert.ok(skillsync.technologies.includes('PostgreSQL'), 'SkillSync must include PostgreSQL');
+  assert.ok(skillsync.technologies.includes('React'), 'SkillSync must include React');
+  assert.ok(skillsync.technologies.includes('Node.js'), 'SkillSync must include Node.js');
+  assert.ok(skillsync.fullOverview.includes('Prisma ORM'));
+  assert.ok(skillsync.fullOverview.includes('PostgreSQL 16'));
+
+  const prismaSkill = PORTFOLIO_DATA.skills.find((s) => s.id === 'prisma');
+  assert.ok(prismaSkill);
+  assert.equal(prismaSkill.category, 'Tools & Technologies');
+  assert.ok(prismaSkill.usedIn.includes('SkillSync'));
+
+  // Ensure readiness formula is accurately documented
+  const readinessSpec = skillsync.specifications?.find((s) => s.label === 'Readiness Formula');
+  assert.ok(readinessSpec, 'SkillSync must specify Readiness Formula');
+  assert.ok(readinessSpec.detail.includes('1.5x'));
+  assert.ok(readinessSpec.detail.includes('0.8x'));
+  assert.ok(readinessSpec.detail.includes('0.3x'));
+
+  // Verify that Prisma is not misclaimed to eliminate all SQL injection
+  for (const dec of skillsync.technicalDecisions || []) {
+    assert.ok(!dec.rationale.includes('without SQL injection risks'));
+  }
 });
 
 test('createMailtoDraft generates structured mailto url with formatted subject and body', () => {
@@ -276,23 +320,21 @@ test('journey and milestones have distinct entries and truthful descriptions', (
   assert.equal(new Set(titles).size, titles.length, 'Achievement titles should all be distinct');
 });
 
-test('both MetroFlow and CampusPulse have verified architecture layers, specs, decisions, and learnings', () => {
+test('all flagship projects have verified architecture layers, specs, decisions, and learnings', () => {
   const metroflow = PORTFOLIO_DATA.projects.find((p) => p.id === 'metroflow');
-  assert.ok(metroflow);
-  assert.ok(metroflow.architecture && metroflow.architecture.length >= 3);
-  assert.ok(metroflow.specifications && metroflow.specifications.length >= 6);
-  assert.ok(metroflow.technicalDecisions && metroflow.technicalDecisions.length >= 3);
-  assert.ok(metroflow.challengesAndLearnings && metroflow.challengesAndLearnings.length >= 3);
-
+  const skillsync = PORTFOLIO_DATA.projects.find((p) => p.id === 'skillsync');
   const campuspulse = PORTFOLIO_DATA.projects.find((p) => p.id === 'campuspulse');
-  assert.ok(campuspulse);
-  assert.ok(campuspulse.architecture && campuspulse.architecture.length >= 3);
-  assert.ok(campuspulse.specifications && campuspulse.specifications.length >= 6);
-  assert.ok(campuspulse.technicalDecisions && campuspulse.technicalDecisions.length >= 3);
-  assert.ok(campuspulse.challengesAndLearnings && campuspulse.challengesAndLearnings.length >= 3);
 
-  // Verify architecture layers contain component and responsibility
-  for (const project of [metroflow, campuspulse]) {
+  assert.ok(metroflow);
+  assert.ok(skillsync);
+  assert.ok(campuspulse);
+
+  for (const project of [metroflow, skillsync, campuspulse]) {
+    assert.ok(project.architecture && project.architecture.length >= 3, `${project.title} must have at least 3 architecture layers`);
+    assert.ok(project.specifications && project.specifications.length >= 6, `${project.title} must have at least 6 specifications`);
+    assert.ok(project.technicalDecisions && project.technicalDecisions.length >= 3, `${project.title} must have at least 3 technical decisions`);
+    assert.ok(project.challengesAndLearnings && project.challengesAndLearnings.length >= 3, `${project.title} must have at least 3 challenges and learnings`);
+
     for (const layer of project.architecture) {
       assert.ok(layer.layer.length > 0);
       assert.ok(layer.component.length > 0);

@@ -6,14 +6,19 @@
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-serif: 'Fraunces', Georgia, serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --bg-obsidian: #090A0E;
+    --bg-surface: #0E1017;
+    --text-primary: #F4EFEA;
+    --text-secondary: #9B968F;
+    --accent-vermilion: #FF4D26;
+    --accent-cobalt: #2563EB;
   }
 
   html {
     font-family: var(--font-sans);
-    background-color: #08090d;
-    color: #f4f4f5;
-    letter-spacing: 0.01em;
-    word-spacing: 0.02em;
+    background-color: var(--bg-obsidian);
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
     scroll-behavior: smooth;
   }
 
@@ -32,7 +37,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid #2563EB;
+    outline: 2px solid var(--accent-vermilion);
     outline-offset: 3px;
   }
 
@@ -45,13 +50,14 @@
   }
 }
 
-.font-display {
-  font-family: var(--font-sans);
-  letter-spacing: -0.025em;
-}
-
 .font-editorial {
   font-family: var(--font-serif);
+  font-optical-sizing: auto;
+}
+
+.font-display {
+  font-family: var(--font-sans);
+  letter-spacing: -0.035em;
 }
 
 .font-mono-tabular {
@@ -59,23 +65,23 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Custom Minimalist Scrollbar */
+/* Custom Minimalist Architectural Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #08090d;
+  background: #090A0E;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 4px;
+  background: #232530;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: #36394A;
 }
 
 /* Hide scrollbar for horizontal filter pill strips on mobile */
@@ -88,25 +94,49 @@
   scrollbar-width: none;
 }
 
-/* Restrained Surface Treatments */
-.liquid-glass {
-  background: rgba(12, 13, 20, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
+/* Architectural Surfaces & Hairline Borders */
+.arch-surface {
+  background-color: #0E1017;
+  border: 1px solid rgba(244, 239, 234, 0.08);
 }
 
-.liquid-glass-pill {
-  background: rgba(16, 17, 26, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.arch-surface-card {
+  background-color: #0C0E14;
+  border: 1px solid rgba(244, 239, 234, 0.08);
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Subtle Structural Grid Background */
-.tech-grid {
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 48px 48px;
+.arch-surface-card:hover {
+  border-color: rgba(244, 239, 234, 0.2);
+}
+
+/* Subtle Architectural Grid Pattern */
+.arch-grid-pattern {
+  background-image: linear-gradient(to right, rgba(244, 239, 234, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(244, 239, 234, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Hairline rule divider */
+.hairline-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 239, 234, 0.12) 20%, rgba(244, 239, 234, 0.12) 80%, transparent);
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
 }
