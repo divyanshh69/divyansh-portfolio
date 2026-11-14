@@ -358,6 +358,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                             >
                               <motion.div
                                 layoutId={prefersReduced || isMobile ? undefined : `project-screenshot-container-${project.id}`}
+                                transition={{ layout: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } }}
                                 className="w-full h-full max-h-[380px] rounded-xl overflow-hidden border border-[#262A36] group-hover:border-[#FF4D26]/40 transition-colors"
                               >
                                 <DisplacementImageTransition

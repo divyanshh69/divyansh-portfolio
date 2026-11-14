@@ -20,6 +20,7 @@ import { PORTFOLIO_DATA, ProjectItem } from '../data/portfolioData';
 import { DisplacementImageTransition } from './DisplacementImageTransition';
 import { Magnetic } from './Magnetic';
 import { ScreenshotAnnotationOverlay } from './ScreenshotAnnotationOverlay';
+import { easeEditorial } from '../utils/motionVariants';
 
 export type ProjectModalTab = 'overview' | 'architecture' | 'decisions' | 'learnings' | 'technical';
 
@@ -178,15 +179,35 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
     >
       <motion.div
         ref={modalRef}
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.96, y: 14 }}
-        transition={{ duration: 0.52, ease: [0.16, 1, 0.3, 1] }}
+        initial={
+          prefersReduced
+            ? { opacity: 0 }
+            : isMobile
+            ? { opacity: 0, y: 50 }
+            : { opacity: 0, y: 0 }
+        }
+        animate={{ opacity: 1, y: 0 }}
+        exit={
+          prefersReduced
+            ? { opacity: 0 }
+            : isMobile
+            ? { opacity: 0, y: 40 }
+            : { opacity: 0, y: 0 }
+        }
+        transition={{
+          duration: prefersReduced ? 0.15 : isMobile ? 0.38 : 0.45,
+          ease: [0.16, 1, 0.3, 1],
+        }}
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-5xl rounded-2xl bg-[#090A0E] border border-[#262A36] text-[#F4EFEA] shadow-2xl overflow-hidden my-2 sm:my-6 flex flex-col max-h-[94vh]"
       >
         {/* Header Bar */}
-        <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#262A36] bg-[#0E1017] shrink-0">
+        <motion.div
+          initial={prefersReduced ? false : { opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.32, delay: 0.08, ease: easeEditorial }}
+          className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#262A36] bg-[#0E1017] shrink-0"
+        >
           <div className="min-w-0 space-y-0.5">
             <div className="flex items-center gap-2 text-[11px] sm:text-xs text-[#8E8B85] font-mono-tabular">
               <span className="text-[#FF4D26] font-bold">PROJECT {project.index}</span>
@@ -211,12 +232,15 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               <X className="w-5 h-5" />
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Accessible Tab Switcher */}
-        <div
+        <motion.div
           role="tablist"
           aria-label={`${project.title} detail tabs`}
+          initial={prefersReduced ? false : { opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.32, delay: 0.12, ease: easeEditorial }}
           className="flex items-center gap-1.5 px-3 sm:px-6 py-2.5 border-b border-[#262A36] bg-[#090A0E] overflow-x-auto touch-pan-x no-scrollbar shrink-0"
         >
           {tabs.map((tab, idx) => {
@@ -254,7 +278,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
               </button>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Modal Scrollable Body */}
         <div
@@ -307,6 +331,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   {/* Uncropped Viewport */}
                   <motion.div
                     layoutId={prefersReduced || isMobile ? undefined : `project-screenshot-container-${project.id}`}
+                    transition={{ layout: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } }}
                     className={`relative bg-[#050608] flex items-center justify-center p-3 sm:p-5 transition-all duration-300 ${
                       isZoomed
                         ? 'min-h-[500px] max-h-[80vh]'
@@ -323,6 +348,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
 
                     {/* Interactive Architectural Blueprint Annotation Pins & Callouts */}
                     <ScreenshotAnnotationOverlay
+                      key={`${project.id}-${activeScreenshotIdx}`}
                       annotations={activeScreenshot.annotations}
                       projectName={project.title}
                     />

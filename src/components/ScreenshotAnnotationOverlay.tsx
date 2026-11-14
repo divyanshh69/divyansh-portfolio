@@ -64,8 +64,8 @@ export const ScreenshotAnnotationOverlay: React.FC<ScreenshotAnnotationOverlayPr
           aria-label={showAnnotations ? 'Hide screenshot feature annotations' : 'Show screenshot feature annotations'}
           className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-mono-tabular transition-all cursor-pointer backdrop-blur-md border ${
             showAnnotations
-              ? 'bg-[#090A0E]/85 text-[#F4EFEA] border-[#FF4D26]/40 shadow-lg'
-              : 'bg-[#090A0E]/70 text-[#8E8B85] border-[#262A36] hover:text-[#F4EFEA]'
+              ? 'bg-[#090A0E]/90 text-[#F4EFEA] border-[#FF4D26]/40 shadow-lg'
+              : 'bg-[#090A0E]/75 text-[#8E8B85] border-[#262A36] hover:text-[#F4EFEA]'
           }`}
           title="Toggle architectural feature annotations"
         >
@@ -89,21 +89,23 @@ export const ScreenshotAnnotationOverlay: React.FC<ScreenshotAnnotationOverlayPr
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             className="absolute inset-0"
           >
             {/* Desktop Full Architectural Leader Lines & Pins */}
             {!isMobile && (
               <>
-                {/* SVG Canvas for Dynamic Leader Lines */}
+                {/* SVG Canvas with normalized 0-100 coordinate space for W3C-compliant path drawing */}
                 <svg
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
                   className="absolute inset-0 w-full h-full pointer-events-none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <defs>
                     <linearGradient id="leader-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#FF4D26" stopOpacity="0.9" />
-                      <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.6" />
+                      <stop offset="0%" stopColor="#FF4D26" stopOpacity="0.95" />
+                      <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.75" />
                     </linearGradient>
                   </defs>
 
@@ -111,7 +113,7 @@ export const ScreenshotAnnotationOverlay: React.FC<ScreenshotAnnotationOverlayPr
                     const isSelected = ann.id === currentActiveAnnotation?.id;
                     const dir = ann.leaderDirection || 'bottom-right';
 
-                    // Compute vector leader elbow points in percentage space
+                    // Compute vector leader elbow points in normalized 0-100 viewBox space
                     const dx = dir.includes('right') ? 5 : -5;
                     const dy = dir.includes('bottom') ? 4 : -4;
                     const elbowX = ann.xPercent + dx;
@@ -121,24 +123,26 @@ export const ScreenshotAnnotationOverlay: React.FC<ScreenshotAnnotationOverlayPr
 
                     return (
                       <g key={`leader-${ann.id}`}>
-                        {/* Leader Line Path */}
+                        {/* Architectural Leader Line Path */}
                         <motion.path
-                          d={`M ${ann.xPercent}% ${ann.yPercent}% L ${elbowX}% ${elbowY}% L ${endX}% ${endY}%`}
+                          d={`M ${ann.xPercent} ${ann.yPercent} L ${elbowX} ${elbowY} L ${endX} ${endY}`}
                           fill="none"
-                          stroke={isSelected ? 'url(#leader-grad)' : 'rgba(142, 139, 133, 0.4)'}
-                          strokeWidth={isSelected ? 1.6 : 1}
+                          stroke={isSelected ? 'url(#leader-grad)' : 'rgba(142, 139, 133, 0.45)'}
+                          strokeWidth={isSelected ? 1.8 : 1.1}
                           strokeDasharray={isSelected ? 'none' : '3 3'}
+                          vectorEffect="non-scaling-stroke"
                           initial={prefersReduced ? false : { pathLength: 0, opacity: 0 }}
                           animate={{ pathLength: 1, opacity: 1 }}
-                          transition={{ duration: 0.7, delay: ann.number * 0.12, ease: easeEditorial }}
+                          transition={{ duration: 0.65, delay: ann.number * 0.12, ease: easeEditorial }}
                         />
 
                         {/* Pin Anchor Dot */}
                         <circle
-                          cx={`${ann.xPercent}%`}
-                          cy={`${ann.yPercent}%`}
-                          r={isSelected ? 4 : 2.5}
+                          cx={ann.xPercent}
+                          cy={ann.yPercent}
+                          r={isSelected ? 1.6 : 1.1}
                           fill={isSelected ? '#FF4D26' : '#8E8B85'}
+                          vectorEffect="non-scaling-stroke"
                           className="transition-all"
                         />
                       </g>
@@ -149,17 +153,11 @@ export const ScreenshotAnnotationOverlay: React.FC<ScreenshotAnnotationOverlayPr
                 {/* Floating Interactive Pins & Cards */}
                 {annotations.map((ann) => {
                   const isSelected = ann.id === currentActiveAnnotation?.id;
-                  const dir = ann.leaderDirection || 'bottom-right';
+                  const isRightSide = ann.xPercent > 55;
+                  const isBottomSide = ann.yPercent > 55;
 
-                  // Dynamic offset calculation for callout card placement
-                  const cardOffsetClass =
-                    dir === 'bottom-right'
-                      ? 'top-8 left-8'
-                      : dir === 'bottom-left'
-                      ? 'top-8 right-8'
-                      : dir === 'top-right'
-                      ? 'bottom-8 left-8'
-                      : 'bottom-8 right-8';
+                  // Intelligent bounds clamping prevents overflow off the screenshot viewport
+                  const cardOffsetClass = `${isBottomSide ? 'bottom-8' : 'top-8'} ${isRightSide ? 'right-4' : 'left-4'}`;
 
                   return (
                     <div
@@ -176,13 +174,14 @@ export const ScreenshotAnnotationOverlay: React.FC<ScreenshotAnnotationOverlayPr
                         onClick={() => setActivePinId(ann.id)}
                         onMouseEnter={() => setActivePinId(ann.id)}
                         aria-label={`Feature 0${ann.number}: ${ann.label}`}
+                        aria-expanded={isSelected}
                         className={`relative group flex items-center justify-center w-7 h-7 rounded-full text-[11px] font-mono-tabular font-bold cursor-pointer transition-all ${
                           isSelected
-                            ? 'bg-[#FF4D26] text-white ring-4 ring-[#FF4D26]/30 shadow-[0_0_16px_rgba(255,77,38,0.7)] scale-110'
-                            : 'bg-[#090A0E] text-[#F4EFEA] border border-[#38BDF8]/60 hover:border-[#FF4D26] hover:scale-105'
+                            ? 'bg-[#FF4D26] text-white ring-4 ring-[#FF4D26]/30 shadow-[0_0_16px_rgba(255,77,38,0.7)] scale-110 z-30'
+                            : 'bg-[#090A0E] text-[#F4EFEA] border border-[#38BDF8]/60 hover:border-[#FF4D26] hover:scale-105 z-20'
                         }`}
                       >
-                        {isSelected && (
+                        {isSelected && !prefersReduced && (
                           <span className="absolute -inset-1 rounded-full bg-[#FF4D26]/20 animate-ping pointer-events-none" />
                         )}
                         <span>0{ann.number}</span>
@@ -192,17 +191,17 @@ export const ScreenshotAnnotationOverlay: React.FC<ScreenshotAnnotationOverlayPr
                       <AnimatePresence>
                         {isSelected && (
                           <motion.div
-                            initial={prefersReduced ? false : { opacity: 0, scale: 0.94, y: 4 }}
+                            initial={prefersReduced ? false : { opacity: 0, scale: 0.95, y: isBottomSide ? -4 : 4 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.96 }}
-                            transition={{ duration: 0.35, ease: easeEditorial }}
+                            transition={{ duration: 0.3, ease: easeEditorial }}
                             className={`absolute ${cardOffsetClass} w-64 p-3.5 rounded-xl bg-[#090A0E]/95 border border-[#262A36] text-[#F4EFEA] shadow-2xl backdrop-blur-md pointer-events-auto z-40 space-y-1.5`}
                           >
                             <div className="flex items-center justify-between text-[10px] font-mono-tabular border-b border-[#262A36] pb-1.5">
                               <span className="text-[#FF4D26] font-bold">
                                 FEATURE 0{ann.number} //
                               </span>
-                              <span className="text-[#8E8B85] uppercase tracking-wider text-[9px]">
+                              <span className="text-[#8E8B85] uppercase tracking-wider text-[9px] truncate max-w-[120px]">
                                 {projectName}
                               </span>
                             </div>
@@ -239,6 +238,7 @@ export const ScreenshotAnnotationOverlay: React.FC<ScreenshotAnnotationOverlayPr
                         top: `${ann.yPercent}%`,
                       }}
                       aria-label={`Select feature 0${ann.number}: ${ann.label}`}
+                      aria-pressed={isSelected}
                       className={`absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center w-8 h-8 rounded-full text-xs font-mono-tabular font-bold shadow-lg transition-transform ${
                         isSelected
                           ? 'bg-[#FF4D26] text-white ring-4 ring-[#FF4D26]/40 scale-110 z-30'
@@ -254,8 +254,9 @@ export const ScreenshotAnnotationOverlay: React.FC<ScreenshotAnnotationOverlayPr
                 {currentActiveAnnotation && (
                   <motion.div
                     key={`mob-card-${currentActiveAnnotation.id}`}
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={prefersReduced ? false : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.25 }}
                     className="absolute bottom-2 inset-x-2 p-3 rounded-xl bg-[#090A0E]/95 border border-[#FF4D26]/40 shadow-2xl backdrop-blur-md pointer-events-auto z-40 space-y-1"
                   >
