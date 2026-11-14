@@ -9,6 +9,7 @@ import {
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { SectionId } from './Navbar';
 import { InteractiveResonatorCanvas } from './InteractiveResonatorCanvas';
+import { HeroBlueprintXRay } from './HeroBlueprintXRay';
 import { Magnetic } from './Magnetic';
 import {
   firstNameContainerVariants,
@@ -93,6 +94,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 arch-grid-pattern opacity-40 [mask-image:radial-gradient(ellipse_at_top,white_15%,transparent_80%)]"
       />
+
+      {/* Blueprint X-Ray Engineering Layer (Desktop cursor-masked inspection loupe) */}
+      <HeroBlueprintXRay containerRef={heroRef} />
 
       <div className="relative max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Top Architectural Metadata Strip */}

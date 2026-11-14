@@ -19,6 +19,7 @@ import {
 import { PORTFOLIO_DATA, ProjectItem } from '../data/portfolioData';
 import { DisplacementImageTransition } from './DisplacementImageTransition';
 import { Magnetic } from './Magnetic';
+import { ScreenshotAnnotationOverlay } from './ScreenshotAnnotationOverlay';
 
 export type ProjectModalTab = 'overview' | 'architecture' | 'decisions' | 'learnings' | 'technical';
 
@@ -39,10 +40,31 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
   const [activeTab, setActiveTab] = useState<ProjectModalTab>(normalizedInitialTab);
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeScreenshotIdx, setActiveScreenshotIdx] = useState(initialScreenshotIdx);
+  const [prefersReduced, setPrefersReduced] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const modalRef = useRef<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReduced(media.matches);
+    const mediaListener = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    media.addEventListener('change', mediaListener);
+
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024 || 'ontouchstart' in window);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      media.removeEventListener('change', mediaListener);
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   useEffect(() => {
     setActiveScreenshotIdx(initialScreenshotIdx);
@@ -283,7 +305,8 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   </div>
 
                   {/* Uncropped Viewport */}
-                  <div
+                  <motion.div
+                    layoutId={prefersReduced || isMobile ? undefined : `project-screenshot-container-${project.id}`}
                     className={`relative bg-[#050608] flex items-center justify-center p-3 sm:p-5 transition-all duration-300 ${
                       isZoomed
                         ? 'min-h-[500px] max-h-[80vh]'
@@ -296,6 +319,12 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                       src={activeScreenshot.image}
                       alt={`${project.title} — ${activeScreenshot.title}`}
                       className="w-full h-full"
+                    />
+
+                    {/* Interactive Architectural Blueprint Annotation Pins & Callouts */}
+                    <ScreenshotAnnotationOverlay
+                      annotations={activeScreenshot.annotations}
+                      projectName={project.title}
                     />
 
                     {/* Prev / Next Chevrons */}
@@ -319,7 +348,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                         </button>
                       </>
                     )}
-                  </div>
+                  </motion.div>
 
                   {/* Caption Drawer (Outside the image) */}
                   <div className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#0E1017] border-t border-[#262A36] flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 text-xs">

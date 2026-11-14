@@ -69,6 +69,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const [modalScreenshotIdx, setModalScreenshotIdx] = useState<number>(0);
   const [mobileActiveProjectIdx, setMobileActiveProjectIdx] = useState<number>(0);
   const [prefersReduced, setPrefersReduced] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const desktopContainerRef = useRef<HTMLDivElement | null>(null);
   const mobileCarouselRef = useRef<HTMLDivElement | null>(null);
@@ -82,7 +83,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       setPrefersReduced(media.matches);
       const listener = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
       media.addEventListener('change', listener);
-      return () => media.removeEventListener('change', listener);
+
+      const checkMobile = () => {
+        setIsMobile(window.innerWidth < 1024 || 'ontouchstart' in window);
+      };
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+
+      return () => {
+        media.removeEventListener('change', listener);
+        window.removeEventListener('resize', checkMobile);
+      };
     }
   }, []);
 
@@ -345,13 +356,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                               className="relative flex-1 w-full bg-[#050608] flex items-center justify-center p-4 cursor-pointer group focus-visible:outline-2 focus-visible:outline-[#FF4D26] overflow-hidden"
                               title="Click to view full case study & technical specifications"
                             >
-                              <div className="w-full h-full max-h-[380px] rounded-xl overflow-hidden border border-[#262A36] group-hover:border-[#FF4D26]/40 transition-colors">
+                              <motion.div
+                                layoutId={prefersReduced || isMobile ? undefined : `project-screenshot-container-${project.id}`}
+                                className="w-full h-full max-h-[380px] rounded-xl overflow-hidden border border-[#262A36] group-hover:border-[#FF4D26]/40 transition-colors"
+                              >
                                 <DisplacementImageTransition
                                   src={currentScreenshot.image}
                                   alt={`${project.title} — ${currentScreenshot.title}`}
                                   imgClassName="max-h-[380px]"
                                 />
-                              </div>
+                              </motion.div>
                             </div>
 
                             {/* Technical Caption Drawer */}

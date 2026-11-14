@@ -51,10 +51,21 @@ export interface ProjectChallengeLearning {
   learning: string;
 }
 
+export interface ScreenshotAnnotation {
+  id: string;
+  number: number;
+  label: string;
+  description: string;
+  xPercent: number;
+  yPercent: number;
+  leaderDirection?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+}
+
 export interface ProjectScreenshot {
   title: string;
   image: string;
   caption: string;
+  annotations?: ScreenshotAnnotation[];
 }
 
 export interface ProjectItem {
@@ -292,16 +303,94 @@ export const PORTFOLIO_DATA = {
           title: 'Home / Music Discovery',
           image: metroflowHomeImg,
           caption: 'Audio discovery dashboard with personalized recommendations, featured spotlights, continue listening queue, and docked mini-player.',
+          annotations: [
+            {
+              id: 'mf-ann-1',
+              number: 1,
+              label: 'Stream Discovery Queue',
+              description: 'Personalized recommendations carousel and continuous listening cache.',
+              xPercent: 32,
+              yPercent: 24,
+              leaderDirection: 'bottom-right',
+            },
+            {
+              id: 'mf-ann-2',
+              number: 2,
+              label: 'Dual Audio Core Status',
+              description: 'libmpv native CoreAudio buffer telemetry and streaming bridge indicators.',
+              xPercent: 74,
+              yPercent: 22,
+              leaderDirection: 'bottom-left',
+            },
+            {
+              id: 'mf-ann-3',
+              number: 3,
+              label: 'Dockable Mini-Player Mode',
+              description: 'Lightweight compact window control for focused programming sessions.',
+              xPercent: 76,
+              yPercent: 74,
+              leaderDirection: 'top-left',
+            },
+          ],
         },
         {
           title: 'Synchronized Lyrics',
           image: metroflowLyricsImg,
           caption: 'Now-playing view with high-resolution album artwork and interactive time-synced lyrics with click-to-seek timestamp navigation.',
+          annotations: [
+            {
+              id: 'mf-ann-4',
+              number: 1,
+              label: 'Interactive Time-Synced Lyrics',
+              description: 'Click-to-seek timestamp navigation aligned to live playback clock.',
+              xPercent: 62,
+              yPercent: 36,
+              leaderDirection: 'bottom-left',
+            },
+            {
+              id: 'mf-ann-5',
+              number: 2,
+              label: 'High-Res Artwork Canvas',
+              description: 'Cached album artwork with dynamic background tone harmonization.',
+              xPercent: 26,
+              yPercent: 44,
+              leaderDirection: 'bottom-right',
+            },
+            {
+              id: 'mf-ann-6',
+              number: 3,
+              label: 'Buffer Transport Scrubber',
+              description: 'Direct audio seek controls with millisecond precision.',
+              xPercent: 50,
+              yPercent: 88,
+              leaderDirection: 'top-right',
+            },
+          ],
         },
         {
           title: 'Settings / About',
           image: metroflowSettingsImg,
           caption: 'Preferences panel with configurable macOS keyboard shortcuts, Apple Silicon ARM64 target, and dual audio engine configuration.',
+          annotations: [
+            {
+              id: 'mf-ann-7',
+              number: 1,
+              label: 'macOS Global Shortcuts',
+              description: 'System-wide hotkey bindings for background playback control.',
+              xPercent: 48,
+              yPercent: 35,
+              leaderDirection: 'bottom-right',
+            },
+            {
+              id: 'mf-ann-8',
+              number: 2,
+              label: 'Apple Silicon ARM64 Target',
+              description: 'Architecture preferences tailored for Apple Silicon runtime.',
+              xPercent: 68,
+              yPercent: 60,
+              leaderDirection: 'top-left',
+            },
+          ],
         },
       ],
       technologies: ['Electron', 'React', 'TypeScript', 'Python Bridge', 'libmpv CoreAudio', 'Tailwind CSS'],
@@ -439,18 +528,105 @@ export const PORTFOLIO_DATA = {
           image: skillsyncHomeImg,
           caption:
             'Student home overview displaying active career goals, recommended next-step actions (e.g. Component Testing with Vitest), priority checklists, and progress metrics (45% readiness, 4 of 23 skills, 3 linked portfolio projects).',
+          annotations: [
+            {
+              id: 'ss-ann-1',
+              number: 1,
+              label: 'Next Step Recommendation',
+              description: 'Personalized action item: Component Testing with Vitest and checklist tracking.',
+              xPercent: 48,
+              yPercent: 32,
+              leaderDirection: 'bottom-right',
+            },
+            {
+              id: 'ss-ann-2',
+              number: 2,
+              label: 'Readiness Calculator (45%)',
+              description: 'Weighted formula weighting project-evidenced skills (1.5x) over passive theory.',
+              xPercent: 36,
+              yPercent: 84,
+              leaderDirection: 'top-right',
+            },
+            {
+              id: 'ss-ann-3',
+              number: 3,
+              label: 'Active Phase Telemetry',
+              description: 'Current focus: Phase 2 Reactive Web & State Architecture milestones.',
+              xPercent: 74,
+              yPercent: 90,
+              leaderDirection: 'top-left',
+            },
+          ],
         },
         {
           title: 'Career Roadmap',
           image: skillsyncRoadmapImg,
           caption:
             'Five-phase milestone roadmap view detailing curriculum progress from Core Web Foundations through Reactive Web Architecture, Backend APIs, Scalability, and Cloud Delivery, with real-time phase completion status.',
+          annotations: [
+            {
+              id: 'ss-ann-4',
+              number: 1,
+              label: 'Phase 1: Web Foundations',
+              description: 'Completed milestones: DOM manipulation, semantic HTML, and modern JS.',
+              xPercent: 50,
+              yPercent: 26,
+              leaderDirection: 'bottom-right',
+            },
+            {
+              id: 'ss-ann-5',
+              number: 2,
+              label: 'Phase 2: Reactive Web',
+              description: 'Current study focus: React 18 component patterns and client state management.',
+              xPercent: 50,
+              yPercent: 45,
+              leaderDirection: 'bottom-left',
+            },
+            {
+              id: 'ss-ann-6',
+              number: 3,
+              label: 'Phases 3-5: Relational & Cloud',
+              description: 'Upcoming progression: Express REST APIs, PostgreSQL schemas, and CI/CD pipelines.',
+              xPercent: 50,
+              yPercent: 80,
+              leaderDirection: 'top-right',
+            },
+          ],
         },
         {
           title: 'My Projects',
           image: skillsyncProjectsImg,
           caption:
             'Project evidence directory (TaskForge CLI, ShopNest Storefront, DevPulse Analytics) linking concrete codebase deliverables directly to demonstrated skill proficiencies and GitHub repositories.',
+          annotations: [
+            {
+              id: 'ss-ann-7',
+              number: 1,
+              label: 'TaskForge CLI',
+              description: 'Node.js terminal tool demonstrating pre-commit hooks, TypeScript, and CLI UX.',
+              xPercent: 32,
+              yPercent: 38,
+              leaderDirection: 'bottom-right',
+            },
+            {
+              id: 'ss-ann-8',
+              number: 2,
+              label: 'ShopNest Storefront',
+              description: 'Headless e-commerce client demonstrating Zustand state sync across tabs.',
+              xPercent: 68,
+              yPercent: 38,
+              leaderDirection: 'bottom-left',
+            },
+            {
+              id: 'ss-ann-9',
+              number: 3,
+              label: 'DevPulse Analytics',
+              description: 'Productivity analytics dashboard evidencing React 18 & custom SVG visual charts.',
+              xPercent: 32,
+              yPercent: 78,
+              leaderDirection: 'top-right',
+            },
+          ],
         },
       ],
       technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL', 'Prisma ORM'],
@@ -593,16 +769,85 @@ export const PORTFOLIO_DATA = {
           title: 'Dashboard',
           image: campuspulseDashboardImg,
           caption: 'Executive club operations overview showing active member headcount, upcoming event schedules, average attendance rates, and live operational activity feeds.',
+          annotations: [
+            {
+              id: 'cp-ann-1',
+              number: 1,
+              label: 'Member Operations KPI',
+              description: 'Active society roster metrics and aggregate attendance percentages.',
+              xPercent: 30,
+              yPercent: 22,
+              leaderDirection: 'bottom-right',
+            },
+            {
+              id: 'cp-ann-2',
+              number: 2,
+              label: 'Conflict-Aware Schedule',
+              description: 'Calendar engine detecting overlapping auditorium and lab reservations.',
+              xPercent: 68,
+              yPercent: 48,
+              leaderDirection: 'top-left',
+            },
+            {
+              id: 'cp-ann-3',
+              number: 3,
+              label: 'Live Activity Feeds',
+              description: 'Real-time updates on student RSVP registrations and venue booking requests.',
+              xPercent: 48,
+              yPercent: 82,
+              leaderDirection: 'top-right',
+            },
+          ],
         },
         {
           title: 'Member Management',
           image: campuspulseMemberManagementImg,
           caption: 'PostgreSQL-backed member directory with department filters, attendance percentages, credit tracking, and an interactive member profile editing modal.',
+          annotations: [
+            {
+              id: 'cp-ann-4',
+              number: 1,
+              label: 'Relational Member Directory',
+              description: 'PostgreSQL-backed student roster with department filtering and attendance rates.',
+              xPercent: 48,
+              yPercent: 40,
+              leaderDirection: 'bottom-right',
+            },
+            {
+              id: 'cp-ann-5',
+              number: 2,
+              label: 'Role-Based Access',
+              description: 'Separated permissions for club presidents, faculty advisors, and student members.',
+              xPercent: 74,
+              yPercent: 32,
+              leaderDirection: 'bottom-left',
+            },
+          ],
         },
         {
           title: 'Platform Settings',
           image: campuspulsePlatformSettingsImg,
           caption: 'Administrative settings panel for configuring club parameters, term dates, minimum attendance thresholds, and inspecting JWT authentication privileges.',
+          annotations: [
+            {
+              id: 'cp-ann-6',
+              number: 1,
+              label: 'Society Governance',
+              description: 'Administrative parameters for academic terms and minimum attendance thresholds.',
+              xPercent: 44,
+              yPercent: 38,
+              leaderDirection: 'bottom-right',
+            },
+            {
+              id: 'cp-ann-7',
+              number: 2,
+              label: 'JWT Privilege Verification',
+              description: 'Stateless authentication middleware protecting administrative endpoints.',
+              xPercent: 72,
+              yPercent: 62,
+              leaderDirection: 'top-left',
+            },
+          ],
         },
       ],
       technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL'],
