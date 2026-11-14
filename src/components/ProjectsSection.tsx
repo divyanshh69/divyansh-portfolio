@@ -28,7 +28,7 @@ const getProjectAccentTheme = (id: string) => {
       badgeBg: 'bg-[#FF4D26]/10 text-[#FF4D26] border-[#FF4D26]/30',
       activeTabBg: 'bg-[#FF4D26] text-white',
       borderHover: 'hover:border-[#FF4D26]/40',
-      tag: '01 // MAC-NATIVE DESKTOP',
+      tag: '01 // MACOS DESKTOP APPLICATION',
     };
   }
   if (id === 'skillsync') {

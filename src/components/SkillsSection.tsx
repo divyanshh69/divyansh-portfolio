@@ -92,7 +92,7 @@ export const SkillsSection: React.FC = () => {
         style={{ x: watermarkX }}
         className="pointer-events-none absolute top-8 left-0 select-none whitespace-nowrap font-display font-black text-[12vw] text-white/[0.022] tracking-tighter will-change-transform z-0"
       >
-        <span>TOPOLOGICAL CAPABILITIES &bull; DISTRIBUTED &bull; NATIVE MACOS &bull; POSTGRESQL</span>
+        <span>TOPOLOGICAL CAPABILITIES &bull; DISTRIBUTED &bull; MACOS DESKTOP &bull; POSTGRESQL</span>
       </motion.div>
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Section Header with Kinetic Typography */}
@@ -112,7 +112,7 @@ export const SkillsSection: React.FC = () => {
             transition={{ duration: 0.85, delay: 0.25, ease: easeEditorial }}
             className="text-sm sm:text-base text-[#D6CFC7] leading-relaxed max-w-md font-sans"
           >
-            Directly applied across native macOS desktop runtimes, full-stack relational platforms, and university computer science coursework.
+            Directly applied across macOS desktop software, full-stack relational platforms, and university computer science coursework.
           </motion.p>
         </div>
 

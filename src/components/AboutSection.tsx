@@ -8,6 +8,7 @@ import {
   Code2,
   Terminal,
   Cpu,
+  Users,
 } from 'lucide-react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { easeEditorial } from '../utils/motionVariants';
@@ -207,6 +208,24 @@ export const AboutSection: React.FC = () => {
                     libmpv CoreAudio, IPC bridges, and window management in MetroFlow.
                   </p>
                 </div>
+              </div>
+
+              {/* Collegiate Leadership & Coordination */}
+              <div className="p-3.5 sm:p-4 rounded-xl bg-[#090A0E] border border-[#262A36] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Users className="w-3.5 h-3.5 text-[#38BDF8]" />
+                    <span className="text-xs font-semibold text-[#F4EFEA]">
+                      Co-head, Promotional Team &bull; Yog &amp; Spiritual Club
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-[#A8A39D] leading-relaxed">
+                    Medi-Caps University collegiate leadership: coordinating student outreach, multi-channel announcements, and on-ground volunteer logistics for university campus wellness workshops.
+                  </p>
+                </div>
+                <span className="font-mono-tabular text-[10px] text-[#8E8B85] px-2 py-0.5 rounded bg-[#141721] border border-[#262A36] shrink-0 self-start sm:self-center">
+                  Aug 2025 &mdash; Present
+                </span>
               </div>
             </div>
 

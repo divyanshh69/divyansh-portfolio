@@ -138,15 +138,15 @@ export interface GrowthAreaItem {
 export const PORTFOLIO_DATA = {
   personal: {
     name: 'Divyansh Nayak',
-    title: 'Computer Science Student & Developer',
-    headline: 'Building native macOS desktop tools and full-stack web platforms.',
+    title: 'Computer Science Student & Software Developer',
+    headline: '2nd-year B.Tech CSE student at Medi-Caps University, Indore. Building macOS desktop software and full-stack web platforms.',
     email: 'divyanshnayak713@gmail.com',
     github: 'https://github.com/divyanshh69',
     linkedin: 'https://www.linkedin.com/in/divyansh-nayak-703390370/',
   },
 
   about: {
-    lead: 'I am a 2nd-year Computer Science student at Medi-Caps University. I learn by building software—translating concepts from coursework in data structures, systems, and relational databases into working applications.',
+    lead: 'I am a 2nd-year Computer Science student at Medi-Caps University in Indore, India. I learn by engineering software from scratch—translating coursework in data structures, systems, and relational databases into working desktop tools and web platforms, alongside campus student leadership.',
   },
 
   skills: [
@@ -186,7 +186,7 @@ export const PORTFOLIO_DATA = {
       id: 'swift',
       name: 'Swift & macOS UI Explorations',
       category: 'Programming',
-      context: 'Studying Swift language fundamentals and SwiftUI for native macOS interface prototyping.',
+      context: 'Studying Swift language fundamentals and SwiftUI for macOS interface prototyping.',
       experienceNote: 'Exploring Swift syntax, SwiftUI view hierarchies, and macOS UI patterns.',
       usedIn: ['macOS UI Prototyping', 'Independent Study'],
     },
@@ -226,7 +226,7 @@ export const PORTFOLIO_DATA = {
       id: 'electron',
       name: 'Electron & Desktop Packaging',
       category: 'Tools & Technologies',
-      context: 'Building desktop applications on macOS with custom frameless windowing, IPC channels, and native packaging.',
+      context: 'Building desktop applications on macOS with custom frameless windowing, IPC channels, and local runtime packaging.',
       experienceNote: 'Electron main/preload integration, window state management, and macOS packaging (.dmg/.app).',
       usedIn: ['MetroFlow'],
     },
@@ -292,11 +292,11 @@ export const PORTFOLIO_DATA = {
       shortDescription:
         'A macOS desktop music application built with Electron, React, and a local Python bridge, pairing streaming discovery with synchronized lyrics, libmpv CoreAudio playback, and a dockable mini-player.',
       fullOverview:
-        'MetroFlow is a standalone desktop music application for macOS optimized for Apple Silicon ARM64. Built with an Electron desktop shell, a React/TypeScript interface, and a local Python bridge on port 8765, it pairs streaming playback with a native libmpv CoreAudio engine, interactive synchronized lyrics, and a dockable mini-player.',
+        'MetroFlow is a standalone desktop music application for macOS optimized for Apple Silicon ARM64. Built with an Electron desktop shell, a React/TypeScript interface, and a local Python bridge on port 8765, it pairs streaming playback with a libmpv CoreAudio engine, interactive synchronized lyrics, and a dockable mini-player.',
       problemStatement:
         'Many modern desktop music players are cluttered with social feeds and lack seamless support for interactive synchronized lyrics, lightweight mini-player docking, and low-latency audio playback.',
       engineeringSolution:
-        'Engineered a desktop macOS application combining an Electron native shell with a responsive React frontend, a dual audio playback pipeline (streaming player and native Apple Silicon libmpv CoreAudio output), interactive synchronized lyrics with click-to-seek, and a local Python backend bridge on port 8765 for fast catalogue search.',
+        'Engineered a macOS desktop application combining an Electron shell with a responsive React frontend, a dual audio playback pipeline (streaming player and Apple Silicon libmpv CoreAudio output), interactive synchronized lyrics with click-to-seek, and a local Python backend bridge on port 8765 for fast catalogue search.',
       image: metroflowHomeImg,
       screenshots: [
         {
@@ -317,7 +317,7 @@ export const PORTFOLIO_DATA = {
               id: 'mf-ann-2',
               number: 2,
               label: 'Dual Audio Core Status',
-              description: 'libmpv native CoreAudio buffer telemetry and streaming bridge indicators.',
+              description: 'libmpv CoreAudio buffer telemetry and streaming bridge indicators.',
               xPercent: 74,
               yPercent: 22,
               leaderDirection: 'bottom-left',
@@ -395,7 +395,7 @@ export const PORTFOLIO_DATA = {
       ],
       technologies: ['Electron', 'React', 'TypeScript', 'Python Bridge', 'libmpv CoreAudio', 'Tailwind CSS'],
       highlights: [
-        'Built for macOS Apple Silicon with dual audio pipeline (streaming player & native libmpv CoreAudio)',
+        'Built for macOS Apple Silicon with dual audio pipeline (streaming player & libmpv CoreAudio)',
         'Interactive synchronized lyrics with time-tagging and one-click timestamp seeking',
         'Local Python backend service on port 8765 for fast catalogue search, metadata, and lyrics',
         'Configurable macOS keyboard shortcuts and lightweight dockable mini-player for focused work',
@@ -409,7 +409,7 @@ export const PORTFOLIO_DATA = {
         {
           layer: 'Audio Engine',
           component: 'Dual Engine (Streaming & libmpv CoreAudio)',
-          responsibility: 'Coordinates streaming playback alongside native Apple Silicon ARM64 libmpv CoreAudio output and Web Audio Studio Synth.',
+          responsibility: 'Coordinates streaming playback alongside Apple Silicon ARM64 libmpv CoreAudio output and Web Audio Studio Synth.',
         },
         {
           layer: 'Metadata & Services',
@@ -451,10 +451,10 @@ export const PORTFOLIO_DATA = {
       ],
       technicalDecisions: [
         {
-          title: 'Electron Desktop Shell with Native macOS Integration',
+          title: 'Electron Desktop Shell with macOS Integration',
           decision: 'Packaged the React/TypeScript frontend into an Electron desktop bundle tailored for Apple Silicon ARM64.',
           rationale:
-            'Provides a dedicated desktop experience with native macOS frameless windowing, global media shortcuts, system About panel, and a compact dockable mini-player mode.',
+            'Provides a dedicated desktop experience with macOS frameless windowing, global media shortcuts, system About panel, and a compact dockable mini-player mode.',
         },
         {
           title: 'Interactive Synchronized Lyrics & Timestamp Seeking',
@@ -471,13 +471,13 @@ export const PORTFOLIO_DATA = {
       ],
       challengesAndLearnings: [
         {
-          title: 'Low-Latency Native Audio Pipeline on macOS',
+          title: 'Low-Latency Audio Pipeline on macOS',
           challenge:
             'Managing desktop audio playback efficiently on Apple Silicon without audio stutter, high memory footprint, or IPC bottlenecks.',
           solution:
-            'Integrated a dual playback architecture combining an embedded streaming player with an Apple Silicon ARM64 native libmpv dynamic library (libmpv.2.dylib), managing CoreAudio output buffers directly.',
+            'Integrated a dual playback architecture combining an embedded streaming player with an Apple Silicon ARM64 libmpv dynamic library (libmpv.2.dylib), managing CoreAudio output buffers directly.',
           learning:
-            'Learned how native audio libraries interface with macOS CoreAudio and discovered the architectural patterns for bridging native C/C++ audio runtimes with desktop UI processes.',
+            'Learned how audio libraries interface with macOS CoreAudio and discovered architectural patterns for bridging C/C++ audio runtimes with desktop UI processes.',
         },
         {
           title: 'Synchronized Lyrics Parsing & Timestamp Seeking',
@@ -756,7 +756,7 @@ export const PORTFOLIO_DATA = {
       year: '2026',
       status: 'Active College Project',
       shortDescription:
-        'A college club management platform designed to centralize student society registrations, event schedules, and room bookings in one web platform.',
+        'A college club management platform designed to centralize student society registrations, event schedules, and member management in one web platform.',
       fullOverview:
         'CampusPulse was born out of observing how university clubs struggle with scattered communication across group chats and shared spreadsheets. The platform provides club leads with a clear dashboard to post events, manage member lists, and check for venue availability without schedule clashes.',
       problemStatement:
@@ -783,7 +783,7 @@ export const PORTFOLIO_DATA = {
               id: 'cp-ann-2',
               number: 2,
               label: 'Conflict-Aware Schedule',
-              description: 'Calendar engine detecting overlapping auditorium and lab reservations.',
+              description: 'Calendar view displaying upcoming society meetings and scheduled campus events.',
               xPercent: 68,
               yPercent: 48,
               leaderDirection: 'top-left',
@@ -792,7 +792,7 @@ export const PORTFOLIO_DATA = {
               id: 'cp-ann-3',
               number: 3,
               label: 'Live Activity Feeds',
-              description: 'Real-time updates on student RSVP registrations and venue booking requests.',
+              description: 'Updates on student RSVP registrations and upcoming society event announcements.',
               xPercent: 48,
               yPercent: 82,
               leaderDirection: 'top-right',
@@ -817,7 +817,7 @@ export const PORTFOLIO_DATA = {
               id: 'cp-ann-5',
               number: 2,
               label: 'Role-Based Access',
-              description: 'Separated permissions for club presidents, faculty advisors, and student members.',
+              description: 'Separated permissions for club organizers and student members.',
               xPercent: 74,
               yPercent: 32,
               leaderDirection: 'bottom-left',
@@ -852,8 +852,8 @@ export const PORTFOLIO_DATA = {
       ],
       technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL'],
       highlights: [
-        'Role-based permissions separating club organizers, faculty advisors, and student members',
-        'Conflict-aware event calendar that checks for overlapping auditorium and lab bookings',
+        'Role-based permissions separating club organizers and student members',
+        'Conflict-aware event calendar that checks for overlapping event dates and campus locations',
         'Student event discovery with category filtering and one-click RSVP registration',
         'Normalized PostgreSQL schema connecting student clubs, event dates, and member records',
       ],
@@ -871,7 +871,7 @@ export const PORTFOLIO_DATA = {
         {
           layer: 'Database Layer',
           component: 'PostgreSQL Relational Database',
-          responsibility: 'Stores structured records for student societies, event schedules, venues, and registrations.',
+          responsibility: 'Stores structured records for student societies, event schedules, and student registrations.',
         },
       ],
       specifications: [
@@ -898,12 +898,12 @@ export const PORTFOLIO_DATA = {
         {
           label: 'Validation',
           value: 'Conflict Detection',
-          detail: 'Venue Overlap Logic',
+          detail: 'Schedule Clash Prevention',
         },
         {
           label: 'Permissions',
           value: 'Role-Based Access',
-          detail: 'Organizers, Faculty & Students',
+          detail: 'Organizers & Student Members',
         },
       ],
       technicalDecisions: [
@@ -911,35 +911,35 @@ export const PORTFOLIO_DATA = {
           title: 'Relational Database Schema (PostgreSQL)',
           decision: 'Structured data in PostgreSQL with relational foreign keys across clubs, events, and registrations.',
           rationale:
-            'Campus club operations rely on relational links: events belong to clubs, venues are reserved during specific time slots, and students register for specific events. Relational foreign keys keep data consistent.',
+            'Campus club operations rely on relational links: events belong to clubs, event dates are scheduled with location details, and students register for specific events. Relational foreign keys keep data consistent.',
         },
         {
           title: 'Role-Based Permissions for Campus Societies',
-          decision: 'Implemented custom middleware to separate permissions between club leads, faculty, and student members.',
+          decision: 'Implemented custom middleware to separate permissions between club organizers and student members.',
           rationale:
-            'Separates event creation and room booking privileges from standard student attendance, keeping club administrative controls organized.',
+            'Separates event creation and society administrative privileges from standard student attendance, keeping club controls organized.',
         },
         {
-          title: 'Venue Conflict Validation Logic',
-          decision: 'Added checks to verify venue availability before confirming an event date and location.',
+          title: 'Event Conflict Validation Logic',
+          decision: 'Added checks to verify date and location availability before confirming an event.',
           rationale:
-            'Prevents double-booking auditoriums and seminar halls by querying overlapping time ranges before saving event records to the database.',
+            'Prevents scheduling clashes by querying overlapping event times for shared campus locations before saving records to the database.',
         },
       ],
       challengesAndLearnings: [
         {
-          title: 'Venue Scheduling Clashes & Relational Data Integrity',
+          title: 'Event Scheduling Clashes & Relational Data Integrity',
           challenge:
-            'Student societies frequently suffered from double-booked auditoriums and seminar halls due to uncoordinated event notices across separate group chats and spreadsheets.',
+            'Student societies frequently suffered from overlapping event schedules and uncoordinated dates across separate group chats and spreadsheets.',
           solution:
-            'Designed a normalized PostgreSQL schema with relational foreign keys linking clubs, rooms, and time slots, paired with backend conflict-detection logic that validates venue availability before confirming bookings.',
+            'Designed a normalized PostgreSQL schema with relational foreign keys linking clubs, events, and registrations, paired with backend conflict-detection logic that validates time and location availability before confirming events.',
           learning:
             'Learned how to write relational SQL queries to detect overlapping time ranges and realized the importance of enforcing data constraints directly at the database layer.',
         },
         {
           title: 'Role-Based Permissions for Campus Societies',
           challenge:
-            'Safely separating administrative privileges (faculty advisors, club presidents) from student member actions without duplicating route logic or creating security loopholes.',
+            'Safely separating administrative privileges (club organizers) from student member actions without duplicating route logic or creating security loopholes.',
           solution:
             'Built custom Express authentication middleware that verifies JWT claims and evaluates permissions before granting access to sensitive actions like credit distribution or platform settings.',
           learning:
@@ -981,14 +981,14 @@ export const PORTFOLIO_DATA = {
     {
       id: 'j-club-1',
       period: 'Aug 2025 — Present',
-      title: 'Student Developer & Tech Community Member',
-      organization: 'Medi-Caps Student Developer Community',
+      title: 'Co-head, Promotional Team',
+      organization: 'Yog & Spiritual Club, Medi-Caps University',
       category: 'Club Roles',
       summary:
-        'Active participant in the Medi-Caps University student developer community, engaging in peer learning, exploring modern web technologies, and collaborating with fellow student builders.',
+        'Serving as Co-head of the Promotional Team, leading campus event announcements, scheduling coordination, and promotional outreach for university wellness sessions. Collaborating closely with student volunteers and faculty advisors.',
       outcomes: [
-        'Engaged in collaborative coding sessions and developer discussions with college peers',
-        'Observed firsthand the club communication and scheduling challenges that inspired CampusPulse',
+        'Coordinated campus promotional schedules and announcement campaigns for collegiate sessions',
+        'Gained hands-on experience in student team leadership, inter-department communication, and event logistics',
       ],
     },
     {
@@ -998,7 +998,7 @@ export const PORTFOLIO_DATA = {
       organization: 'College Project',
       category: 'Projects',
       summary:
-        'Designed and built a college club management web application to centralize society event discovery, registrations, and room bookings.',
+        'Designed and built a college club management web application to centralize society event discovery, student registrations, and member management.',
       outcomes: [
         'Implemented role-based permissions, venue conflict checks, and event registration flows',
         'Structured modular React components and an Express REST API with PostgreSQL',
@@ -1039,7 +1039,7 @@ export const PORTFOLIO_DATA = {
       summary:
         'Built a standalone desktop music streaming and studio synth application for macOS Apple Silicon with Electron, React, libmpv CoreAudio, and a local Python bridge.',
       outcomes: [
-        'Integrated streaming playback alongside native Apple Silicon libmpv CoreAudio output',
+        'Integrated streaming playback alongside Apple Silicon libmpv CoreAudio output',
         'Engineered interactive time-synced lyrics, dockable mini-player, and local Python metadata bridge',
       ],
     },

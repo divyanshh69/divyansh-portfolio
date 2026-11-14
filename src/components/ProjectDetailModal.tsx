@@ -20,6 +20,7 @@ import { PORTFOLIO_DATA, ProjectItem } from '../data/portfolioData';
 import { DisplacementImageTransition } from './DisplacementImageTransition';
 import { Magnetic } from './Magnetic';
 import { ScreenshotAnnotationOverlay } from './ScreenshotAnnotationOverlay';
+import { ProjectArchitectureDiagram } from './ProjectArchitectureDiagram';
 import { easeEditorial } from '../utils/motionVariants';
 
 export type ProjectModalTab = 'overview' | 'architecture' | 'decisions' | 'learnings' | 'technical';
@@ -521,6 +522,9 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                   Detailed technical architecture, runtime environment, and subsystem responsibilities for {project.title}.
                 </p>
               </div>
+
+              {/* Verified Architectural Tier Diagram */}
+              <ProjectArchitectureDiagram projectId={project.id} />
 
               {/* Subsystems Breakdown */}
               <div className="space-y-3">

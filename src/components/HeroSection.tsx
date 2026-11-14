@@ -198,7 +198,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               transition={{ duration: 0.9, delay: 0.82, ease: easeEditorial }}
               className="text-lg sm:text-xl text-[#F4EFEA]/95 font-medium leading-snug max-w-xl"
             >
-              Building native macOS desktop tools and full-stack web platforms backed by normalized relational schemas.
+              2nd-Year Computer Science Student building macOS desktop software and full-stack web platforms backed by normalized relational schemas.
             </motion.p>
 
             {/* Step 4: Introduction enters next */}
@@ -208,7 +208,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               transition={{ duration: 0.88, delay: 1.05, ease: easeEditorial }}
               className="text-sm sm:text-base text-[#D6CFC7] leading-relaxed max-w-xl"
             >
-              2nd-year Computer Science student at Medi-Caps University. I build desktop media runtimes with Electron, React, and libmpv CoreAudio, career roadmaps with PostgreSQL and Prisma ORM, alongside conflict-aware campus systems.
+              Studying at Medi-Caps University, Indore. Focused on desktop audio pipelines with Electron &amp; libmpv CoreAudio, structured career roadmaps with PostgreSQL &amp; Prisma ORM, and conflict-aware campus systems. Actively seeking software engineering internships.
             </motion.p>
 
             {/* Step 5: CTA buttons appear last */}
@@ -293,7 +293,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
                   <span className="w-2 h-2 rounded-full bg-[#FF4D26]" />
                   <span className="text-[#F4EFEA] font-semibold uppercase tracking-wider">
                     {activeSpotlight === 'metroflow'
-                      ? 'PROJECT 01 // MAC-NATIVE'
+                      ? 'PROJECT 01 // MAC-DESKTOP'
                       : activeSpotlight === 'skillsync'
                         ? 'PROJECT 02 // CAREER-ROADMAP'
                         : 'PROJECT 03 // EVENT-OPS'}
