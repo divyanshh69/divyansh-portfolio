@@ -61,6 +61,7 @@ export const DisplacementImageTransition: React.FC<DisplacementImageTransitionPr
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const programRef = useRef<WebGLProgram | null>(null);
   const animFrameRef = useRef<number | null>(null);
+  const texturesRef = useRef<WebGLTexture[]>([]);
 
   // Detect reduced motion or lack of WebGL
   useEffect(() => {
@@ -202,6 +203,7 @@ export const DisplacementImageTransition: React.FC<DisplacementImageTransitionPr
 
         const texFrom = createTexture(imgFrom, 0);
         const texTo = createTexture(imgTo, 1);
+        texturesRef.current = [texFrom, texTo].filter(Boolean) as WebGLTexture[];
 
         const uFromLoc = gl!.getUniformLocation(program, 'u_from');
         const uToLoc = gl!.getUniformLocation(program, 'u_to');
@@ -226,6 +228,7 @@ export const DisplacementImageTransition: React.FC<DisplacementImageTransitionPr
             // Clean up textures and conclude transition
             if (texFrom) gl!.deleteTexture(texFrom);
             if (texTo) gl!.deleteTexture(texTo);
+            texturesRef.current = [];
             setIsTransitioning(false);
             setPrevSrc(null);
             onLoaded?.();
@@ -250,8 +253,16 @@ export const DisplacementImageTransition: React.FC<DisplacementImageTransitionPr
     imgTo.src = currentSrc;
 
     return () => {
+      imgFrom.onload = null;
+      imgFrom.onerror = null;
+      imgTo.onload = null;
+      imgTo.onerror = null;
       if (animFrameRef.current) {
         cancelAnimationFrame(animFrameRef.current);
+      }
+      if (glRef.current && texturesRef.current.length > 0) {
+        texturesRef.current.forEach((t) => glRef.current?.deleteTexture(t));
+        texturesRef.current = [];
       }
     };
   }, [isTransitioning, prevSrc, currentSrc, useWebGL, onLoaded]);

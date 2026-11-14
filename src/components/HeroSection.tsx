@@ -143,7 +143,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               {/* Kinetic Letter-by-Letter Art-Directed Reveal */}
               <h1
                 aria-label="Divyansh Nayak — Creative &amp; Systems Engineering"
-                className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-[#F4EFEA] leading-[1.04] sm:leading-[1.08] lg:leading-[1.1] select-none"
+                className="font-display text-[2.6rem] xs:text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-[#F4EFEA] leading-[1.04] sm:leading-[1.08] lg:leading-[1.1] select-none"
               >
                 <span className="sr-only">Divyansh Nayak</span>
                 <span aria-hidden="true">

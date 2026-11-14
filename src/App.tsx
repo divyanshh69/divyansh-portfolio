@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { Navbar, SectionId, NAV_SECTIONS } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
@@ -7,9 +7,12 @@ import { ProjectsSection } from './components/ProjectsSection';
 import { SkillsSection } from './components/SkillsSection';
 import { JourneySection } from './components/JourneySection';
 import { ContactFooter } from './components/ContactFooter';
-import { CommandPalette } from './components/CommandPalette';
 import { ParticleTrailCanvas } from './components/ParticleTrailCanvas';
 import { SectionDivider } from './components/SectionDivider';
+
+const CommandPalette = lazy(() =>
+  import('./components/CommandPalette').then((m) => ({ default: m.CommandPalette }))
+);
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<SectionId>('home');
@@ -107,15 +110,17 @@ export default function App() {
 
       <ContactFooter onNavigate={handleNavigate} />
 
-      {/* Global Command Palette (⌘K) */}
+      {/* Global Command Palette (⌘K) — Lazy loaded on demand */}
       <AnimatePresence>
         {isCommandPaletteOpen && (
-          <CommandPalette
-            isOpen={isCommandPaletteOpen}
-            onClose={() => setIsCommandPaletteOpen(false)}
-            onNavigate={handleNavigate}
-            onOpenProject={handleOpenProject}
-          />
+          <Suspense fallback={null}>
+            <CommandPalette
+              isOpen={isCommandPaletteOpen}
+              onClose={() => setIsCommandPaletteOpen(false)}
+              onNavigate={handleNavigate}
+              onOpenProject={handleOpenProject}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
     </div>

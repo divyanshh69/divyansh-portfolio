@@ -15,5 +15,19 @@ export default defineConfig(() => {
       port: 3000,
       host: '0.0.0.0',
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules/motion')) {
+              return 'motion';
+            }
+            if (id.includes('node_modules/lucide-react')) {
+              return 'lucide';
+            }
+          },
+        },
+      },
+    },
   };
 });

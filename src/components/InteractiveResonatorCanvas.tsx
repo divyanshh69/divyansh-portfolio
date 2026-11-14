@@ -151,14 +151,35 @@ export const InteractiveResonatorCanvas: React.FC<{ className?: string }> = ({ c
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    // Pause rendering when element is not in viewport
+    let isLoopRunning = false;
+
+    const startLoop = () => {
+      if (isLoopRunning || prefersReducedMotion) return;
+      isLoopRunning = true;
+      animationFrameId.current = requestAnimationFrame(render);
+    };
+
+    const stopLoop = () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+      }
+      isLoopRunning = false;
+    };
+
+    // Truly pause rendering loop when element is offscreen
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           isVisibleRef.current = entry.isIntersecting;
+          if (entry.isIntersecting) {
+            startLoop();
+          } else {
+            stopLoop();
+          }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
     observer.observe(container);
 
@@ -194,7 +215,7 @@ export const InteractiveResonatorCanvas: React.FC<{ className?: string }> = ({ c
 
     const render = () => {
       if (!isVisibleRef.current) {
-        animationFrameId.current = requestAnimationFrame(render);
+        isLoopRunning = false;
         return;
       }
 
@@ -431,12 +452,14 @@ export const InteractiveResonatorCanvas: React.FC<{ className?: string }> = ({ c
         }
       });
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && isVisibleRef.current) {
         animationFrameId.current = requestAnimationFrame(render);
+      } else {
+        isLoopRunning = false;
       }
     };
 
-    render();
+    startLoop();
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -445,9 +468,7 @@ export const InteractiveResonatorCanvas: React.FC<{ className?: string }> = ({ c
       canvas.removeEventListener('touchmove', handleTouchMove);
       canvas.removeEventListener('touchend', handleMouseLeave);
       observer.disconnect();
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
+      stopLoop();
     };
   }, []);
 

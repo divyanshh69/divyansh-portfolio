@@ -31,10 +31,6 @@ export const Project3DCard: React.FC<Project3DCardProps> = ({
   const rotateX = useTransform(springMouseY, [-1, 1], [maxTilt, -maxTilt]);
   const rotateY = useTransform(springMouseX, [-1, 1], [-maxTilt, maxTilt]);
 
-  // Specular sheen highlight coordinates
-  const glareX = useTransform(springMouseX, [-1, 1], ['0%', '100%']);
-  const glareY = useTransform(springMouseY, [-1, 1], ['0%', '100%']);
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setPrefersReduced(isReducedMotion());
@@ -61,6 +57,9 @@ export const Project3DCard: React.FC<Project3DCardProps> = ({
 
     mouseX.set(x * 2 - 1); // -1 to 1
     mouseY.set(y * 2 - 1); // -1 to 1
+
+    card.style.setProperty('--glare-x', `${(x * 100).toFixed(1)}%`);
+    card.style.setProperty('--glare-y', `${(y * 100).toFixed(1)}%`);
   };
 
   const handleMouseEnter = () => {
@@ -102,11 +101,12 @@ export const Project3DCard: React.FC<Project3DCardProps> = ({
       >
         {children}
 
-        {/* Dynamic Specular Sheen (Subtle light reflection moving across surface) */}
-        <motion.div
+        {/* Dynamic Specular Sheen (Subtle light reflection moving across surface via GPU CSS vars) */}
+        <div
           aria-hidden="true"
           style={{
-            background: `radial-gradient(circle 350px at ${glareX.get()} ${glareY.get()}, rgba(255, 255, 255, 0.06), transparent 70%)`,
+            background:
+              'radial-gradient(circle 350px at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.08), transparent 70%)',
           }}
           className={`pointer-events-none absolute inset-0 rounded-3xl transition-opacity duration-300 z-30 ${
             isHovered ? 'opacity-100' : 'opacity-0'

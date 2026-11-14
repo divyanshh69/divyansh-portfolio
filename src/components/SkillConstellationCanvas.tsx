@@ -77,31 +77,19 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
   const animationFrameId = useRef<number | null>(null);
   const isVisibleRef = useRef<boolean>(true);
 
-  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [activeCluster, setActiveCluster] = useState<string>('All');
+  const hoveredNodeIdRef = useRef<string | null>(null);
+  const activeClusterRef = useRef<string>('All');
+
+  useEffect(() => {
+    activeClusterRef.current = activeCluster;
+  }, [activeCluster]);
 
   const mousePosRef = useRef<{ x: number; y: number; active: boolean }>({
     x: -1000,
     y: -1000,
     active: false,
   });
-
-  const triggerHoverNode = useCallback(
-    (clientX: number, clientY: number, width: number, height: number) => {
-      let matched: string | null = null;
-      for (const node of NODES) {
-        const nx = node.normX * width;
-        const ny = node.normY * height;
-        const dist = Math.hypot(clientX - nx, clientY - ny);
-        if (dist < (node.isHub ? 36 : 24)) {
-          matched = node.id;
-          break;
-        }
-      }
-      setHoveredNodeId(matched);
-    },
-    []
-  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -133,13 +121,35 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
     handleResize();
     window.addEventListener('resize', handleResize);
 
+    let isLoopRunning = false;
+
+    const startLoop = () => {
+      if (isLoopRunning || prefersReducedMotion) return;
+      isLoopRunning = true;
+      animationFrameId.current = requestAnimationFrame(render);
+    };
+
+    const stopLoop = () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+      }
+      isLoopRunning = false;
+    };
+
+    // Truly pause rendering loop when element is offscreen
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           isVisibleRef.current = e.isIntersecting;
+          if (e.isIntersecting) {
+            startLoop();
+          } else {
+            stopLoop();
+          }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
     observer.observe(container);
 
@@ -148,12 +158,22 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       mousePosRef.current = { x, y, active: true };
-      triggerHoverNode(x, y, width, height);
+
+      let matched: string | null = null;
+      for (const node of NODES) {
+        const nx = node.normX * width;
+        const ny = node.normY * height;
+        if (Math.hypot(x - nx, y - ny) < (node.isHub ? 36 : 24)) {
+          matched = node.id;
+          break;
+        }
+      }
+      hoveredNodeIdRef.current = matched;
     };
 
     const handleMouseLeave = () => {
       mousePosRef.current = { x: -1000, y: -1000, active: false };
-      setHoveredNodeId(null);
+      hoveredNodeIdRef.current = null;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
@@ -163,12 +183,22 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
       const x = touch.clientX - rect.left;
       const y = touch.clientY - rect.top;
       mousePosRef.current = { x, y, active: true };
-      triggerHoverNode(x, y, width, height);
+
+      let matched: string | null = null;
+      for (const node of NODES) {
+        const nx = node.normX * width;
+        const ny = node.normY * height;
+        if (Math.hypot(x - nx, y - ny) < (node.isHub ? 36 : 24)) {
+          matched = node.id;
+          break;
+        }
+      }
+      hoveredNodeIdRef.current = matched;
     };
 
     const handleTouchEnd = () => {
       mousePosRef.current = { x: -1000, y: -1000, active: false };
-      setHoveredNodeId(null);
+      hoveredNodeIdRef.current = null;
     };
 
     const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -200,7 +230,7 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
 
     const render = () => {
       if (!isVisibleRef.current) {
-        animationFrameId.current = requestAnimationFrame(render);
+        isLoopRunning = false;
         return;
       }
 
@@ -220,6 +250,9 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
         }
       }
 
+      const activeHov = hoveredNodeIdRef.current;
+      const activeClust = activeClusterRef.current;
+
       // 2. Draw Vector Connections between Nodes
       EDGES.forEach((edge) => {
         const source = nodeMap.get(edge.source);
@@ -232,9 +265,9 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
         const ty = target.normY * height;
 
         const isHighlighted =
-          hoveredNodeId === source.id ||
-          hoveredNodeId === target.id ||
-          activeCluster === source.cluster;
+          activeHov === source.id ||
+          activeHov === target.id ||
+          activeClust === source.cluster;
 
         ctx.beginPath();
         ctx.moveTo(sx, sy);
@@ -280,8 +313,8 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
           }
         }
 
-        const isHovered = hoveredNodeId === node.id;
-        const isClusterActive = activeCluster === node.cluster || activeCluster === 'All';
+        const isHovered = activeHov === node.id;
+        const isClusterActive = activeClust === node.cluster || activeClust === 'All';
 
         // Outer Reticle Ring on Hubs
         if (node.isHub) {
@@ -324,12 +357,14 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
         ctx.fillText(labelText, labelX, labelY);
       });
 
-      if (!prefersReducedMotion) {
+      if (!prefersReducedMotion && isVisibleRef.current) {
         animationFrameId.current = requestAnimationFrame(render);
+      } else {
+        isLoopRunning = false;
       }
     };
 
-    render();
+    startLoop();
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -338,11 +373,9 @@ export const SkillConstellationCanvas: React.FC<SkillConstellationCanvasProps> =
       canvas.removeEventListener('touchmove', handleTouchMove);
       canvas.removeEventListener('touchend', handleTouchEnd);
       observer.disconnect();
-      if (animationFrameId.current) {
-        cancelAnimationFrame(animationFrameId.current);
-      }
+      stopLoop();
     };
-  }, [hoveredNodeId, activeCluster, onSelectSkill, triggerHoverNode]);
+  }, []);
 
   return (
     <div
