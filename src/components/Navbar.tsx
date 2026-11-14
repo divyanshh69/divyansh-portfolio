@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, ArrowUpRight, Search, ArrowUp } from 'lucide-react';
 import { Magnetic } from './Magnetic';
@@ -33,6 +33,21 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Synchronize CSS variable --navbar-height with actual measured header height
+  useEffect(() => {
+    const updateNavbarHeight = () => {
+      if (headerRef.current) {
+        const measuredHeight = headerRef.current.offsetHeight;
+        document.documentElement.style.setProperty('--navbar-height', `${measuredHeight}px`);
+      }
+    };
+
+    updateNavbarHeight();
+    window.addEventListener('resize', updateNavbarHeight, { passive: true });
+    return () => window.removeEventListener('resize', updateNavbarHeight);
+  }, []);
 
   // Keyboard accessibility: Escape key closes mobile navigation drawer
   useEffect(() => {
@@ -81,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-[#090A0E]/90 backdrop-blur-md border-b border-[#262A36]">
+      <header ref={headerRef} className="sticky top-0 z-40 w-full bg-[#090A0E]/90 backdrop-blur-md border-b border-[#262A36]">
         {/* Architectural Scroll Progress Indicator */}
         <div
           aria-hidden="true"
@@ -205,7 +220,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               transition={{ duration: 0.45, ease: 'easeOut' }}
               onClick={() => setMobileMenuOpen(false)}
               aria-hidden="true"
-              className="md:hidden fixed inset-0 top-[57px] bg-black/75 backdrop-blur-xs z-30"
+              style={{ top: 'var(--navbar-height, 73px)' }}
+              className="md:hidden fixed inset-0 bg-black/75 backdrop-blur-xs z-30"
             />
 
             <motion.div
@@ -213,7 +229,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
-              className="md:hidden fixed inset-x-0 top-[57px] z-40 bg-[#090A0E] border-b border-[#262A36] px-4 py-4 shadow-2xl"
+              style={{ top: 'var(--navbar-height, 73px)' }}
+              className="md:hidden fixed inset-x-0 z-40 bg-[#090A0E] border-b border-[#262A36] px-4 py-4 shadow-2xl"
             >
               <nav aria-label="Mobile Navigation" className="grid grid-cols-2 gap-2">
                 {NAV_SECTIONS.map((sec) => {

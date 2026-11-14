@@ -35,7 +35,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
                 Frameless macOS windowing, dockable mini-player mode, and global keyboard shortcuts.
               </p>
             </div>
-            <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+            <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
               Runtime: Electron + macOS API
             </div>
           </div>
@@ -52,7 +52,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
                 Album artwork, discovery queue, interactive synchronized lyrics parser, and millisecond scrubber.
               </p>
             </div>
-            <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+            <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
               IPC: preload.js Context Bridge
             </div>
           </div>
@@ -69,7 +69,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
                 Lightweight HTTP daemon running ytmusicapi for fast catalogue search, metadata, and time-coded lyrics.
               </p>
             </div>
-            <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+            <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
               Protocol: Localhost REST / JSON
             </div>
           </div>
@@ -86,7 +86,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
                 Apple Silicon ARM64 libmpv.2.dylib outputting directly to macOS CoreAudio buffers with low latency.
               </p>
             </div>
-            <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+            <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
               Pipeline: 48kHz 32-bit Float Audio
             </div>
           </div>
@@ -94,7 +94,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
 
         {/* Data Flow Legend */}
         <div className="p-2.5 rounded-xl bg-[#090A0E] border border-[#1C202E] flex flex-wrap items-center justify-between gap-3 text-[10.5px] font-mono-tabular text-[#8E8B85]">
-          <div className="flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-1.5">
             <span className="text-[#FF4D26] font-bold">DATA FLOW:</span>
             <span>UI Action &rarr; Electron IPC &rarr; Localhost :8765 &rarr; CoreAudio Output Buffer</span>
           </div>
@@ -133,7 +133,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
                 5-phase milestone roadmap view, project evidence cards, and optimistic UI updates for task checklists.
               </p>
             </div>
-            <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+            <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
               Client State: Custom React Hooks
             </div>
           </div>
@@ -150,7 +150,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
                 REST controllers, input validation middleware, phase transition gates, and readiness score aggregator.
               </p>
             </div>
-            <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+            <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
               Readiness: utils/readiness.ts
             </div>
           </div>
@@ -167,7 +167,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
                 Type-safe database client, schema migrations, composite unique constraints, and relational query consolidation.
               </p>
             </div>
-            <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+            <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
               Parameterized SQL Generation
             </div>
           </div>
@@ -184,7 +184,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
                 7 normalized models: User, Skill, UserSkill, Project, ProjectSkill, RoadmapPhase, PhaseSkill with cascade rules.
               </p>
             </div>
-            <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+            <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
               Schema: Composite Foreign Keys
             </div>
           </div>
@@ -192,7 +192,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
 
         {/* Data Flow Legend */}
         <div className="p-2.5 rounded-xl bg-[#090A0E] border border-[#1C202E] flex flex-wrap items-center justify-between gap-3 text-[10.5px] font-mono-tabular text-[#8E8B85]">
-          <div className="flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-1.5">
             <span className="text-[#38BDF8] font-bold">DATA FLOW:</span>
             <span>Client &rarr; REST API &rarr; Readiness Algorithm &rarr; Prisma ORM &rarr; PostgreSQL 16</span>
           </div>
@@ -231,7 +231,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
               Club operations dashboard, event schedule calendar, member management directory, and RSVP flow.
             </p>
           </div>
-          <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+          <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
             Styling: Tailwind CSS Responsive
           </div>
         </div>
@@ -248,7 +248,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
               Role-based authorization separating privileges between club organizers and student members.
             </p>
           </div>
-          <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+          <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
             Stateless Claim Verification
           </div>
         </div>
@@ -265,7 +265,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
               Validates event dates and campus locations against existing schedules to prevent event overlap.
             </p>
           </div>
-          <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+          <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
             Validation: SQL Time-Range Overlap
           </div>
         </div>
@@ -282,7 +282,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
               Normalized relational schema connecting student clubs, event dates, member rosters, and student registrations.
             </p>
           </div>
-          <div className="text-[9.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
+          <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
             Relational Integrity &amp; Foreign Keys
           </div>
         </div>
@@ -290,7 +290,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
 
       {/* Data Flow Legend */}
       <div className="p-2.5 rounded-xl bg-[#090A0E] border border-[#1C202E] flex flex-wrap items-center justify-between gap-3 text-[10.5px] font-mono-tabular text-[#8E8B85]">
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5">
           <span className="text-[#FF4D26] font-bold">DATA FLOW:</span>
           <span>Client Event Submission &rarr; Role-Based Auth &rarr; Schedule Conflict Query &rarr; PostgreSQL Persistence</span>
         </div>

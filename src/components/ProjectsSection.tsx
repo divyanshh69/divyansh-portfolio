@@ -599,7 +599,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                     <span className="text-xs font-mono-tabular font-bold text-[#FF4D26]">
                       0{pIdx + 1} //
                     </span>
-                    <span className="text-sm font-bold text-[#F4EFEA]">{project.title}</span>
+                    <h3 className="text-sm font-bold text-[#F4EFEA]">{project.title}</h3>
                   </div>
                   <span className={`text-[10px] px-2 py-0.5 rounded border font-semibold ${theme.badgeBg}`}>
                     {project.status}

@@ -26,7 +26,7 @@ const NODES: ConstellationNode[] = [
 
   // Cluster 2: Full-Stack Web & Runtime (Cobalt/Cyan)
   { id: 'web-hub', name: 'Full-Stack Runtime', cluster: 'Web', normX: 0.76, normY: 0.35, isHub: true, color: '#38BDF8' },
-  { id: 'react', name: 'React 19', cluster: 'Web', normX: 0.64, normY: 0.22, isHub: false, color: '#38BDF8' },
+  { id: 'react', name: 'React', cluster: 'Web', normX: 0.64, normY: 0.22, isHub: false, color: '#38BDF8' },
   { id: 'typescript', name: 'TypeScript', cluster: 'Web', normX: 0.88, normY: 0.22, isHub: false, color: '#38BDF8' },
   { id: 'nodejs', name: 'Node.js & Express', cluster: 'Web', normX: 0.88, normY: 0.50, isHub: false, color: '#38BDF8' },
   { id: 'tailwind', name: 'Tailwind CSS', cluster: 'Web', normX: 0.66, normY: 0.52, isHub: false, color: '#38BDF8' },

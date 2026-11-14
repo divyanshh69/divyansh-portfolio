@@ -12,6 +12,13 @@
     --text-secondary: #9B968F;
     --accent-vermilion: #FF4D26;
     --accent-cobalt: #2563EB;
+    --navbar-height: 73px;
+  }
+
+  @media (min-width: 640px) {
+    :root {
+      --navbar-height: 77px;
+    }
   }
 
   html {
