@@ -281,7 +281,7 @@ export const PORTFOLIO_DATA = {
       shortDescription:
         'A macOS desktop music application built with Electron, React, and a local Python bridge, pairing streaming discovery with synchronized lyrics, libmpv CoreAudio playback, and a dockable mini-player.',
       fullOverview:
-        'MetroFlow is a standalone desktop music application for macOS optimized for Apple Silicon ARM64. Built with an Electron desktop shell, a React/TypeScript interface, and a local Python bridge on port 8765, it pairs compliant streaming playback with a native libmpv CoreAudio engine, interactive synchronized lyrics, and a dockable mini-player.',
+        'MetroFlow is a standalone desktop music application for macOS optimized for Apple Silicon ARM64. Built with an Electron desktop shell, a React/TypeScript interface, and a local Python bridge on port 8765, it pairs streaming playback with a native libmpv CoreAudio engine, interactive synchronized lyrics, and a dockable mini-player.',
       problemStatement:
         'Many modern desktop music players are cluttered with social feeds and lack seamless support for interactive synchronized lyrics, lightweight mini-player docking, and low-latency audio playback.',
       engineeringSolution:
@@ -320,7 +320,7 @@ export const PORTFOLIO_DATA = {
         {
           layer: 'Audio Engine',
           component: 'Dual Engine (Streaming & libmpv CoreAudio)',
-          responsibility: 'Coordinates compliant streaming playback alongside native Apple Silicon ARM64 libmpv CoreAudio output and Web Audio Studio Synth.',
+          responsibility: 'Coordinates streaming playback alongside native Apple Silicon ARM64 libmpv CoreAudio output and Web Audio Studio Synth.',
         },
         {
           layer: 'Metadata & Services',
@@ -332,7 +332,7 @@ export const PORTFOLIO_DATA = {
         {
           label: 'Target Architecture',
           value: 'Apple Silicon ARM64',
-          detail: 'Native macOS Build (com.metroflow.mac)',
+          detail: 'macOS Desktop Build',
         },
         {
           label: 'Desktop Shell',
@@ -420,18 +420,18 @@ export const PORTFOLIO_DATA = {
       id: 'skillsync',
       index: '02',
       title: 'SkillSync',
-      subtitle: 'An AI-powered career companion and structured milestone roadmap platform for student developers',
+      subtitle: 'A full-stack career roadmap and skill progression platform for student developers',
       category: 'Full-Stack Web',
       year: '2026',
       status: 'Active Project',
       shortDescription:
-        'A full-stack career preparation and skill progression platform that connects student career goals with structured milestone roadmaps, verified project evidence, and readiness analytics.',
+        'A full-stack career preparation and skill progression platform that connects student career goals with structured milestone roadmaps, project evidence deliverables, and readiness analytics.',
       fullOverview:
         'SkillSync is an engineering career companion designed to help computer science students and early-career builders track skills, manage project evidence, and navigate structured learning roadmaps. Built with a React/TypeScript client, a Node.js/Express REST API, PostgreSQL 16, and Prisma ORM, it replaces disconnected spreadsheets with a normalized relational model that links individual skills to completed projects, milestone roadmap phases, and career readiness percentages.',
       problemStatement:
         'Students and early-career developers frequently track their learning across scattered bookmarks, arbitrary to-do lists, and disconnected repositories without a structured way to assess real career readiness or demonstrate concrete project evidence for specific competencies.',
       engineeringSolution:
-        'Engineered a full-stack platform featuring a normalized relational schema with Prisma ORM and PostgreSQL 16. Implemented a five-phase career roadmap engine, project portfolio manager with skill tagging, and an aggregated readiness calculator that evaluates completed skills alongside verified repository deliverables.',
+        'Engineered a full-stack platform featuring a normalized relational schema with Prisma ORM and PostgreSQL 16. Implemented a five-phase career roadmap engine, project portfolio manager with skill tagging, and an aggregated readiness calculator that evaluates completed skills alongside linked repository deliverables.',
       image: skillsyncHomeImg,
       screenshots: [
         {
@@ -458,7 +458,7 @@ export const PORTFOLIO_DATA = {
         'Five-phase structured career roadmap mapping foundational web concepts through production systems',
         'Normalized 7-model PostgreSQL schema with Prisma ORM linking users, skills, projects, and roadmaps',
         'Deterministic readiness calculation in utils/readiness.ts weighting project-evidenced skills (1.5x) over theory',
-        'GitHub repository analyzer inspecting package.json & manifests to suggest verifiable skill evidence',
+        'GitHub repository analyzer inspecting package.json & manifests to suggest linked skill evidence',
       ],
       architecture: [
         {
@@ -530,7 +530,7 @@ export const PORTFOLIO_DATA = {
         {
           title: 'Deterministic Weighted Readiness Calculation (utils/readiness.ts)',
           decision:
-            'Implemented a deterministic backend readiness algorithm in server/src/utils/readiness.ts weighting verified project evidence over passive completion.',
+            'Implemented a deterministic backend readiness algorithm in server/src/utils/readiness.ts weighting project-evidenced skills over passive completion.',
           rationale:
             'Calculates points = (evidencedSkills * 1.5) + (theoryOnlySkills * 0.8) + (inProgressSkills * 0.3) against maxPossible = (totalSkills * 1.5). By rewarding project-evidenced skills with a 1.5x multiplier compared to 0.8x for unevidenced completion and 0.3x for in-progress work, the platform grounds student progress in tangible repository deliverables rather than passive checkboxes.',
         },
@@ -550,9 +550,9 @@ export const PORTFOLIO_DATA = {
           challenge:
             'Fetching dashboard overview data required querying user goals, milestone phase statuses, skill counts, and linked project records, which initially triggered multiple nested database lookups.',
           solution:
-            'Leveraged Prisma’s fluent query API with selective include clauses and database-level aggregate counts (_count: { select: { skills: true } }), reducing multiple round-trips to a single optimized relational query.',
+            'Leveraged Prisma’s fluent query API with selective include clauses and database-level aggregate counts (_count: { select: { skills: true } }), consolidating related data fetching into structured relational lookups.',
           learning:
-            'Learned how ORM abstraction affects query performance and how to inspect generated SQL queries to keep API latency under 50ms.',
+            'Learned how ORM abstractions affect query performance and how to inspect generated SQL queries to keep API endpoints responsive.',
         },
         {
           title: 'Hierarchical State Management for Milestone Roadmap Progression',
@@ -779,7 +779,7 @@ export const PORTFOLIO_DATA = {
       organization: 'Independent Project',
       category: 'Projects',
       summary:
-        'Built an AI-assisted career companion and skill tracking platform with React, TypeScript, Node.js, PostgreSQL 16, and Prisma ORM.',
+        'Built a full-stack career roadmap and skill progression platform with React, TypeScript, Node.js, PostgreSQL 16, and Prisma ORM.',
       outcomes: [
         'Modeled normalized relational schema with explicit join tables linking skills, projects, and roadmaps',
         'Built 5-phase career milestone roadmap with deterministic readiness analytics and project evidence mapping',
@@ -794,20 +794,20 @@ export const PORTFOLIO_DATA = {
       summary:
         'Built a standalone desktop music streaming and studio synth application for macOS Apple Silicon with Electron, React, libmpv CoreAudio, and a local Python bridge.',
       outcomes: [
-        'Integrated compliant streaming playback alongside native Apple Silicon libmpv CoreAudio output',
+        'Integrated streaming playback alongside native Apple Silicon libmpv CoreAudio output',
         'Engineered interactive time-synced lyrics, dockable mini-player, and local Python metadata bridge',
       ],
     },
     {
       id: 'j-goal-future',
-      period: '2026 — Beyond',
+      period: 'Current — Future',
       title: 'Next Step: Software Engineering Roles & Practical Growth',
       organization: 'Career Roadmap',
       category: 'Future Goals',
       summary:
         'Seeking software engineering internship and entry-level opportunities to contribute to real-world software, learn team workflows, and deepen engineering skills.',
       outcomes: [
-        'Continuing to build practical tools and open-source projects',
+        'Continuing to build practical software tools and independent systems',
         'Deepening practical knowledge of backend services and system programming',
       ],
     },
@@ -832,17 +832,17 @@ export const PORTFOLIO_DATA = {
       date: '2026',
       detail:
         'Engineered a standalone desktop music application for macOS Apple Silicon with synchronized lyrics, libmpv CoreAudio playback, and local Python bridge.',
-      credentialRef: 'Project Release',
+      credentialRef: 'Desktop Build',
     },
     {
       id: 'ach-3',
       category: 'Projects',
-      title: 'CampusPulse Web Platform Deployment',
+      title: 'CampusPulse Web Platform',
       issuerOrEvent: 'Collegiate Web Build',
       date: '2026',
       detail:
         'Developed full-stack club management platform with role-based permissions, venue conflict validation, and normalized PostgreSQL database.',
-      credentialRef: 'Project Release',
+      credentialRef: 'College Build',
     },
     {
       id: 'ach-4',

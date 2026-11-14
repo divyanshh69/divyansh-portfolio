@@ -162,7 +162,7 @@ export const SkillsSection: React.FC = () => {
           </div>
 
           <div className="text-xs font-mono-tabular text-[#8E8B85] hidden sm:block">
-            SHOWING {filteredSkills.length} OF {PORTFOLIO_DATA.skills.length} VERIFIED CAPABILITIES
+            SHOWING {filteredSkills.length} OF {PORTFOLIO_DATA.skills.length} PRACTICED CAPABILITIES
           </div>
         </motion.div>
 

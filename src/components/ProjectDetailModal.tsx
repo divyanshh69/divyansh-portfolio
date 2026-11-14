@@ -13,8 +13,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Monitor,
+  Mail,
+  Github,
 } from 'lucide-react';
-import { ProjectItem } from '../data/portfolioData';
+import { PORTFOLIO_DATA, ProjectItem } from '../data/portfolioData';
 import { DisplacementImageTransition } from './DisplacementImageTransition';
 import { Magnetic } from './Magnetic';
 
@@ -38,6 +40,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
   const [isZoomed, setIsZoomed] = useState(false);
   const [activeScreenshotIdx, setActiveScreenshotIdx] = useState(initialScreenshotIdx);
 
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -58,12 +61,38 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
     };
   }, []);
 
-  // Keyboard accessibility: Escape key closes modal
+  // Keyboard accessibility: Escape key closes modal & Tab key traps focus within dialog
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
         onClose();
+        return;
+      }
+      if (e.key === 'Tab') {
+        const modal = modalRef.current;
+        if (!modal) return;
+        const focusables = modal.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const visibleFocusables = Array.from(focusables).filter(
+          (el) => !el.hasAttribute('disabled') && el.offsetParent !== null
+        );
+        if (visibleFocusables.length === 0) return;
+        const first = visibleFocusables[0];
+        const last = visibleFocusables[visibleFocusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -126,6 +155,7 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
       onClick={onClose}
     >
       <motion.div
+        ref={modalRef}
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 14 }}
@@ -593,24 +623,44 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
 
         {/* Modal Footer */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-t border-[#262A36] bg-[#0E1017] shrink-0 text-xs">
-          <div className="flex items-center gap-2 text-[#8E8B85] font-mono-tabular">
+          <div className="flex flex-wrap items-center gap-2 text-[#8E8B85] font-mono-tabular">
             <span>DEVELOPMENT STATUS:</span>
             <span className="text-emerald-400 font-semibold flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               {project.status}
             </span>
+            <span className="opacity-40 hidden sm:inline">&bull;</span>
+            <span className="px-2 py-0.5 rounded bg-[#141721] text-[#A8A39D] border border-[#262A36] text-[10px]">
+              Private Repository &bull; Code Available on Request
+            </span>
           </div>
 
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <Magnetic strength={0.25} radius={60} className="w-full sm:w-auto">
+          <div className="flex items-center gap-2.5 w-full sm:w-auto">
+            <Magnetic strength={0.25} radius={50} className="flex-1 sm:flex-none">
               <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`mailto:${PORTFOLIO_DATA.personal.email}?subject=${encodeURIComponent(
+                  `Code Walkthrough Request: ${project.title}`
+                )}&body=${encodeURIComponent(
+                  `Hello Divyansh,\n\nI reviewed your portfolio and would like to request access or a walkthrough of the ${project.title} codebase.\n\nBest regards,`
+                )}`}
                 className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-mono-tabular uppercase tracking-wider font-semibold text-white bg-[#FF4D26] hover:bg-[#ff623e] rounded-lg transition-colors cursor-pointer w-full sm:w-auto min-h-[44px] shadow-xs"
               >
-                <span>Explore Code on GitHub</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <span>Request Code Walkthrough</span>
+                <Mail className="w-3.5 h-3.5" aria-hidden="true" />
+              </a>
+            </Magnetic>
+
+            <Magnetic strength={0.2} radius={40}>
+              <a
+                href={PORTFOLIO_DATA.personal.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View Divyansh's GitHub profile`}
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-mono-tabular text-[#A8A39D] hover:text-[#F4EFEA] bg-[#090A0E] border border-[#262A36] rounded-lg transition-colors min-h-[44px]"
+                title="View GitHub Profile (@divyanshh69)"
+              >
+                <Github className="w-4 h-4" aria-hidden="true" />
+                <span className="hidden sm:inline">Profile</span>
               </a>
             </Magnetic>
           </div>

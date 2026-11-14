@@ -198,7 +198,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
         style={{ x: watermarkX }}
         className="pointer-events-none absolute bottom-8 left-0 select-none whitespace-nowrap font-display font-black text-[14vw] text-white/[0.022] tracking-tighter will-change-transform z-0"
       >
-        <span>ENGAGE &bull; INDORE 2026 &bull; OPEN TO INTERNSHIPS &bull; GET IN TOUCH</span>
+        <span>ENGAGE &bull; INDORE INDIA &bull; OPEN TO INTERNSHIPS &bull; GET IN TOUCH</span>
       </motion.div>
 
       <div
@@ -211,7 +211,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
         <span>&bull;</span>
         <span className="text-[#10B981] flex items-center gap-1.5 font-semibold">
           <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] inline-block animate-pulse" />
-          AVAILABLE 2026
+          AVAILABLE FOR ROLES
         </span>
       </div>
 
@@ -235,7 +235,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                 transition={{ duration: 0.85, delay: 0.2, ease: easeEditorial }}
                 className="text-sm sm:text-base text-[#9B968F] leading-relaxed max-w-lg font-sans"
               >
-                I am actively seeking software engineering internship opportunities for 2026. Whether you have an open role, feedback on my desktop audio or web builds, or a technical inquiry, I welcome your message.
+                I am actively seeking software engineering internship opportunities. Whether you have an open role, feedback on my desktop audio or web builds, or a technical inquiry, I welcome your message.
               </motion.p>
             </div>
 
@@ -248,7 +248,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
               className="p-6 rounded-2xl arch-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4"
             >
               <div className="space-y-1 min-w-0">
-                <div className="text-xs text-[#7C7872] font-mono-tabular uppercase tracking-wider">Direct Email Address</div>
+                <div className="text-xs text-[#8E8B85] font-mono-tabular uppercase tracking-wider">Direct Email Address</div>
                 <a
                   href={`mailto:${personal.email}`}
                   className="font-mono-tabular text-sm sm:text-base font-bold text-[#F4EFEA] hover:text-[#FF4D26] transition-colors break-all"
@@ -277,7 +277,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3.5 h-3.5 text-[#7C7872]" aria-hidden="true" />
+                        <Copy className="w-3.5 h-3.5 text-[#8E8B85]" aria-hidden="true" />
                         <span>COPY EMAIL</span>
                       </>
                     )}
@@ -325,11 +325,11 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                 >
                   <div className="flex items-center justify-between text-[#A8A39D] group-hover:text-[#F4EFEA] transition-colors">
                     <card.icon className="w-5 h-5" aria-hidden="true" />
-                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[#7C7872]" />
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[#8E8B85]" />
                   </div>
                   <div>
                     <div className="text-sm font-bold text-[#F4EFEA]">{card.title}</div>
-                    <div className="text-xs text-[#7C7872] font-mono-tabular mt-0.5">{card.subtitle}</div>
+                    <div className="text-xs text-[#8E8B85] font-mono-tabular mt-0.5">{card.subtitle}</div>
                   </div>
                 </motion.a>
               ))}
@@ -443,8 +443,8 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                       setFormState((prev) => ({ ...prev, subject: e.target.value }));
                       if (errors.subject) setErrors((prev) => ({ ...prev, subject: undefined }));
                     }}
-                    placeholder="2026 SWE Internship Opportunity / Project Collaboration"
-                    className={`w-full px-4 py-2.5 min-h-[44px] text-xs sm:text-sm bg-black/50 border rounded-xl text-[#F4EFEA] placeholder:text-[#7C7872] focus:outline-none transition-colors ${
+                    placeholder="Software Engineering Internship / Project Collaboration"
+                    className={`w-full px-4 py-2.5 min-h-[44px] text-xs sm:text-sm bg-black/50 border rounded-xl text-[#F4EFEA] placeholder:text-[#8E8B85] focus:outline-none transition-colors ${
                       errors.subject ? 'border-rose-500/70 focus:border-rose-400' : 'border-white/[0.08] focus:border-[#FF4D26]'
                     }`}
                   />
@@ -474,7 +474,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
                       if (errors.message) setErrors((prev) => ({ ...prev, message: undefined }));
                     }}
                     placeholder="Role details, timeline, or project inquiry..."
-                    className={`w-full px-4 py-2.5 min-h-[44px] text-xs sm:text-sm bg-black/50 border rounded-xl text-[#F4EFEA] placeholder:text-[#7C7872] focus:outline-none transition-colors resize-none ${
+                    className={`w-full px-4 py-2.5 min-h-[44px] text-xs sm:text-sm bg-black/50 border rounded-xl text-[#F4EFEA] placeholder:text-[#8E8B85] focus:outline-none transition-colors resize-none ${
                       errors.message ? 'border-rose-500/70 focus:border-rose-400' : 'border-white/[0.08] focus:border-[#FF4D26]'
                     }`}
                   />
@@ -527,10 +527,10 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
 
                   <div className="p-3 rounded-lg bg-black/50 border border-white/[0.06] text-xs font-mono-tabular text-[#D8D4CE] space-y-1">
                     <div>
-                      <span className="text-[#7C7872]">Destination:</span> {personal.email}
+                      <span className="text-[#8E8B85]">Destination:</span> {personal.email}
                     </div>
                     <div>
-                      <span className="text-[#7C7872]">Subject:</span> {preparedDraft.formattedSubject}
+                      <span className="text-[#8E8B85]">Subject:</span> {preparedDraft.formattedSubject}
                     </div>
                   </div>
 
@@ -593,7 +593,7 @@ export const ContactFooter: React.FC<ContactFooterProps> = ({ onNavigate }) => {
             <div className="text-sm font-bold text-[#F4EFEA] tracking-tight">
               {personal.name}
             </div>
-            <p className="text-xs text-[#7C7872]">
+            <p className="text-xs text-[#8E8B85]">
               MEDI-CAPS UNIVERSITY · B.TECH CSE (2ND YEAR) · INDORE, INDIA
             </p>
           </div>

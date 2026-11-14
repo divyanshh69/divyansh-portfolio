@@ -458,6 +458,7 @@ export const InteractiveResonatorCanvas: React.FC<{ className?: string }> = ({ c
     >
       <canvas
         ref={canvasRef}
+        aria-hidden="true"
         onClick={(e) => triggerImpulse(e.clientX, e.clientY)}
         className="block w-full h-full cursor-crosshair"
         title="Interactive Engineering Canvas — click or move pointer to propagate harmonic shockwave"

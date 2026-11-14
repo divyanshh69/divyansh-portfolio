@@ -36,7 +36,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
         ? skillsync
         : campuspulse;
 
-  const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
   const [prefersReduced, setPrefersReduced] = useState(false);
   const [nameRevealed, setNameRevealed] = useState(false);
 
@@ -79,14 +78,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
     }
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (prefersReduced) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width - 0.5;
-    const ny = (e.clientY - rect.top) / rect.height - 0.5;
-    setPointerOffset({ x: nx * 10, y: ny * 10 });
-  };
-
   const firstName = 'Divyansh'.split('');
   const lastName = 'Nayak'.split('');
 
@@ -95,7 +86,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
       ref={heroRef}
       id="home"
       aria-label="Introduction and Overview"
-      onMouseMove={handleMouseMove}
       className="relative pt-12 sm:pt-20 lg:pt-24 pb-16 sm:pb-24 border-b border-[#262A36] overflow-hidden"
     >
       {/* Background Architectural Grid Pattern */}
@@ -115,7 +105,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-2 px-2.5 py-1 rounded bg-[#FF4D26]/10 text-[#FF4D26] border border-[#FF4D26]/20 font-semibold text-[11px]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D26] animate-pulse" />
-              <span>AVAILABLE // 2026 INTERNSHIPS</span>
+              <span>AVAILABLE // SWE INTERNSHIPS</span>
             </span>
             <span className="hidden sm:inline opacity-40">/</span>
             <span className="hidden sm:inline text-[#F4EFEA]">MEDI-CAPS UNIVERSITY &bull; 2ND-YEAR CSE</span>
@@ -124,7 +114,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
           <div className="flex items-center gap-4 text-[11px]">
             <span className="hidden md:inline">INDORE, INDIA</span>
             <span className="opacity-40 hidden md:inline">|</span>
-            <span className="text-[#F4EFEA] font-semibold">DEV.SPACE 2026</span>
+            <span className="text-[#F4EFEA] font-semibold">DEV.SPACE // PORTFOLIO</span>
           </div>
         </motion.div>
 
@@ -147,47 +137,53 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               </motion.div>
 
               {/* Kinetic Letter-by-Letter Art-Directed Reveal */}
-              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-[#F4EFEA] leading-[1.04] sm:leading-[1.08] lg:leading-[1.1] select-none">
-                {/* Step 1: First name begins revealing */}
-                <motion.div
-                  variants={prefersReduced ? undefined : firstNameContainerVariants}
-                  initial={prefersReduced ? false : "hidden"}
-                  animate="visible"
-                  className={`inline-flex flex-wrap pt-1 pb-2 sm:pb-3 -mb-2 sm:-mb-3 pr-2 ${
-                    nameRevealed ? 'overflow-visible' : 'overflow-hidden'
-                  }`}
-                >
-                  {firstName.map((char, i) => (
-                    <motion.span
-                      key={`fn-${i}`}
-                      variants={prefersReduced ? undefined : letterCharVariants}
-                      className="inline-block"
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </motion.div>
-                <br />
-                {/* Step 2: Surname follows with deliberate stagger */}
-                <motion.div
-                  variants={prefersReduced ? undefined : lastNameContainerVariants}
-                  initial={prefersReduced ? false : "hidden"}
-                  animate="visible"
-                  onAnimationComplete={() => setNameRevealed(true)}
-                  className={`inline-flex flex-wrap font-editorial italic font-normal text-[#FF4D26] pt-1 pb-4 sm:pb-6 -mb-4 sm:-mb-6 pr-4 ${
-                    nameRevealed ? 'overflow-visible' : 'overflow-hidden'
-                  }`}
-                >
-                  {lastName.map((char, i) => (
-                    <motion.span
-                      key={`ln-${i}`}
-                      variants={prefersReduced ? undefined : letterCharVariants}
-                      className="inline-block"
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </motion.div>
+              <h1
+                aria-label="Divyansh Nayak — Creative &amp; Systems Engineering"
+                className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-[#F4EFEA] leading-[1.04] sm:leading-[1.08] lg:leading-[1.1] select-none"
+              >
+                <span className="sr-only">Divyansh Nayak</span>
+                <span aria-hidden="true">
+                  {/* Step 1: First name begins revealing */}
+                  <motion.div
+                    variants={prefersReduced ? undefined : firstNameContainerVariants}
+                    initial={prefersReduced ? false : "hidden"}
+                    animate="visible"
+                    className={`inline-flex flex-wrap pt-1 pb-2 sm:pb-3 -mb-2 sm:-mb-3 pr-2 ${
+                      nameRevealed ? 'overflow-visible' : 'overflow-hidden'
+                    }`}
+                  >
+                    {firstName.map((char, i) => (
+                      <motion.span
+                        key={`fn-${i}`}
+                        variants={prefersReduced ? undefined : letterCharVariants}
+                        className="inline-block"
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                  </motion.div>
+                  <br />
+                  {/* Step 2: Surname follows with deliberate stagger */}
+                  <motion.div
+                    variants={prefersReduced ? undefined : lastNameContainerVariants}
+                    initial={prefersReduced ? false : "hidden"}
+                    animate="visible"
+                    onAnimationComplete={() => setNameRevealed(true)}
+                    className={`inline-flex flex-wrap font-editorial italic font-normal text-[#FF4D26] pt-1 pb-4 sm:pb-6 -mb-4 sm:-mb-6 pr-4 ${
+                      nameRevealed ? 'overflow-visible' : 'overflow-hidden'
+                    }`}
+                  >
+                    {lastName.map((char, i) => (
+                      <motion.span
+                        key={`ln-${i}`}
+                        variants={prefersReduced ? undefined : letterCharVariants}
+                        className="inline-block"
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                  </motion.div>
+                </span>
               </h1>
             </div>
 
@@ -269,19 +265,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
 
           {/* Step 6: Right Column enters in coordination with the main content */}
           <motion.div
-            initial={prefersReduced ? false : { opacity: 0, scale: 0.96, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1.05, delay: 0.65, ease: easeEditorial }}
             style={{
               y: yHeroRight,
               opacity: opacityHero,
             }}
-            className="lg:col-span-5 space-y-5 will-change-transform"
+            className="lg:col-span-5 will-change-transform"
           >
-            {/* Interactive Resonator Canvas */}
-            <div className="h-64 sm:h-72 w-full shadow-2xl">
-              <InteractiveResonatorCanvas className="h-full" />
-            </div>
+            <motion.div
+              initial={prefersReduced ? false : { opacity: 0, scale: 0.96, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1.05, delay: 0.65, ease: easeEditorial }}
+              className="space-y-5"
+            >
+              {/* Interactive Resonator Canvas */}
+              <div className="h-64 sm:h-72 w-full shadow-2xl" aria-hidden="true">
+                <InteractiveResonatorCanvas className="h-full" />
+              </div>
 
             {/* Quick Architectural Spotlight Switcher (All 3 Flagship Projects) */}
             <div className="rounded-2xl arch-surface p-5 space-y-4">
@@ -379,10 +378,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenProj
               </AnimatePresence>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
+      </div>
 
-        {/* Live Architectural Marquee Ticker */}
-        <div className="pt-6 sm:pt-8 border-t border-[#262A36] overflow-hidden select-none">
+      {/* Live Architectural Marquee Ticker */}
+      <div aria-hidden="true" className="pt-6 sm:pt-8 border-t border-[#262A36] overflow-hidden select-none">
           <div className="animate-marquee whitespace-nowrap text-xs sm:text-sm font-mono-tabular tracking-widest text-[#8E8B85]">
             <span className="mx-6 text-[#F4EFEA] font-semibold">SYSTEM ARCHITECTURE</span>
             <span className="mx-6">&bull;</span>

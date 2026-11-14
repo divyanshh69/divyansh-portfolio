@@ -437,18 +437,26 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                                 </button>
                               </Magnetic>
 
-                              <Magnetic strength={0.25} radius={60}>
-                                <a
-                                  href={project.githubUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label={`View ${project.title} repository on GitHub`}
-                                  className="inline-flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-mono-tabular text-[#A8A39D] hover:text-[#F4EFEA] transition-colors ml-auto min-h-[42px]"
+                              <div className="flex items-center gap-2 ml-auto">
+                                <span
+                                  className="px-2.5 py-1 text-[10px] font-mono-tabular rounded bg-[#141721] text-[#A8A39D] border border-[#262A36]"
+                                  title="Repository is private. Code walkthrough available upon request."
                                 >
-                                  <Github className="w-4 h-4" aria-hidden="true" />
-                                  <span>CODE &rarr;</span>
-                                </a>
-                              </Magnetic>
+                                  PRIVATE REPO
+                                </span>
+                                <Magnetic strength={0.2} radius={45}>
+                                  <a
+                                    href={PORTFOLIO_DATA.personal.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="View Divyansh's GitHub profile"
+                                    className="inline-flex items-center justify-center p-2 text-xs font-mono-tabular text-[#A8A39D] hover:text-[#F4EFEA] hover:bg-[#141721] rounded-lg border border-transparent hover:border-[#262A36] transition-colors min-w-[36px] min-h-[36px]"
+                                    title="View GitHub Profile (@divyanshh69)"
+                                  >
+                                    <Github className="w-4 h-4" aria-hidden="true" />
+                                  </a>
+                                </Magnetic>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -659,10 +667,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
                     <Magnetic strength={0.2} radius={40}>
                       <a
-                        href={project.githubUrl}
+                        href={PORTFOLIO_DATA.personal.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`${project.title} GitHub repo`}
+                        aria-label="Private repository — View GitHub profile"
+                        title="Private repository — View GitHub profile"
                         className="p-2.5 rounded-xl bg-[#0E1017] border border-[#262A36] text-[#A8A39D] hover:text-white flex items-center justify-center min-w-[44px] min-h-[44px]"
                       >
                         <Github className="w-4 h-4" />

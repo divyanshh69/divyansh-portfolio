@@ -77,7 +77,7 @@ export const JourneySection: React.FC = () => {
         style={{ x: watermarkX }}
         className="pointer-events-none absolute top-10 left-0 select-none whitespace-nowrap font-display font-black text-[12vw] text-white/[0.022] tracking-tighter will-change-transform z-0"
       >
-        <span>CHRONOLOGICAL PROGRESSION &bull; CS CURRICULUM &bull; INDORE 2024 &rarr; 2026</span>
+        <span>CHRONOLOGICAL PROGRESSION &bull; CS CURRICULUM &bull; INDORE INDIA &bull; ROADMAP</span>
       </motion.div>
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-20">
         {/* Timeline Header with Kinetic Typography */}

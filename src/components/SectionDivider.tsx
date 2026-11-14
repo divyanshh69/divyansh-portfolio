@@ -80,7 +80,7 @@ export const SectionDivider: React.FC<SectionDividerProps> = ({ variant, classNa
           <span className="text-[#FF4D26] font-semibold">STAGE 01</span>
           <span>&bull;</span>
           <span className="text-[#F4EFEA]">FOUNDATION &amp; CRAFT</span>
-          <span className="hidden sm:inline text-[#7C7872]">&bull; 2026 ROADMAP</span>
+          <span className="hidden sm:inline text-[#8E8B85]">&bull; ENGINEERING ROADMAP</span>
         </motion.div>
       </div>
     );
@@ -107,7 +107,7 @@ export const SectionDivider: React.FC<SectionDividerProps> = ({ variant, classNa
             <span className="text-[#F4EFEA] font-semibold">DEPTH STACK</span>
             <span>// 320VH PINNED SHOWCASE TRACK</span>
           </motion.div>
-          <div className="hidden sm:flex items-center gap-2 text-[#7C7872]">
+          <div className="hidden sm:flex items-center gap-2 text-[#8E8B85]">
             <span>STICKY VIEWPORT // 01 METROFLOW &bull; 02 SKILLSYNC &bull; 03 CAMPUSPULSE</span>
           </div>
         </div>
@@ -198,7 +198,7 @@ export const SectionDivider: React.FC<SectionDividerProps> = ({ variant, classNa
         style={{ x: ribbonX }}
         className="absolute inset-y-0 flex items-center whitespace-nowrap font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl tracking-tighter text-white/[0.03] will-change-transform"
       >
-        <span>APERTURE // DIRECT COMM CHANNEL // 2026 SWE ENGAGEMENT</span>
+        <span>APERTURE // DIRECT COMM CHANNEL // SWE OPPORTUNITIES</span>
       </motion.div>
 
       <motion.div

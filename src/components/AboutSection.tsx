@@ -249,7 +249,7 @@ export const AboutSection: React.FC = () => {
               </div>
 
               <div className="p-4 rounded-xl bg-[#FF4D26]/5 border border-[#FF4D26]/20 space-y-1">
-                <span className="text-[11px] font-mono-tabular font-semibold text-[#FF4D26] uppercase">2026 Target</span>
+                <span className="text-[11px] font-mono-tabular font-semibold text-[#FF4D26] uppercase">Career Target</span>
                 <p className="text-xs text-[#F4EFEA]">
                   Seeking software engineering internship opportunities where I can contribute to production systems and learn team workflows from experienced mentors.
                 </p>

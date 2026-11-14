@@ -39,6 +39,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [copyFeedback, setCopyFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    if (itemRefs.current[selectedIndex]) {
+      itemRefs.current[selectedIndex]?.scrollIntoView({ block: 'nearest' });
+    }
+  }, [selectedIndex]);
 
   const commands: CommandItem[] = useMemo(() => [
     ...NAV_SECTIONS.map((sec) => ({
@@ -193,6 +200,11 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           <input
             ref={inputRef}
             type="text"
+            role="combobox"
+            aria-expanded={isOpen}
+            aria-controls="command-palette-results"
+            aria-activedescendant={filteredCommands[selectedIndex]?.id}
+            aria-autocomplete="list"
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -245,7 +257,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         )}
 
         {/* Command Items List */}
-        <div className="max-h-80 overflow-y-auto p-2 divide-y divide-[#262A36]/40">
+        <div
+          id="command-palette-results"
+          role="listbox"
+          aria-label="Commands and Destinations"
+          className="max-h-80 overflow-y-auto p-2 divide-y divide-[#262A36]/40"
+        >
           {filteredCommands.length === 0 ? (
             <div className="py-8 text-center text-xs font-mono-tabular text-[#8E8B85]">
               No matching commands or destinations found.
@@ -256,6 +273,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               return (
                 <button
                   key={cmd.id}
+                  id={cmd.id}
+                  ref={(el) => { itemRefs.current[idx] = el; }}
+                  role="option"
+                  aria-selected={isSelected}
                   type="button"
                   onClick={cmd.action}
                   onMouseEnter={() => setSelectedIndex(idx)}
