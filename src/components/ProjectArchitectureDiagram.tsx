@@ -32,11 +32,11 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
               </div>
               <h6 className="text-xs font-bold text-[#F4EFEA] mt-1">Electron Shell</h6>
               <p className="text-[11px] text-[#A8A39D] mt-1 leading-snug">
-                Frameless macOS windowing, dockable mini-player mode, and global keyboard shortcuts.
+                Frameless macOS windowing, dockable mini-player mode, and in-app keyboard shortcuts.
               </p>
             </div>
             <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
-              Runtime: Electron + macOS API
+              Runtime: Electron + macOS Window API
             </div>
           </div>
 
@@ -49,7 +49,7 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
               </div>
               <h6 className="text-xs font-bold text-[#F4EFEA] mt-1">React 18 + TypeScript</h6>
               <p className="text-[11px] text-[#A8A39D] mt-1 leading-snug">
-                Album artwork, discovery queue, interactive synchronized lyrics parser, and millisecond scrubber.
+                Liquid Glass UI, dynamic artwork themes, continuous radio queue, time-coded lyrics, and client stats.
               </p>
             </div>
             <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
@@ -66,11 +66,11 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
               </div>
               <h6 className="text-xs font-bold text-[#F4EFEA] mt-1">Local Python Bridge</h6>
               <p className="text-[11px] text-[#A8A39D] mt-1 leading-snug">
-                Lightweight HTTP daemon running ytmusicapi for fast catalogue search, metadata, and time-coded lyrics.
+                Lightweight daemon on port 8765 running ytmusicapi &amp; YouTube API for search, radio, and lyrics.
               </p>
             </div>
             <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
-              Protocol: Localhost REST / JSON
+              Protocol: Localhost REST (Standalone Python)
             </div>
           </div>
 
@@ -79,15 +79,15 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
             <div>
               <div className="flex items-center justify-between text-[10px] font-mono-tabular text-[#FF4D26] font-semibold">
                 <span>TIER 04 // AUDIO</span>
-                <span>COREAUDIO</span>
+                <span>PLAYBACK</span>
               </div>
-              <h6 className="text-xs font-bold text-[#F4EFEA] mt-1">libmpv Audio Engine</h6>
+              <h6 className="text-xs font-bold text-[#F4EFEA] mt-1">Dual Audio Pipeline</h6>
               <p className="text-[11px] text-[#A8A39D] mt-1 leading-snug">
-                Apple Silicon ARM64 libmpv.2.dylib outputting directly to macOS CoreAudio buffers with low latency.
+                Embedded player API streaming, with optional Apple Silicon libmpv CoreAudio output when bundled.
               </p>
             </div>
             <div className="text-[10.5px] font-mono-tabular text-[#8E8B85] pt-2 border-t border-[#1C202E]">
-              Pipeline: 48kHz 32-bit Float Audio
+              Pipeline: Web Audio / Optional libmpv ARM64
             </div>
           </div>
         </div>
@@ -96,9 +96,9 @@ export const ProjectArchitectureDiagram: React.FC<ProjectArchitectureDiagramProp
         <div className="p-2.5 rounded-xl bg-[#090A0E] border border-[#1C202E] flex flex-wrap items-center justify-between gap-3 text-[10.5px] font-mono-tabular text-[#8E8B85]">
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="text-[#FF4D26] font-bold">DATA FLOW:</span>
-            <span>UI Action &rarr; Electron IPC &rarr; Localhost :8765 &rarr; CoreAudio Output Buffer</span>
+            <span>UI Action &rarr; Electron IPC &rarr; Localhost :8765 &rarr; Playback Pipeline (Web Audio / Optional libmpv)</span>
           </div>
-          <span className="text-[#38BDF8]">ZERO REMOTE CLOUD DEPENDENCIES FOR CORE PLAYBACK</span>
+          <span className="text-[#38BDF8]">COMPLIANT EMBEDDED STREAMING &bull; OPTIONAL LIBMPV BUNDLE</span>
         </div>
       </div>
     );
